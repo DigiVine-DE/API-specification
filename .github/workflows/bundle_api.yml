@@ -4,6 +4,7 @@ on: push
 
 jobs:
   check:
+    runs-on: ubuntu-latest
     steps:
       - name: checkout spec
         uses: actions/checkout@v2
