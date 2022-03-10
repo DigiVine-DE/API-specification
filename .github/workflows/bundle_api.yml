@@ -7,13 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout spec
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: bundle spec
         uses: mpetrunic/swagger-cli-action@v1.0.0
         with:
-          command: "bundle --outfile bundled/tmp.yml -t yaml openapi.yaml"
-      - name: Run OpenAPI Diff
-        uses: mvegter/openapi-diff-action@v0.23.5
-        with:
-          head-spec: bundled/tmp.yml
-          base-spec: bundled/openapi.yaml
+          command: "bundle --outfile bundled/openapi.yml -t yaml openapi.yaml"
+      - name: push specification
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add bundled/openapi.yml
+          git commit -m "Bundle Specification"
+          git push
