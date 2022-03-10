@@ -1,8 +1,19 @@
-steps:
-  - name: checkout spec
-    uses: actions/checkout@v2
-  - name: bundle spec
-    uses: hilary/openapi-cli-bundle-action@v0.0.1
-    with:
-      base-spec: openapi.yaml
-      bundled-spec: bundled/openapi.yml
+name: Check Bundle 
+
+on: push
+
+jobs:
+  check:
+    steps:
+      - name: checkout spec
+        uses: actions/checkout@v2
+      - name: bundle spec
+        uses: hilary/openapi-cli-bundle-action@v0.0.1
+        with:
+          base-spec: openapi.yaml
+          bundled-spec: bundled/tmp.yml
+      - name: Run OpenAPI Diff
+        uses: mvegter/openapi-diff-action@v0.23.5
+        with:
+          head-spec: bundled/tmp.yml
+          base-spec: bundled/openapi.yaml
