@@ -1,0 +1,17 @@
+name: limit
+in: query
+description: The number of items to return
+schema:
+  type: integer
+  default: 100
+  minimum: 1
+examples:
+  min:
+    value: 1
+    summary: The minimum number of items, which can be returned.
+  default:
+    value: 100
+    summary: The default number of items, which will be returned, if no value is given for the limit parameter.
+  other:
+    value: 815
+    summary: Another example for the limit parameter.

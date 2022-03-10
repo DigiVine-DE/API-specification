@@ -1,0 +1,10 @@
+# Status Code: 500
+# For more information see:
+#  RFC7231 - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content
+#  https://tools.ietf.org/html/rfc7231#section-6.6.1
+
+description: Backend Error
+content:
+  application/json:
+    schema:
+      $ref: "../openapi.yaml#/components/schemas/Error"

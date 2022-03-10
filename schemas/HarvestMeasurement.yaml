@@ -1,0 +1,38 @@
+type: object
+required:
+  - type
+  - geometry
+  - properties
+properties:
+  # GeoJSON Type "Feature"
+  type:
+    type: string
+    enum:
+      - Feature
+  # Geometry of each feature
+  geometry:
+    $ref: "../openapi.yaml#/components/schemas/Point"
+    # Position of the measurement
+  # Properties of each feature
+  properties:
+    # If you change something here, you have also to change it in `Harvest.yaml`!
+    type: object
+    required:
+      - acid
+      - sugar
+    properties:
+      acid:
+        type: integer
+        format: int64
+        description: Acid content of the harvested fruits in g/L
+        # TODO: Is the unit g/L correct?
+        example: 23
+      sugar:
+        type: integer
+        format: int64
+        description: Sugar content of the harvested fruits in g/L
+        # TODO: Is the unit g/L correct?
+        example: 7
+      spectral:
+        type: string
+        # TODO: What does spectral represent? add description!

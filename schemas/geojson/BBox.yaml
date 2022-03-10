@@ -1,0 +1,18 @@
+type: array
+minItems: 4
+maxItems: 4
+items:
+  type: number
+description: >
+  This parameter contains information on the coordinate range for its Geometries, Features or FeatureCollections.
+  It describes a bounding box for this.
+  The coordinates are given in the decimal degrees unit.
+  In the following it is described, which value of the array represents which coordinate:
+    - The most southwesterly point: Longitude
+    - The most southwesterly point: Latitude
+    - The most northeasterly point: Longitude
+    - The most northeasterly point: Latitude
+externalDocs:
+  description: RFC7946 - The GeoJSON format
+  url: https://tools.ietf.org/html/rfc7946#section-5
+example: [8.01234567890123,49.0123456789012,8.12345678901234,49.1234567890123]

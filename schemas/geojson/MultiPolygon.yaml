@@ -1,0 +1,71 @@
+type: object
+required:
+  - type
+  - coordinates
+properties:
+  # GeoJSON Type "MultiPolygon"
+  type:
+    type: string
+    enum:
+      - MultiPolygon
+  # Bounding Box of Feature
+  bbox:
+    $ref: "../../openapi.yaml#/components/schemas/BBox"
+  # Coordinates of Feature
+  coordinates:
+    type: array
+    items:
+      type: array
+      items:
+        type: array
+        items:
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            type: number
+    description: >
+      A Polygon is a surface specified by its vertices.
+      The vertices are coordinates, given in the decimal degrees unit.
+      Note the following:
+        - The surface vertices are given counterclockwise.
+        - Holes in the surface are given clockwise.
+        - The last and the first coordinates must be equal.
+      In the following it is described, which value of the innermost array represents which coordinate:
+        - Longitude
+        - Latitude
+      The outermost array includes the various Polygons.
+
+      A example, given in the [RFC7946 - The GeoJSON format](https://tools.ietf.org/html/rfc7946#appendix-A.6)
+    externalDocs:
+      description: RFC7946 - The GeoJSON format
+      url: https://tools.ietf.org/html/rfc7946#section-3.1.7
+    example:
+      [
+        [
+          [
+            [8.00000000000000,49.0000000000000],
+            [8.10000000000000,49.0000000000000],
+            [8.10000000000000,49.1000000000000],
+            [8.00000000000000,49.1000000000000],
+            [8.00000000000000,49.0000000000000]
+          ]
+        ],
+        [
+          [
+            [8.00000000000000,49.0000000000000],
+            [8.10000000000000,49.0000000000000],
+            [8.10000000000000,49.1000000000000],
+            [8.00000000000000,49.1000000000000],
+            [8.00000000000000,49.0000000000000]
+          ],
+          [
+            [8.08000000000000,49.0800000000000],
+            [8.08000000000000,49.0200000000000],
+            [8.02000000000000,49.0200000000000],
+            [8.02000000000000,49.0800000000000],
+            [8.08000000000000,49.0800000000000]
+          ]
+        ]
+      ]
+      # The MultiPolygon contains two Polygons. First a square face without hole. Second a square face with hole in the middle. The first group (of the second Polygon) describes the surface, while the second group describes the hole.

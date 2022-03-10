@@ -1,0 +1,9 @@
+# GET /forecast/{ForecastId}
+operationId: getOneForecast
+parameters:
+  ForecastId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `GET /forecast/{ForecastId}`
+  (see also `getOneForecast`).
+  Returns a specific stored Forecast.

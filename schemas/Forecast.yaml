@@ -1,0 +1,84 @@
+type: object
+required:
+  - group_id
+  - station_id
+  - station
+  - field_ids
+  - model_id
+  - model
+  - query_timestamp
+  - time_span_start
+  - time_span_end
+  - measurement_rate
+  - measurements
+properties:
+  id:
+    type: integer
+    format: int32
+    description: The numeric ID of the Forecast
+    example: 4711
+  group_id:
+    type: integer
+    format: int32
+    description: Notice. This information will soon no longer be used and sent along!
+    example: 1
+  station_id:
+    type: integer
+    format: int32
+    description: The numeric ID of the station that makes Forecasts for a group of Fields.
+    example: 4711
+  station:
+    type: string
+    description: Name of the measuring station
+    example: Bad Dürkheim
+  field_ids:
+    type: array
+    items:
+      type: integer
+      format: int32
+    description: An array containing the IDs of the Fields for which the Forecast is.
+    example: [4711, 815]
+  model_id:
+    type: integer
+    format: int32
+    description: The numeric ID of the model
+    example: 17
+  model:
+    type: string
+    description: Name of the model
+    example: Traubenwickler
+  query_timestamp:
+    type: string
+    format: date-time
+    description: Time of retrieval of the data from an external source, given in the format YYYY-MM-DDThh:mm:ss.sssZ (where Y,M,D,h,m,s are variables for the time).
+    externalDocs:
+      description: RFC3339 - Date and Time on the Internet - Timestamps
+      url: https://tools.ietf.org/html/rfc3339
+    example: "1970-01-01T00:00:00.000Z"
+  time_span_start:
+    type: string
+    format: date
+    description: Start time of the measurement, given in the format YYYY-MM-DDThh:mm:ssZ (where Y,M,D,h,m,s are variables for the time).
+    externalDocs:
+      description: RFC3339 - Date and Time on the Internet - Timestamps
+      url: https://tools.ietf.org/html/rfc3339
+    example: "2000-01-01T00:00:00Z"
+  time_span_end:
+    type: string
+    format: date
+    description: End time of the measurement, given in the format YYYY-MM-DDThh:mm:ssZ (where Y,M,D,h,m,s are variables for the time).
+    externalDocs:
+      description: RFC3339 - Date and Time on the Internet - Timestamps
+      url: https://tools.ietf.org/html/rfc3339
+    example: "2000-12-31T23:59:59Z"
+  measurement_rate:
+    type: string
+    enum:
+      - Daily
+    description: Rate of the measurement
+    example: Daily
+  measurements:
+    type: array
+    items:
+      $ref: "../openapi.yaml#/components/schemas/ForecastMeasurement"
+    description: An array of measurements

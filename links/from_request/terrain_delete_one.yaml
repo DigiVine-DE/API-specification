@@ -1,0 +1,9 @@
+# DELETE /terrain/{TerrainId}
+operationId: deleteOneTerrain
+parameters:
+  TerrainId: "$request.path.TerrainId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `DELETE /terrain/{TerrainId}`
+  (see also `deleteOneTerrain`).
+  Deletes a specific stored Terrain.

@@ -1,0 +1,24 @@
+type: object
+properties:
+  name:
+    type: string
+    description: Field location
+    example: Dürkheimer Michelsberg
+  station_id:
+    type: integer
+    format: int32
+    description: The numeric ID of the station that makes Forecasts for a group of Fields.
+    example: 4711
+  number:
+    type: string
+    description: The Number of the Field (not the ID)
+    example: 471/1
+  size:
+    type: number
+    format: double
+    description: Size of the Field given in square meters
+    example: 47.11
+  fruit_name:
+    type: string
+    description: Name of the fruit on this Field
+    example: Riesling

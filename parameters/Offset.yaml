@@ -1,0 +1,17 @@
+name: offset
+in: query
+description: The number of items to skip before starting to collect the result set
+schema:
+  type: integer
+  default: 0
+  minimum: 0
+examples:
+  min:
+    value: 0
+    summary: The minimum number of items, which can be skipped before returning.
+  default:
+    value: 0
+    summary: The default number of items, which will be skipped before returning, if no value is given for the limit parameter.
+  other:
+    value: 815
+    summary: Another example for the offset parameter.

@@ -1,0 +1,9 @@
+# GET /terrain/{TerrainId}
+operationId: getOneTerrain
+parameters:
+  TerrainId: "$request.path.TerrainId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `GET /terrain/{TerrainId}`
+  (see also `getOneTerrain`).
+  Returns a specific stored Terrain.

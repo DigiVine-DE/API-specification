@@ -1,0 +1,98 @@
+get:
+  summary: Returns a list of (all) stored Forecasts
+  description: >
+    Returns a list of (all) stored Forecasts.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Forecasts will be returned.
+  operationId: getAllForecasts
+  tags:
+    - Forecast
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Forecast"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds a new Forecast to the collection
+  description: >
+    Adds a new Forecast to the collection.
+    In the request body you have to add the new Forecast, which to be added.
+    If the operation was successful (status code `200`), the numeric ID of the new Forecast will be returned.
+  operationId: postForecast
+  tags:
+    - Forecast
+    - Add
+  requestBody:
+    required: true
+    description: A Forecast to be added to the collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/Forecast"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Forecast.
+      links:
+        # GET /forecast
+        GetAllForecastsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllForecastsRedirected"
+        # GET /forecast/{ForecastId}
+        GetOneForecastByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOneForecastByIdFromResponse"
+        # DELETE /forecast/{ForecastId}
+        DeleteOneForecastByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOneForecastByIdFromResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete collection of Forecast data.
+    You can delete one specific Forecast with `DELETE /forecast/{ForecastID}` (`deleteOneForecast`).
+  operationId: deleteForecast
+  tags:
+    - Forecast
+    - Delete
+    - DeleteAll
+    - Modify
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

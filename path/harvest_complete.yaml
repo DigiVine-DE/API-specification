@@ -1,0 +1,185 @@
+get:
+  summary: Returns either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection
+  description: >
+    Returns either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection.
+    The parameter `HarvestTaskId` is required, to get the specific stored Harvest.
+    If the operation was successful (status code `200`), the specific Harvest will be returned.
+  operationId: getOneCompletedHarvestTask
+  tags:
+    - Harvest
+    - Harvest Task
+    - Completed Harvest Task
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/HarvestTaskId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/HarvestOrTask"
+      links:
+        # GET /harvest/complete
+        GetAllCompletedHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedHarvestTasksRedirected"
+        # DELETE /harvest/complete/{HarvestTaskId}
+        DeleteOneCompletedHarvestTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneCompletedHarvestTaskById"
+        # GET /harvest/task
+        GetAllScheduledHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledHarvestTasksRedirected"
+        # GET /harvest/task/{HarvestTaskId}
+        GetOneScheduledHarvestTaskById:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledHarvestTaskById"
+        # DELETE /harvest/task/{HarvestTaskId}
+        DeleteOneScheduledHarvestTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledHarvestTaskById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /harvest/complete
+        GetAllCompletedHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedHarvestTasksRedirected"
+        # GET /harvest/task
+        GetAllScheduledHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledHarvestTasksRedirected"
+        # GET /harvest/task/{HarvestTaskId}
+        GetOneScheduledHarvestTaskById:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledHarvestTaskById"
+        # DELETE /harvest/task/{HarvestTaskId}
+        DeleteOneScheduledHarvestTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledHarvestTaskById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection
+  description: >
+    Removes either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection.
+    The parameter `HarvestTaskId` is required, to delete the specific stored Harvest.
+  operationId: deleteOneCompletedHarvestTask
+  tags:
+    - Harvest
+    - Harvest Task
+    - Completed Harvest Task
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/HarvestTaskId"
+  responses:
+    "200":
+      description: Successfully deleted completed Harvest
+      links:
+        # GET /harvest/complete
+        GetAllCompletedHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedHarvestTasksRedirected"
+        # GET /harvest/task
+        GetAllScheduledHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledHarvestTasksRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /harvest/complete
+        GetAllCompletedHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedHarvestTasksRedirected"
+        # GET /harvest/task
+        GetAllScheduledHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledHarvestTasksRedirected"
+        # GET /harvest/task/{HarvestTaskId}
+        GetOneScheduledHarvestTaskById:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledHarvestTaskById"
+        # DELETE /harvest/task/{HarvestTaskId}
+        DeleteOneScheduledHarvestTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledHarvestTaskById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+#patch:
+#  summary: Patches either a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements
+#  description: >
+#    Patches either a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.
+#    The parameter `HarvestTaskId` is required, to replace the specific stored Harvest by the new one.
+#    Also the new data (either `HarvestTaskPatch` or `HarvestPatch`) is required.
+#    If the operation was successful (status code `200`), the new Harvest will be returned.
+#  operationId: patchOneCompletedHarvestTask
+#  tags:
+#    - Harvest
+#    - Harvest Task
+#    - Completed Harvest Task
+#    - Change
+#    - Modify
+#  parameters:
+#    - $ref: "../openapi.yaml#/components/parameters/HarvestTaskId"
+#  requestBody:
+#    required: true
+#    description: The updated properties to patch
+#    content:
+#      application/json:
+#        schema:
+#          oneOf:
+#          - $ref: "../openapi.yaml#/components/schemas/HarvestTaskPatch"
+#          - $ref: "../openapi.yaml#/components/schemas/HarvestPatch"
+#  responses:
+#    "200":
+#      description: Successful operation
+#      content:
+#        application/json:
+#          schema:
+#            oneOf:
+#            - $ref: "../openapi.yaml#/components/schemas/HarvestTask"
+#            - $ref: "../openapi.yaml#/components/schemas/Harvest"
+#      links:
+#        # GET /harvest/complete
+#        GetAllCompletedHarvestTasksRedirected:
+#          $ref: "../openapi.yaml#/components/links/GetAllCompletedHarvestTasksRedirected"
+#        # GET /harvest/complete/{HarvestTaskId}
+#        GetOneCompletedHarvestTaskById:
+#          $ref: "../openapi.yaml#/components/links/GetOneCompletedHarvestTaskById"
+#        # DELETE /harvest/complete/{HarvestTaskId}
+#        DeleteOneCompletedHarvestTaskById:
+#          $ref: "../openapi.yaml#/components/links/DeleteOneCompletedHarvestTaskById"
+#        # GET /harvest/task
+#        GetAllScheduledHarvestTasksRedirected:
+#          $ref: "../openapi.yaml#/components/links/GetAllScheduledHarvestTasksRedirected"
+#        # GET /harvest/task/{HarvestTaskId}
+#        GetOneScheduledHarvestTaskById:
+#          $ref: "../openapi.yaml#/components/links/GetOneScheduledHarvestTaskById"
+#        # DELETE /harvest/task/{HarvestTaskId}
+#        DeleteOneScheduledHarvestTaskById:
+#          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledHarvestTaskById"
+#    "400":
+#      $ref: "../openapi.yaml#/components/responses/BadRequest"
+#    "401":
+#      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+#    "403":
+#      $ref: "../openapi.yaml#/components/responses/Forbidden"
+#    "404":
+#      description: The specified resource was not found
+#      links:
+#        # GET /harvest/complete
+#        GetAllCompletedHarvestTasksRedirected:
+#          $ref: "../openapi.yaml#/components/links/GetAllCompletedHarvestTasksRedirected"
+#        # GET /harvest/task
+#        GetAllScheduledHarvestTasksRedirected:
+#          $ref: "../openapi.yaml#/components/links/GetAllScheduledHarvestTasksRedirected"
+#        # GET /harvest/task/{HarvestTaskId}
+#        GetOneScheduledHarvestTaskById:
+#          $ref: "../openapi.yaml#/components/links/GetOneScheduledHarvestTaskById"
+#        # DELETE /harvest/task/{HarvestTaskId}
+#        DeleteOneScheduledHarvestTaskById:
+#          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledHarvestTaskById"
+#    "500":
+#      $ref: "../openapi.yaml#/components/responses/BackendError"

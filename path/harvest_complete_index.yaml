@@ -1,0 +1,115 @@
+get:
+  summary: Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements
+  description: >
+    Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Harvests will be returned.
+  operationId: getAllCompletedHarvestTasks
+  tags:
+    - Harvest
+    - Harvest Task
+    - Completed Harvest Task
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/HarvestOrTask"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds either a new Harvest Task or a new Harvest with Harvest Measurements to the completed collection
+  description: >
+    Adds either a new Harvest Task or a new Harvest with Harvest Measurements to the completed collection.
+    In the request body you have to add either the new Harvest Task or the new Harvest with Harvest Measurements, which to be added.
+    If the operation was successful (status code `200`), the numeric ID of the new Harvest will be returned.
+    Note: All Harvests with the same ID - as the ID specified here in the request body - are removed from the list of scheduled Harvest Tasks!
+  operationId: postCompletedHarvestTask
+  tags:
+    - Harvest
+    - Harvest Task
+    - Completed Harvest Task
+    - Add
+  requestBody:
+    required: true
+    description: Either a Harvest Task or a Harvest with Harvest Measurements to be added to the completed collection
+    content:
+      application/json:
+        schema:
+            $ref: "../openapi.yaml#/components/schemas/HarvestOrTask"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Harvest Task.
+      links:
+        # GET /harvest/complete
+        GetAllCompletedHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedHarvestTasksRedirected"
+        # GET /harvest/complete/{HarvestTaskId}
+        GetOneCompletedHarvestTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOneCompletedHarvestTaskByIdFromResponse"
+        # DELETE /harvest/complete/{HarvestTaskId}
+        DeleteOneCompletedHarvestTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOneCompletedHarvestTaskByIdFromResponse"
+        # GET /harvest/task
+        GetAllScheduledHarvestTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledHarvestTasksRedirected"
+        # GET /harvest/task/{HarvestTaskId}
+        GetOneScheduledHarvestTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledHarvestTaskByIdFromResponse"
+        # DELETE /harvest/task/{HarvestTaskId}
+        DeleteOneScheduledHarvestTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledHarvestTaskByIdFromResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete completed collection of Harvest Tasks and Harvests with Harvest Measurements.
+    You can delete one specific completed Harvest Task with `DELETE /harvest/complete/{HarvestTaskId}` (`deleteOneCompletedHarvestTask`).
+    Or you can delete one specific scheduled Harvest Task with `DELETE /harvest/task/{HarvestTaskId}` (`deleteOneScheduledHarvestTask`).
+  operationId: deleteCompletedHarvestTask
+  tags:
+    - Harvest
+    - Harvest Task
+    - Completed Harvest Task
+    - Delete
+    - DeleteAll
+    - Modify
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

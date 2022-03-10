@@ -1,0 +1,33 @@
+# This definition aims to follow the geometry object as defined in the GeoJSON RFC https://tools.ietf.org/html/rfc7946#section-3.1
+#
+
+type: object
+required:
+  - type
+  - coordinates
+properties:
+  # GeoJSON Type "Point"
+  type:
+    type: string
+    enum:
+      - Point
+  # Bounding Box of Feature
+  bbox:
+    $ref: "../../openapi.yaml#/components/schemas/BBoxWithHeight"
+  # Coordinates of Feature
+  coordinates:
+    type: array
+    minItems: 3
+    maxItems: 3
+    items:
+      type: number
+    description: >
+      A Point with its height is described by its coordinate, given in the decimal degrees unit, and its altitude, given in meter.
+      In the following it is described, which value of the array represents which coordinate:
+        - Longitude
+        - Latitude
+        - Altitude
+    externalDocs:
+      description: RFC7946 - The GeoJSON format
+      url: https://tools.ietf.org/html/rfc7946#section-3.1.2
+    example: [8.00000000000000,49.0000000000000,168.0]

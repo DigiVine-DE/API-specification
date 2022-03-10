@@ -1,0 +1,9 @@
+# DELETE /harvest/task/{HarvestTaskId}
+operationId: deleteOneScheduledHarvestTask
+parameters:
+  HarvestTaskId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `DELETE /harvest/task/{HarvestTaskId}`
+  (see also `deleteOneScheduledHarvestTask`).
+  Deletes a specific stored scheduled Harvest Task.

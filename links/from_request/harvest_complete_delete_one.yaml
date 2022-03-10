@@ -1,0 +1,9 @@
+# DELETE /harvest/complete/{HarvestTaskId}
+operationId: deleteOneCompletedHarvestTask
+parameters:
+  HarvestTaskId: "$request.path.HarvestTaskId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `DELETE /harvest/complete/{HarvestTaskId}`
+  (see also `deleteOneCompletedHarvestTask`).
+  Deletes a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.

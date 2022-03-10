@@ -1,0 +1,6 @@
+# GET /harvest/task
+operationId: getAllScheduledHarvestTasks
+description: >
+  `GET /harvest/task`
+  (see also `getAllScheduledHarvestTasks`).
+  Returns a list of (all) stored scheduled Harvest Tasks.

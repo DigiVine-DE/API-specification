@@ -1,0 +1,252 @@
+get:
+  summary: Returns a specific stored Plant from the collection
+  description: >
+    Returns a specific stored Plant from the collection.
+    The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to get the specific stored Plant.
+    If the operation was successful (status code `200`), the specific Plant will be returned.
+  operationId: getOnePlant
+  tags:
+    - Plant
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/PlantId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Plant"
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        DeleteOnePlantById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlantById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement
+        GetAllQualityMeasurementsById:
+          $ref: "../openapi.yaml#/components/links/GetAllQualityMeasurementsById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes a specific stored Plant from the collection
+  description: >
+    Removes a specific stored Plant from the collection.
+    The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to delete the specific stored Plant.
+  operationId: deleteOnePlant
+  tags:
+    - Plant
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/PlantId"
+  responses:
+    "200":
+      description: Successfully deleted Plant
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+patch:
+  summary: Patches a specific stored Plant
+  description: >
+    Patches a specific stored Plant.
+    The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to replace the specific stored Plant by the new one.
+    Also the new data (`PlantPatch`) is required.
+    If the operation was successful (status code `200`), the new Plant will be returned.
+  operationId: patchOnePlant
+  tags:
+    - Plant
+    - Change
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/PlantId"
+  requestBody:
+    required: true
+    description: The updated properties to patch
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/PlantPatch"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Plant"
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        GetOnePlantById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlantById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        DeleteOnePlantById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlantById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement
+        GetAllQualityMeasurementsById:
+          $ref: "../openapi.yaml#/components/links/GetAllQualityMeasurementsById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        #  Maybe it is possible to take the patched data and pass it to the POST in plant_index.yaml.
+        #  An example for that exists for the PATCH of the field.
+        #  At the point of writing this, it was not possible,
+        #  because the POST of a Plant needs a geometry object (the coordinates of the Plant)
+        #  and in the PATCH this isn't given.
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"

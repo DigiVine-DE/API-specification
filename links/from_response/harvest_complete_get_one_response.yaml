@@ -1,0 +1,9 @@
+# GET /harvest/complete/{HarvestTaskId}
+operationId: getOneCompletedHarvestTask
+parameters:
+  HarvestTaskId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `GET /harvest/complete/{HarvestTaskId}`
+  (see also `getOneCompletedHarvestTask`).
+  Returns a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.

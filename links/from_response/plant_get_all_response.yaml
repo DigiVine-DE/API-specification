@@ -1,0 +1,10 @@
+# GET /field/{FieldId}/planter/{PlanterRunId}/plant
+operationId: getAllPlants
+parameters:
+  FieldId: "$request.path.FieldId"
+  PlanterRunId: "$response.body#/id"
+description: >
+  The `id` values given in the request and returned in the response can be used as
+  the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant`
+  (see also `getAllPlants`).
+  Returns a list of (all) stored Plants for the given Planter Run.

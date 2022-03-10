@@ -1,0 +1,133 @@
+get:
+  summary: Returns a specific stored Field from the collection
+  description: >
+    Returns a specific stored Field from the collection.
+    The parameter `FieldId` is required, to get the specific stored Field.
+    If the operation was successful (status code `200`), the specific Field will be returned.
+  operationId: getOneField
+  tags:
+    - Field
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Field"
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes a specific stored Field from the collection
+  description: >
+    Removes a specific stored Field from the collection.
+    The parameter `FieldId` is required, to delete the specific stored Field.
+  operationId: deleteOneField
+  tags:
+    - Field
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+  responses:
+    "200":
+      description: Successfully deleted Field
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+patch:
+  summary: Patches a specific stored Field
+  description: >
+    Patches a specific stored Field.
+    The parameter `FieldId` is required, to replace the specific stored Field by the new one.
+    Also the new data (`FieldPatch`) is required.
+    If the operation was successful (status code `200`), the new Field will be returned.
+  operationId: patchOneField
+  tags:
+    - Field
+    - Change
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+  requestBody:
+    required: true
+    description: The updated properties to patch
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/FieldPatch"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Field"
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"

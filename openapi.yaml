@@ -1,0 +1,99 @@
+openapi: "3.0.2"
+info:
+  title: DigiVine API
+  description: REST/CRUD API for the Digivine data warehouse
+  version: "0.3"
+  contact:
+    name: DigiVine
+    url: https://www.digivine.org/
+    email: info@digivine.org
+servers:
+  - url: http://127.0.0.1/api/v0.3
+externalDocs:
+  description: RFC7946 - The GeoJSON format.
+  url: https://tools.ietf.org/html/rfc7946
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api-token
+  schemas:
+    $ref: "./schemas/_index.yaml"
+  parameters:
+    $ref: "./parameters/_index.yaml"
+  responses:
+    $ref: "./responses/_index.yaml"
+  links:
+    $ref: "./links/_index.yaml"
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  $ref: "./tags/_index.yaml"
+
+paths:
+  #   /ero:
+  #     $ref: "path/ero/index.yaml"
+  #   /ero/{id}:
+  #     $ref: "path/ero/one.yaml"
+  #   /jki_lidar:
+  #     $ref: "path/jki_lidar/index.yaml"
+  #   /jki_lidar/{id}:
+  #     $ref: "path/jki_lidar/one.yaml"
+  #   /jki_shape:
+  #     $ref: "path/jki_shape/index.yaml"
+  #   /jki_shape/{id}:
+  #     $ref: "path/jki_shape/one.yaml"
+  # # Cleaned up
+
+  #     $ref: "path/field/planter/plant/one.yaml"
+  #   /field/{field_id}/plant:
+  #     $ref: "path/field/planter/plant/index.yaml"
+  #   /field/{field_id}/plant/{id}:
+  #     $ref: "path/field/planter/plant/one.yaml"
+  # Reworked
+  /forecast:
+    $ref: "path/forecast_index.yaml"
+  /forecast/{ForecastId}:
+    $ref: "path/forecast.yaml"
+  /field:
+    $ref: "path/field_index.yaml"
+  /field/{FieldId}:
+    $ref: "path/field.yaml"
+  /field/{FieldId}/planter:
+    $ref: "path/planter_index.yaml"
+  /field/{FieldId}/planter/{PlanterRunId}:
+    $ref: "path/planter.yaml"
+  # /field/{FieldId}/plant/:
+  #   $ref: "path/plant_index_ro.yaml"
+  # /field/{FieldId}/plant/{PlantId}:
+  #   $ref: "path/plant.yaml"
+  # /field/{FieldId}/plant/{PlantId}/quality_measurement:
+  #   $ref: "path/quality_measurement_index.yaml"
+  # /field/{FieldId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}:
+  #   $ref: "path/quality_measurement.yaml"
+  /field/{FieldId}/planter/{PlanterRunId}/plant:
+    $ref: "path/plant_index.yaml"
+  /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}:
+    $ref: "path/plant.yaml"
+  /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement:
+    $ref: "path/quality_measurement_index.yaml"
+  /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}:
+    $ref: "path/quality_measurement.yaml"
+  /terrain:
+    $ref: "path/terrain_index.yaml"
+  /terrain/{TerrainId}:
+    $ref: "path/terrain.yaml"
+  # Harvests
+  # /harvest:
+  /harvest/task:
+    $ref: "path/harvest_task_index.yaml"
+  /harvest/task/{HarvestTaskId}:
+    $ref: "path/harvest_task.yaml"
+  /harvest/complete:
+    $ref: "path/harvest_complete_index.yaml"
+  /harvest/complete/{HarvestTaskId}:
+    $ref: "path/harvest_complete.yaml"

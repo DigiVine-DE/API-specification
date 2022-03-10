@@ -1,0 +1,48 @@
+type: object
+required:
+  - type
+  - features
+  - properties
+properties:
+  # GeoJSON Type "FeatureCollection"
+  type:
+    type: string
+    enum:
+      - FeatureCollection
+  # Array of GeoJSON Features
+  features:
+    type: array
+    items:
+      $ref: "../openapi.yaml#/components/schemas/Plant"
+    description: An array containing the planted Plants of this Planter Run.
+  # Bounding Box of Features
+  bbox:
+    $ref: "../openapi.yaml#/components/schemas/BBox"
+  # Metadata referencing related objects
+  properties:
+    type: object
+    required:
+    - user_id
+    - terminal_id
+    - field_id
+    properties:
+      id:
+        type: integer
+        format: int32
+        description: The numeric ID of the Planter Run
+        example: 4711
+      user_id:
+        type: integer
+        format: int32
+        description: The numeric ID of the User who planted
+        example: 815
+      terminal_id:
+        type: integer
+        format: int32
+        description: The numeric ID of the Terminal of the Machine that planted
+        example: 42
+      field_id:
+        type: integer
+        format: int32
+        description: The numeric ID of the Field on which the Planter Run is performed.
+        example: 4711

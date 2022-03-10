@@ -1,0 +1,127 @@
+get:
+  summary: Returns a list of (all) stored Planter Runs
+  description: >
+    Returns a list of (all) stored Planter Runs.
+    The parameter `FieldId` is required, to get the specific stored Planter Runs.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Planter Runs will be returned.
+  operationId: getAllPlanterRuns
+  tags:
+    - Planter
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/PlanterRun"
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds a new Planter Run to the collection
+  description: >
+    Adds a new Planter Run to the collection.
+    In the request body you have to add the new Planter Run, which to be added.
+    The parameter `FieldId` is required, to add a Planter Run.
+    If the operation was successful (status code `200`), the numeric ID of the new Planter Run will be returned.
+  operationId: postPlanterRun
+  tags:
+    - Planter
+    - Add
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+  requestBody:
+    required: true
+    description: A Planter Run to be added to the collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/PlanterRun"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Planter Run.
+      links:
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunByIdFromResponse"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunByIdFromResponse"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsByIdFromResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete collection of Planter Run data.
+    You can delete one specific Planter Run with `DELETE /field/{FieldId}/planter/{PlanterRunId}` (`deleteOnePlanterRun`).
+  operationId: deletePlanterRun
+  tags:
+    - Planter
+    - Delete
+    - DeleteAll
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

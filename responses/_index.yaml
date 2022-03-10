@@ -1,0 +1,12 @@
+BackendError:
+  $ref: "./BackendError.yaml"
+Unauthorized:
+  $ref: "./Unauthorized.yaml"
+NotFound:
+  $ref: "./NotFound.yaml"
+MethodNotAllowed:
+  $ref: "./MethodNotAllowed.yaml"
+Forbidden:
+  $ref: "./Forbidden.yaml"
+BadRequest:
+  $ref: "./BadRequest.yaml"

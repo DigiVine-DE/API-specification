@@ -1,0 +1,8 @@
+name: FieldId
+in: path
+required: true
+description: The numeric ID of the field
+schema:
+  type: integer
+  format: int32
+  example: 4711

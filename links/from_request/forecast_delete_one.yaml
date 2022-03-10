@@ -1,0 +1,9 @@
+# DELETE /forecast/{ForecastId}
+operationId: deleteOneForecast
+parameters:
+  ForecastId: "$request.path.ForecastId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `DELETE /forecast/{ForecastId}`
+  (see also `deleteOneForecast`).
+  Deletes a specific stored Forecast.

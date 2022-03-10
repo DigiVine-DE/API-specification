@@ -1,0 +1,32 @@
+# GET
+- $ref: "./get.yaml"
+- $ref: "./getOne.yaml"
+- $ref: "./getAll.yaml"
+# DELETE
+- $ref: "./delete.yaml"
+- $ref: "./deleteOne.yaml"
+- $ref: "./deleteAll.yaml"
+# POST
+- $ref: "./add.yaml"
+# PATCH
+- $ref: "./change.yaml"
+# DELETE, PATCH
+- $ref: "./modify.yaml"
+#
+# Field
+- $ref: "./field.yaml"
+# Planter Run
+- $ref: "./planter.yaml"
+# Plant
+- $ref: "./plant.yaml"
+# Quality Measurement
+- $ref: "./qualityMeasurement.yaml"
+# Forecast
+- $ref: "./forecast.yaml"
+# Terrain
+- $ref: "./terrain.yaml"
+# Harvest
+- $ref: "./harvest.yaml"
+- $ref: "./harvestTask.yaml"
+- $ref: "./scheduledHarvestTask.yaml"
+- $ref: "./completedHarvestTask.yaml"

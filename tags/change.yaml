@@ -1,0 +1,5 @@
+name: Change
+description: All operations to CHANGE / PATCH data
+externalDocs:
+  description: RFC2616 - PATCH Method for HTTP
+  url: https://tools.ietf.org/html/rfc5789#section-2

@@ -1,0 +1,6 @@
+# GET /forecast
+operationId: getAllForecasts
+description: >
+  `GET /forecast`
+  (see also `getAllForecasts`).
+  Returns a list of (all) stored Forecasts.

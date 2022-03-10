@@ -1,0 +1,106 @@
+get:
+  summary: Returns a specific stored Forecast from the collection
+  description: >
+    Returns a specific stored Forecast from the collection.
+    The parameter `ForecastId` is required, to get the specific stored Forecast.
+    If the operation was successful (status code `200`), the specific Forecast will be returned.
+  operationId: getOneForecast
+  tags:
+    - Forecast
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/ForecastId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Forecast"
+      links:
+        # GET /forecast
+        GetAllForecastsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllForecastsRedirected"
+        # DELETE /forecast/{ForecastId}
+        DeleteOneForecastById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneForecastById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /forecast
+        GetAllForecastsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllForecastsRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes a specific stored Forecast from the collection
+  description: >
+    Removes a specific stored Forecast from the collection.
+    The parameter `ForecastId` is required, to delete the specific stored Forecast.
+  operationId: deleteOneForecast
+  tags:
+    - Forecast
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/ForecastId"
+  responses:
+    "200":
+      description: Successfully deleted Forecast
+      links:
+        # GET /forecast
+        GetAllForecastsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllForecastsRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /forecast
+        GetAllForecastsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllForecastsRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+
+# PATCH
+# If the operation PATCH comes here, you can use the links parameter below.
+# You just have to comment it out and place it in the successful response (status code "200").
+# No other links have to be added in other operations.
+# Have fun!
+#
+#links:
+#  # GET /forecast
+#  GetAllForecastsRedirected:
+#    $ref: "../openapi.yaml#/components/links/GetAllForecastsRedirected"
+#  # GET /forecast/{ForecastId}
+#  GetOneForecastById:
+#    $ref: "../openapi.yaml#/components/links/GetOneForecastById"
+#  # DELETE /forecast/{ForecastId}
+#  DeleteOneForecastById:
+#    $ref: "../openapi.yaml#/components/links/DeleteOneForecastById"
+
+# PATCH
+# If the operation PATCH comes here, you can use the links parameter below.
+# You just have to comment it out and place it in the not found response (status code "404").
+# No other links have to be added in other operations.
+# But attention!!
+#   Maybe it is possible (if the patching fails, because the ForecastId isn't found) to take the patched data and pass it to the POST in forecast_index.yaml.
+#   An example for that exists for the PATCH of field.
+# Have fun!
+#
+#links:
+#  # GET /forecast
+#  GetAllForecastsRedirected:
+#    $ref: "../openapi.yaml#/components/links/GetAllForecastsRedirected"

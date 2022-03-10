@@ -1,0 +1,84 @@
+type: object
+required:
+  - type
+  - features
+  - properties
+properties:
+  # GeoJSON Type "FeatureCollection"
+  type:
+    type: string
+    enum:
+      - FeatureCollection
+  # feature list containing measurement points
+  features:
+    type: array
+    items:
+      $ref: "../openapi.yaml#/components/schemas/HarvestMeasurement"
+    description: An array containing the measurements taken during the harvest task.
+  # metadata referencing related objects
+  properties:
+    # If you change something here, you have also to change it in `HarvestMeasurement.yaml`!
+    type: object
+    required:
+      - task_id
+      - task_name
+      - customer_name
+      - fruit_group_name
+      - fruit_name
+      - plain_name
+      - plain_size
+    properties:
+      task_id:
+        type: integer
+        format: int32
+        description: The numeric ID of the Harvest Task
+        example: 4711
+      task_name:
+        type: string
+        description: Name of the task
+        example: Ernte
+      customer_name:
+        type: string
+        description: Name of the customer
+        example: Julius Kühn-Institut
+      farm_name:
+        type: string
+        description: Name of the farm
+        example: Geilweilerhof
+      fruit_group_name:
+        type: string
+        description: Name of the fruit group
+        example: Traube
+      fruit_name:
+        type: string
+        description: Name of the specific fruit
+        example: Riesling
+      plain_name:
+        type: string
+        description: Name of the plains
+        example: Auf dem Weinberg
+      plain_size:
+        type: integer
+        format: int64
+        description: Size of the plains in square meter
+        example: 7668
+      yield_total_mass:
+        type: integer
+        format: int64
+        description: The mass of the harvest yield in kilogram
+        example: 7568
+      total_area:
+        type: integer
+        format: int64
+        description: The total area of the harvest task in square meter
+        example: 5874
+      effective_total_distance:
+        type: integer
+        format: int64
+        description: The effective distance travelled by the harvester in meter
+        example: 2580
+      effective_total_time:
+        type: integer
+        format: int64
+        description: The effective total time of the harvesting run in minutes
+        example: 95

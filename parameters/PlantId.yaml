@@ -1,0 +1,8 @@
+name: PlantId
+in: path
+required: true
+description: The numeric ID of the plant
+schema:
+  type: integer
+  format: int32
+  example: 4711

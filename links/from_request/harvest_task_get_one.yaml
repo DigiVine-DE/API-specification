@@ -1,0 +1,9 @@
+# GET /harvest/task/{HarvestTaskId}
+operationId: getOneScheduledHarvestTask
+parameters:
+  HarvestTaskId: "$request.path.HarvestTaskId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `GET /harvest/task/{HarvestTaskId}`
+  (see also `getOneScheduledHarvestTask`).
+  Returns a specific stored scheduled Harvest Task.

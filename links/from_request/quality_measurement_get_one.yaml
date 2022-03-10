@@ -1,0 +1,12 @@
+# GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+operationId: getOneQualityMeasurement
+parameters:
+  FieldId: "$request.path.FieldId"
+  PlanterRunId: "$request.path.PlanterRunId"
+  PlantId: "$request.path.PlantId"
+  QualityMeasurementId: "$request.path.QualityMeasurementId"
+description: >
+  The `id` values given in the request can be used as
+  the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}`
+  (see also `getOneQualityMeasurement`).
+  Returns a specific stored Quality Measurement.

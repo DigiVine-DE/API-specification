@@ -1,0 +1,54 @@
+# Common
+Error:
+  $ref: "Error.yaml"
+# Endpoints
+# EroEntry:
+#   $ref: "./eroEntry.yaml"
+#
+# JkiLidarEntry:
+#   $ref: "./jkiLidarEntry.yaml"
+#
+# JkiShapeEntry:
+#   $ref: "./jkiShapeEntry.yaml"
+#
+# Cleaned up
+BBox:
+  $ref: "./geojson/BBox.yaml"
+BBoxWithHeight:
+  $ref: "./geojson/BBoxWithHeight.yaml"
+MultiPointWithHeight:
+  $ref: "./geojson/MultiPointWithHeight.yaml"
+Point:
+  $ref: "geojson/Point.yaml"
+PointWithHeight:
+  $ref: "./geojson/PointWithHeight.yaml"
+Polygon:
+  $ref: "./geojson/Polygon.yaml"
+MultiPolygon:
+  $ref: "./geojson/MultiPolygon.yaml"
+Plant:
+  $ref: "./Plant.yaml"
+PlantPatch:
+  $ref: "./PlantPatch.yaml"
+PlanterRun:
+  $ref: "./PlanterRun.yaml"
+Field:
+  $ref: "./Field.yaml"
+FieldPatch:
+  $ref: "./FieldPatch.yaml"
+Forecast:
+  $ref: "./Forecast.yaml"
+ForecastMeasurement:
+  $ref: "./ForecastMeasurement.yaml"
+QualityMeasurement:
+  $ref: "./QualityMeasurement.yaml"
+Terrain:
+  $ref: "./Terrain.yaml"
+HarvestTask:
+  $ref: "./HarvestTask.yaml"
+Harvest:
+  $ref: "./Harvest.yaml"
+HarvestOrTask:
+  $ref: "./HarvestOrTask.yaml"
+HarvestMeasurement:
+  $ref: "./HarvestMeasurement.yaml"

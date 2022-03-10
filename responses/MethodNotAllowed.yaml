@@ -1,0 +1,6 @@
+# Status Code: 405
+# For more information see:
+#  RFC7231 - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content
+#  https://tools.ietf.org/html/rfc7231#section-6.5.5
+
+description: Method not allowed

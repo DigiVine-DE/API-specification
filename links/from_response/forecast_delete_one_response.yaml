@@ -1,0 +1,9 @@
+# DELETE /forecast/{ForecastId}
+operationId: deleteOneForecast
+parameters:
+  ForecastId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `DELETE /forecast/{ForecastId}`
+  (see also `deleteOneForecast`).
+  Deletes a specific stored Forecast.

@@ -1,0 +1,9 @@
+# DELETE /field/{FieldId}
+operationId: deleteOneField
+parameters:
+  FieldId: "$request.path.FieldId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `DELETE /field/{FieldId}`
+  (see also `deleteOneField`).
+  Deletes a specific stored Field.

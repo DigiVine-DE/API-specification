@@ -1,0 +1,68 @@
+get:
+  summary: Returns a list of (all) stored Terrain Models
+  description: >
+    Returns a list of (all) stored Terrain Models.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Terrain Models will be returned.
+  operationId: getAllTerrains
+  tags:
+    - Terrain
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Terrain"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete collection of Terrain Model data.
+    You can delete one specific Terrain Model with `DELETE /terrain/{TerrainId}` (`deleteOneTerrain`).
+  operationId: deleteTerrain
+  tags:
+    - Terrain
+    - Delete
+    - DeleteAll
+    - Modify
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+
+# POST
+# If the operation POST comes here, you can use the links parameter below.
+# You just have to comment it out and place it in the successful response (status code "200").
+# No other links have to be added in other operations.
+# Have fun!
+#
+#links:
+#  # GET /terrain
+#  GetAllTerrainsRedirected:
+#    $ref: "../openapi.yaml#/components/links/GetAllTerrainsRedirected"
+#  # GET /terrain/{TerrainId}
+#  GetOneTerrainByIdFromResponse:
+#    $ref: "../openapi.yaml#/components/links/GetOneTerrainByIdFromResponse"
+#  # DELETE /terrain/{TerrainId}
+#  DeleteOneTerrainByIdFromResponse:
+#    $ref: "../openapi.yaml#/components/links/DeleteOneTerrainByIdFromResponse"

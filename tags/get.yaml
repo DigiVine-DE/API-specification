@@ -1,0 +1,5 @@
+name: Get
+description: All operations to GET data
+externalDocs:
+  description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+  url: https://tools.ietf.org/html/rfc2616#section-9.3

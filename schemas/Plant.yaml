@@ -1,0 +1,73 @@
+type: object
+required:
+  - type
+  - geometry
+  - properties
+properties:
+  # GeoJSON Type "Feature"
+  type:
+    type: string
+    enum:
+      - Feature
+  # Geometry of each feature
+  geometry:
+    $ref: "../openapi.yaml#/components/schemas/Point"
+    # Position of the Plant
+  # Properties of each feature
+  properties:
+    type: object
+    required:
+    - import_key
+    - timestamp
+    - height
+    - deviation
+    - speed
+    - plant_distance
+    - row_distance
+    - row_number
+    properties:
+      id:
+        type: integer
+        format: int32
+        description: The numeric ID of the Plant
+        example: 4711
+      import_key:
+        type: string
+        description: Internal key to facilitate error tracing
+        example: 1-example_feld1
+      timestamp:
+        type: string
+        format: date-time
+        description: Timestamp when this plant was planted, given in the format YYYY-MM-DDThh:mm:ss.sssZ (where Y,M,D,h,m,s are variables for the time).
+        externalDocs:
+          description: RFC3339 - Date and Time on the Internet - Timestamps
+          url: https://tools.ietf.org/html/rfc3339
+        example: 1970-01-01T00:00:00.000Z
+      height:
+        type: number
+        description: Height above sea level, measured in millimeters
+        externalDocs:
+          description: RFC7946 - The GeoJSON format.
+          url: https://tools.ietf.org/html/rfc7946
+        example: 123000.0
+      deviation:
+        type: number
+        # TODO: add description
+        example: 12.3456789012345
+      speed:
+        type: number
+        description: Planting speed measured in km/h
+        example: 1.23456789012345
+      plant_distance:
+        type: number
+        description: Distance between two Plants in a row, measured in millimeters
+        example: 1000
+      row_distance:
+        type: number
+        description: Distance between two rows, measured in millimeters
+        example: 2000
+      row_number:
+        type: integer
+        format: int32
+        description: Number of the row of the Plant
+        example: 2

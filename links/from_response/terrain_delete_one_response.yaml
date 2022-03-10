@@ -1,0 +1,9 @@
+# DELETE /terrain/{TerrainId}
+operationId: deleteOneTerrain
+parameters:
+  TerrainId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `DELETE /terrain/{TerrainId}`
+  (see also `deleteOneTerrain`).
+  Deletes a specific stored Terrain.

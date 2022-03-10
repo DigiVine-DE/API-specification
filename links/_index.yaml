@@ -1,0 +1,94 @@
+# Field
+GetAllFieldsRedirected:                         # GET /field
+  $ref: "./from_request/field_get_all.yaml"
+GetOneFieldById:                                # GET /field/{FieldId}
+  $ref: "./from_request/field_get_one.yaml"
+GetOneFieldByIdFromResponse:                    # GET /field/{FieldId}
+  $ref: "./from_response/field_get_one_response.yaml"
+DeleteOneFieldById:                             # DELETE /field/{FieldId}
+  $ref: "./from_request/field_delete_one.yaml"
+DeleteOneFieldByIdFromResponse:                 # DELETE /field/{FieldId}
+  $ref: "./from_response/field_delete_one_response.yaml"
+# Planter Run
+GetAllPlanterRunsById:                          # GET /field/{FieldId}/planter
+  $ref: "./from_request/planter_get_all.yaml"
+GetAllPlanterRunsByIdFromResponse:              # GET /field/{FieldId}/planter
+  $ref: "./from_response/planter_get_all_response.yaml"
+GetOnePlanterRunById:                           # GET /field/{FieldId}/planter/{PlanterRunId}
+  $ref: "./from_request/planter_get_one.yaml"
+GetOnePlanterRunByIdFromResponse:               # GET /field/{FieldId}/planter/{PlanterRunId}
+  $ref: "./from_response/planter_get_one_response.yaml"
+DeleteOnePlanterRunById:                        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+  $ref: "./from_request/planter_delete_one.yaml"
+DeleteOnePlanterRunByIdFromResponse:            # DELETE /field/{FieldId}/planter/{PlanterRunId}
+  $ref: "./from_response/planter_delete_one_response.yaml"
+# Plant
+GetAllPlantsById:                               # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+  $ref: "./from_request/plant_get_all.yaml"
+GetAllPlantsByIdFromResponse:                   # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+  $ref: "./from_response/plant_get_all_response.yaml"
+GetOnePlantById:                                # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+  $ref: "./from_request/plant_get_one.yaml"
+GetOnePlantByIdFromResponse:                    # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+  $ref: "./from_response/plant_get_one_response.yaml"
+DeleteOnePlantById:                             # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+  $ref: "./from_request/plant_delete_one.yaml"
+DeleteOnePlantByIdFromResponse:                 # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+  $ref: "./from_response/plant_delete_one_response.yaml"
+# Quality Measurement
+GetAllQualityMeasurementsById:                  # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement
+  $ref: "./from_request/quality_measurement_get_all.yaml"
+GetAllQualityMeasurementsByIdFromResponse:      # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement
+  $ref: "./from_response/quality_measurement_get_all_response.yaml"
+GetOneQualityMeasurementById:                   # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+  $ref: "./from_request/quality_measurement_get_one.yaml"
+GetOneQualityMeasurementByIdFromResponse:       # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+  $ref: "./from_response/quality_measurement_get_one_response.yaml"
+DeleteOneQualityMeasurementById:                # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+  $ref: "./from_request/quality_measurement_delete_one.yaml"
+DeleteOneQualityMeasurementByIdFromResponse:    # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+  $ref: "./from_response/quality_measurement_delete_one_response.yaml"
+# Forecast
+GetAllForecastsRedirected:                      # GET /forecast
+  $ref: "./from_request/forecast_get_all.yaml"
+GetOneForecastById:                             # GET /forecast/{ForecastId}
+  $ref: "./from_request/forecast_get_one.yaml"
+GetOneForecastByIdFromResponse:                 # GET /forecast/{ForecastId}
+  $ref: "./from_response/forecast_get_one_response.yaml"
+DeleteOneForecastById:                          # DELETE /forecast/{ForecastId}
+  $ref: "./from_request/forecast_delete_one.yaml"
+DeleteOneForecastByIdFromResponse:              # DELETE /forecast/{ForecastId}
+  $ref: "./from_response/forecast_delete_one_response.yaml"
+# Terrain
+GetAllTerrainsRedirected:                       # GET /terrain
+  $ref: "./from_request/terrain_get_all.yaml"
+GetOneTerrainById:                              # GET /terrain/{TerrainId}
+  $ref: "./from_request/terrain_get_one.yaml"
+GetOneTerrainByIdFromResponse:                  # GET /terrain/{TerrainId}
+  $ref: "./from_response/terrain_get_one_response.yaml"
+DeleteOneTerrainById:                           # DELETE /terrain/{TerrainId}
+  $ref: "./from_request/terrain_delete_one.yaml"
+DeleteOneTerrainByIdFromResponse:               # DELETE /terrain/{TerrainId}
+  $ref: "./from_response/terrain_delete_one_response.yaml"
+# Harvest - task
+GetAllScheduledHarvestTasksRedirected:          # GET /harvest/task
+  $ref: "./from_request/harvest_task_get_all.yaml"
+GetOneScheduledHarvestTaskById:                 # GET /harvest/task/{HarvestTaskId}
+  $ref: "./from_request/harvest_task_get_one.yaml"
+GetOneScheduledHarvestTaskByIdFromResponse:     # GET /harvest/task/{HarvestTaskId}
+  $ref: "./from_response/harvest_task_get_one_response.yaml"
+DeleteOneScheduledHarvestTaskById:              # DELETE /harvest/task/{HarvestTaskId}
+  $ref: "./from_request/harvest_task_delete_one.yaml"
+DeleteOneScheduledHarvestTaskByIdFromResponse:  # DELETE /harvest/task/{HarvestTaskId}
+  $ref: "./from_response/harvest_task_delete_one_response.yaml"
+# Harvest - complete
+GetAllCompletedHarvestTasksRedirected:          # GET /harvest/task
+  $ref: "./from_request/harvest_complete_get_all.yaml"
+GetOneCompletedHarvestTaskById:                 # GET /harvest/task/{HarvestTaskId}
+  $ref: "./from_request/harvest_complete_get_one.yaml"
+GetOneCompletedHarvestTaskByIdFromResponse:     # GET /harvest/task/{HarvestTaskId}
+  $ref: "./from_response/harvest_complete_get_one_response.yaml"
+DeleteOneCompletedHarvestTaskById:              # DELETE /harvest/task/{HarvestTaskId}
+  $ref: "./from_request/harvest_complete_delete_one.yaml"
+DeleteOneCompletedHarvestTaskByIdFromResponse:  # DELETE /harvest/task/{HarvestTaskId}
+  $ref: "./from_response/harvest_complete_delete_one_response.yaml"

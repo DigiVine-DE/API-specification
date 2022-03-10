@@ -1,0 +1,20 @@
+# Common
+Limit:
+  $ref: "./Limit.yaml"
+Offset:
+  $ref: "./Offset.yaml"
+# Ids
+FieldId:
+  $ref: "./FieldId.yaml"
+ForecastId:
+  $ref: "./ForecastId.yaml"
+PlantId:
+  $ref: "./PlantId.yaml"
+PlanterRunId:
+  $ref: "./PlanterRunId.yaml"
+QualityMeasurementId:
+  $ref: "./QualityMeasurementId.yaml"
+TerrainId:
+  $ref: "./TerrainId.yaml"
+HarvestTaskId:
+  $ref: "./HarvestTaskId.yaml"

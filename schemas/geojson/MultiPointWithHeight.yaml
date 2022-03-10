@@ -1,0 +1,36 @@
+# This definition aims to follow the geometry object as defined in the GeoJSON rfc https://tools.ietf.org/html/rfc7946#section-3.1
+#
+
+type: object
+required:
+  - type
+  - coordinates
+properties:
+  # GeoJSON Type "MultiPoint"
+  type:
+    type: string
+    enum:
+      - MultiPoint
+  # Bounding Box of MultiPoint
+  bbox:
+    $ref: "../../openapi.yaml#/components/schemas/BBoxWithHeight"
+  # Coordinates of MultiPoint
+  coordinates:
+    type: array
+    items:
+      type: array
+      minItems: 3
+      maxItems: 3
+      items:
+        type: number
+    description: >
+      An array of Points with its coordinates and altitudes, given in the decimal degrees unit.
+      The altitude/height is given in meter.
+      In the following it is described, which value of the array represents which coordinate:
+        - Longitude
+        - Latitude
+        - Altitude
+    externalDocs:
+      description: RFC7946 - The GeoJSON format
+      url: https://tools.ietf.org/html/rfc7946#section-3.1
+    example: [[8.01234567890123,49.0123456789012,154.1],[8.12345678901234,49.1234567890123,138.2]]

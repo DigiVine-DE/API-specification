@@ -1,0 +1,101 @@
+get:
+  summary: Returns a list of (all) stored Fields
+  description: >
+    Returns a list of (all) stored Fields.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Fields will be returned.
+  operationId: getAllFields
+  tags:
+    - Field
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Field"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds a new Field to the collection
+  description: >
+    Adds a new Field to the collection.
+    In the request body you have to add the new Field, which to be added.
+    If the operation was successful (status code `200`), the numeric ID of the new Field will be returned.
+  operationId: postField
+  tags:
+    - Field
+    - Add
+  requestBody:
+    required: true
+    description: A Field to be added to the collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/Field"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Field.
+      links:
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldByIdFromResponse"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldByIdFromResponse"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsByIdFromResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete collection of Field data.
+    You can delete one specific Field with `DELETE /field/{FieldId}` (`deleteOneField`).
+  operationId: deleteField
+  tags:
+    - Field
+    - Delete
+    - DeleteAll
+    - Modify
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

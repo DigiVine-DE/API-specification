@@ -1,0 +1,6 @@
+# Status Code: 403
+# For more information see:
+#  RFC7231 - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content
+#  https://tools.ietf.org/html/rfc7231#section-6.5.3
+
+description: Specified API key does not have the required rights.

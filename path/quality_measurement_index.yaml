@@ -1,0 +1,166 @@
+get:
+  summary: Returns a list of (all) stored Quality Measurements
+  description: >
+    Returns a list of (all) stored Quality Measurements.
+    The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to get the specific stored Quality Measurements.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Quality Measurements will be returned.
+  operationId: getAllQualityMeasurements
+  tags:
+    - QualityMeasurement
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/PlantId"
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/QualityMeasurement"
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        GetOnePlantById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlantById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        DeleteOnePlantById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlantById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds a new Quality Measurement to the collection
+  description: >
+    Adds a new Quality Measurement to the collection.
+    In the request body you have to add the new Quality Measurement, which to be added.
+    The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to add a Quality Measurement.
+    If the operation was successful (status code `200`), the numeric ID of the new Quality Measurement will be returned.
+  operationId: postQualityMeasurement
+  tags:
+    - QualityMeasurement
+    - Add
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/PlantId"
+  requestBody:
+    required: true
+    description: A Quality Measurement to be added to the collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/QualityMeasurement"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Quality Measurement.
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement
+        GetAllQualityMeasurementsById:
+          $ref: "../openapi.yaml#/components/links/GetAllQualityMeasurementsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+        GetOneQualityMeasurementByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOneQualityMeasurementByIdFromResponse"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+        DeleteOneQualityMeasurementByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOneQualityMeasurementByIdFromResponse"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        GetOnePlantById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlantById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        DeleteOnePlantById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlantById"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete collection of Quality Measurement data.
+    You can delete one specific Quality Measurement with `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}` (`deleteOneQualityMeasurement`).
+  operationId: deleteQualityMeasurement
+  tags:
+    - QualityMeasurement
+    - Delete
+    - DeleteAll
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/PlantId"
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

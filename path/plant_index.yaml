@@ -1,0 +1,149 @@
+get:
+  summary: Returns a list of (all) stored Plants
+  description: >
+    Returns a list of (all) stored Plants.
+    The parameters `FieldId` and `PlanterRunId` are required, to get the specific stored Plants.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Plants will be returned.
+  operationId: getAllPlants
+  tags:
+    - Plant
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Plant"
+      links:
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds a new Plant to the collection
+  description: >
+    Adds a new Plant to the collection.
+    In the request body you have to add the new Plant, which to be added.
+    The parameters `FieldId` and `PlanterRunId` are required, to add a Plant.
+    If the operation was successful (status code `200`), the numeric ID of the new Plant will be returned.
+  operationId: postPlant
+  tags:
+    - Plant
+    - Add
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+  requestBody:
+    required: true
+    description: A plant to be added to the collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/Plant"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Plant.
+      links:
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant
+        GetAllPlantsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlantsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        GetOnePlantByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOnePlantByIdFromResponse"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}
+        DeleteOnePlantByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlantByIdFromResponse"
+        # GET /field/{FieldId}/planter
+        GetAllPlanterRunsById:
+          $ref: "../openapi.yaml#/components/links/GetAllPlanterRunsById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}
+        GetOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/GetOnePlanterRunById"
+        # DELETE /field/{FieldId}/planter/{PlanterRunId}
+        DeleteOnePlanterRunById:
+          $ref: "../openapi.yaml#/components/links/DeleteOnePlanterRunById"
+        # GET /field
+        GetAllFieldsRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllFieldsRedirected"
+        # GET /field/{FieldId}
+        GetOneFieldById:
+          $ref: "../openapi.yaml#/components/links/GetOneFieldById"
+        # DELETE /field/{FieldId}
+        DeleteOneFieldById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneFieldById"
+        # GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement
+        GetAllQualityMeasurementsByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetAllQualityMeasurementsByIdFromResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete collection of Plants data.
+    The parameters `FieldId` and `PlanterRunId` are required.
+    You can delete one specific Plant with `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}` (`deleteOnePlant`).
+  operationId: deletePlant
+  tags:
+    - Plant
+    - Delete
+    - DeleteAll
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/FieldId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

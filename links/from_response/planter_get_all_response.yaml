@@ -1,0 +1,9 @@
+# GET /field/{FieldId}/planter
+operationId: getAllPlanterRuns
+parameters:
+  FieldId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `GET /field/{FieldId}/planter`
+  (see also `getAllPlanterRuns`).
+  Returns a list of (all) stored Planter Runs for the given Field.

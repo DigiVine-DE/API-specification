@@ -1,0 +1,6 @@
+# GET /terrain
+operationId: getAllTerrains
+description: >
+  `GET /terrain`
+  (see also `getAllTerrains`).
+  Returns a list of (all) stored Terrains.

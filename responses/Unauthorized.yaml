@@ -1,0 +1,6 @@
+# Status Code: 401
+# For more information see:
+#  RFC7235 - Hypertext Transfer Protocol (HTTP/1.1): Authentication
+#  https://tools.ietf.org/html/rfc7235#section-3.1
+
+description: Missing API key.

@@ -1,0 +1,9 @@
+# DELETE /field/{FieldId}
+operationId: deleteOneField
+parameters:
+  FieldId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `DELETE /field/{FieldId}`
+  (see also `deleteOneField`).
+  Deletes a specific stored Field.

@@ -1,0 +1,6 @@
+# GET /harvest/complete
+operationId: getAllCompletedHarvestTasks
+description: >
+  `GET /harvest/complete`
+  (see also `getAllCompletedHarvestTasks`).
+  Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements.

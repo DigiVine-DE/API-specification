@@ -1,0 +1,12 @@
+# DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}
+operationId: deleteOneQualityMeasurement
+parameters:
+  FieldId: "$request.path.FieldId"
+  PlanterRunId: "$request.path.PlanterRunId"
+  PlantId: "$request.path.PlantId"
+  QualityMeasurementId: "$response.body#/id"
+description: >
+  The `id` values given in the request and returned in the response can be used as
+  the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}`
+  (see also `deleteOneQualityMeasurement`).
+  Deletes a specific stored Quality Measurement.

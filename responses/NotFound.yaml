@@ -1,0 +1,13 @@
+# Status Code: 404
+# For more information see:
+#  RFC7231 - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content
+#  https://tools.ietf.org/html/rfc7231#section-6.5.4
+
+description: The specified resource was not found
+
+# NOTE:
+# Additional parameters with a reference parameter are not allowed.
+# In the operations there are for all 404 responses Links defined.
+# Because there is no place for a reference, this description was copied.
+# NOTE: THIS FILE ISN'T USED ANYMORE.
+# Please change the text in every 404 response. - Sorry.

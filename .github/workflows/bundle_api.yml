@@ -1,0 +1,8 @@
+steps:
+  - name: checkout spec
+    uses: actions/checkout@v2
+  - name: bundle spec
+    uses: hilary/openapi-cli-bundle-action@v0.0.1
+    with:
+      base-spec: openapi.yaml
+      bundled-spec: bundled/openapi.yml

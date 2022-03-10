@@ -1,0 +1,6 @@
+# GET /field
+operationId: getAllFields
+description: >
+  `GET /field`
+  (see also `getAllFields`).
+  Returns a list of (all) stored Fields.

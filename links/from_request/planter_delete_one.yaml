@@ -1,0 +1,10 @@
+# DELETE /field/{FieldId}/planter/{PlanterRunId}
+operationId: deleteOnePlanterRun
+parameters:
+  FieldId: "$request.path.FieldId"
+  PlanterRunId: "$request.path.PlanterRunId"
+description: >
+  The `id` values given in the request can be used as
+  the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}`
+  (see also `deleteOnePlanterRun`).
+  Deletes a specific stored Planter Run.

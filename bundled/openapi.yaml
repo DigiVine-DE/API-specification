@@ -1,0 +1,3165 @@
+openapi: 3.0.2
+info:
+  title: DigiVine API
+  description: REST/CRUD API for the Digivine data warehouse
+  version: '0.3'
+  contact:
+    name: DigiVine
+    url: 'https://www.digivine.org/'
+    email: info@digivine.org
+servers:
+  - url: 'http://127.0.0.1/api/v0.3'
+externalDocs:
+  description: RFC7946 - The GeoJSON format.
+  url: 'https://tools.ietf.org/html/rfc7946'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api-token
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: A uniquely identifiable code for the error message
+          example: FieldLibError
+        message:
+          type: string
+          description: The error message
+          example: 'could not connect to DB: could not connect to server: Connection refused'
+      required:
+        - code
+        - message
+    BBox:
+      type: array
+      minItems: 4
+      maxItems: 4
+      items:
+        type: number
+      description: |
+        This parameter contains information on the coordinate range for its Geometries, Features or FeatureCollections. It describes a bounding box for this. The coordinates are given in the decimal degrees unit. In the following it is described, which value of the array represents which coordinate:
+          - The most southwesterly point: Longitude
+          - The most southwesterly point: Latitude
+          - The most northeasterly point: Longitude
+          - The most northeasterly point: Latitude
+      externalDocs:
+        description: RFC7946 - The GeoJSON format
+        url: 'https://tools.ietf.org/html/rfc7946#section-5'
+      example:
+        - 8.01234567890123
+        - 49.0123456789012
+        - 8.12345678901234
+        - 49.1234567890123
+    BBoxWithHeight:
+      type: array
+      minItems: 6
+      maxItems: 6
+      items:
+        type: number
+      description: |
+        This parameter contains information on the coordinate range for its Geometries, Features or FeatureCollections. It describes a bounding box for this. The coordinates are given in the decimal degrees unit. The altitude is given in meter. In the following it is described, which value of the array represents which coordinate:
+          - The most southwesterly point: Longitude
+          - The most southwesterly point: Latitude
+          - The most southwesterly point: Altitude
+          - The most northeasterly point: Longitude
+          - The most northeasterly point: Latitude
+          - The most northeasterly point: Altitude
+      externalDocs:
+        description: RFC7946 - The GeoJSON format
+        url: 'https://tools.ietf.org/html/rfc7946#section-5'
+      example:
+        - 8.01234567890123
+        - 49.0123456789012
+        - 154.1
+        - 8.12345678901234
+        - 49.1234567890123
+        - 138.2
+    MultiPointWithHeight:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum:
+            - MultiPoint
+        bbox:
+          $ref: '#/components/schemas/BBoxWithHeight'
+        coordinates:
+          type: array
+          items:
+            type: array
+            minItems: 3
+            maxItems: 3
+            items:
+              type: number
+          description: |
+            An array of Points with its coordinates and altitudes, given in the decimal degrees unit. The altitude/height is given in meter. In the following it is described, which value of the array represents which coordinate:
+              - Longitude
+              - Latitude
+              - Altitude
+          externalDocs:
+            description: RFC7946 - The GeoJSON format
+            url: 'https://tools.ietf.org/html/rfc7946#section-3.1'
+          example:
+            - - 8.01234567890123
+              - 49.0123456789012
+              - 154.1
+            - - 8.12345678901234
+              - 49.1234567890123
+              - 138.2
+    Point:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum:
+            - Point
+        bbox:
+          $ref: '#/components/schemas/BBox'
+        coordinates:
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            type: number
+          description: |
+            A Point is described by its coordinate, given in the decimal degrees unit. In the following it is described, which value of the array represents which coordinate:
+              - Longitude
+              - Latitude
+
+            A example, given in the [RFC7946 - The GeoJSON format](https://tools.ietf.org/html/rfc7946#appendix-A.1)
+          externalDocs:
+            description: RFC7946 - The GeoJSON format
+            url: 'https://tools.ietf.org/html/rfc7946#section-3.1.2'
+          example:
+            - 8
+            - 49
+    PointWithHeight:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum:
+            - Point
+        bbox:
+          $ref: '#/components/schemas/BBoxWithHeight'
+        coordinates:
+          type: array
+          minItems: 3
+          maxItems: 3
+          items:
+            type: number
+          description: |
+            A Point with its height is described by its coordinate, given in the decimal degrees unit, and its altitude, given in meter. In the following it is described, which value of the array represents which coordinate:
+              - Longitude
+              - Latitude
+              - Altitude
+          externalDocs:
+            description: RFC7946 - The GeoJSON format
+            url: 'https://tools.ietf.org/html/rfc7946#section-3.1.2'
+          example:
+            - 8
+            - 49
+            - 168
+    Polygon:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum:
+            - Polygon
+        bbox:
+          $ref: '#/components/schemas/BBox'
+        coordinates:
+          type: array
+          items:
+            type: array
+            minItems: 4
+            items:
+              type: array
+              minItems: 2
+              maxItems: 2
+              items:
+                type: number
+          description: |
+            A Polygon is a surface specified by its vertices. The vertices are coordinates, given in the decimal degrees unit. Note the following:
+              - The surface vertices are given counterclockwise.
+              - Holes in the surface are given clockwise.
+              - The last and the first coordinates must be equal.
+            In the following it is described, which value of the innermost array represents which coordinate:
+              - Longitude
+              - Latitude
+
+            A example, given in the [RFC7946 - The GeoJSON format](https://tools.ietf.org/html/rfc7946#appendix-A.3)
+          externalDocs:
+            description: RFC7946 - The GeoJSON format
+            url: 'https://tools.ietf.org/html/rfc7946#section-3.1.6'
+          example:
+            - - - 8
+                - 49
+              - - 8.1
+                - 49
+              - - 8.1
+                - 49.1
+              - - 8
+                - 49.1
+              - - 8
+                - 49
+            - - - 8.08
+                - 49.08
+              - - 8.08
+                - 49.02
+              - - 8.02
+                - 49.02
+              - - 8.02
+                - 49.08
+              - - 8.08
+                - 49.08
+    MultiPolygon:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum:
+            - MultiPolygon
+        bbox:
+          $ref: '#/components/schemas/BBox'
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: array
+                minItems: 2
+                maxItems: 2
+                items:
+                  type: number
+          description: |
+            A Polygon is a surface specified by its vertices. The vertices are coordinates, given in the decimal degrees unit. Note the following:
+              - The surface vertices are given counterclockwise.
+              - Holes in the surface are given clockwise.
+              - The last and the first coordinates must be equal.
+            In the following it is described, which value of the innermost array represents which coordinate:
+              - Longitude
+              - Latitude
+            The outermost array includes the various Polygons.
+            A example, given in the [RFC7946 - The GeoJSON format](https://tools.ietf.org/html/rfc7946#appendix-A.6)
+          externalDocs:
+            description: RFC7946 - The GeoJSON format
+            url: 'https://tools.ietf.org/html/rfc7946#section-3.1.7'
+          example:
+            - - - - 8
+                  - 49
+                - - 8.1
+                  - 49
+                - - 8.1
+                  - 49.1
+                - - 8
+                  - 49.1
+                - - 8
+                  - 49
+            - - - - 8
+                  - 49
+                - - 8.1
+                  - 49
+                - - 8.1
+                  - 49.1
+                - - 8
+                  - 49.1
+                - - 8
+                  - 49
+              - - - 8.08
+                  - 49.08
+                - - 8.08
+                  - 49.02
+                - - 8.02
+                  - 49.02
+                - - 8.02
+                  - 49.08
+                - - 8.08
+                  - 49.08
+    Plant:
+      type: object
+      required:
+        - type
+        - geometry
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - Feature
+        geometry:
+          $ref: '#/components/schemas/Point'
+        properties:
+          type: object
+          required:
+            - import_key
+            - timestamp
+            - height
+            - deviation
+            - speed
+            - plant_distance
+            - row_distance
+            - row_number
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Plant
+              example: 4711
+            import_key:
+              type: string
+              description: Internal key to facilitate error tracing
+              example: 1-example_feld1
+            timestamp:
+              type: string
+              format: date-time
+              description: 'Timestamp when this plant was planted, given in the format YYYY-MM-DDThh:mm:ss.sssZ (where Y,M,D,h,m,s are variables for the time).'
+              externalDocs:
+                description: RFC3339 - Date and Time on the Internet - Timestamps
+                url: 'https://tools.ietf.org/html/rfc3339'
+              example: 1970-01-01T00:00:00.000Z
+            height:
+              type: number
+              description: 'Height above sea level, measured in millimeters'
+              externalDocs:
+                description: RFC7946 - The GeoJSON format.
+                url: 'https://tools.ietf.org/html/rfc7946'
+              example: 123000
+            deviation:
+              type: number
+              example: 12.3456789012345
+            speed:
+              type: number
+              description: Planting speed measured in km/h
+              example: 1.23456789012345
+            plant_distance:
+              type: number
+              description: 'Distance between two Plants in a row, measured in millimeters'
+              example: 1000
+            row_distance:
+              type: number
+              description: 'Distance between two rows, measured in millimeters'
+              example: 2000
+            row_number:
+              type: integer
+              format: int32
+              description: Number of the row of the Plant
+              example: 2
+    PlantPatch:
+      type: object
+      properties:
+        import_key:
+          type: string
+          description: Internal key to facilitate error tracing
+          example: 1-example_feld1
+        timestamp:
+          type: string
+          format: date-time
+          description: 'Timestamp when this plant was planted, given in the format YYYY-MM-DDThh:mm:ss.sssZ (where Y,M,D,h,m,s are variables for the time).'
+          externalDocs:
+            description: RFC3339 - Date and Time on the Internet - Timestamps
+            url: 'https://tools.ietf.org/html/rfc3339'
+          example: 1970-01-01T00:00:00.000Z
+        height:
+          type: number
+          description: 'Height above sea level, measured in millimeters'
+          externalDocs:
+            description: RFC7946 - The GeoJSON format.
+            url: 'https://tools.ietf.org/html/rfc7946'
+          example: 123000
+        deviation:
+          type: number
+          example: 12.3456789012345
+        speed:
+          type: number
+          description: Planting speed measured in km/h
+          example: 1.23456789012345
+        plant_distance:
+          type: number
+          description: 'Distance between two Plants in a row, measured in millimeters'
+          example: 1000
+        row_distance:
+          type: number
+          description: 'Distance between two rows, measured in millimeters'
+          example: 2000
+        row_number:
+          type: integer
+          format: int32
+          description: Number of the row of the Plant
+          example: 2
+    PlanterRun:
+      type: object
+      required:
+        - type
+        - features
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - FeatureCollection
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/Plant'
+          description: An array containing the planted Plants of this Planter Run.
+        bbox:
+          $ref: '#/components/schemas/BBox'
+        properties:
+          type: object
+          required:
+            - user_id
+            - terminal_id
+            - field_id
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Planter Run
+              example: 4711
+            user_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the User who planted
+              example: 815
+            terminal_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Terminal of the Machine that planted
+              example: 42
+            field_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Field on which the Planter Run is performed.
+              example: 4711
+    Field:
+      type: object
+      required:
+        - type
+        - features
+        - properties
+        - planter_runs
+      properties:
+        type:
+          type: string
+          enum:
+            - Feature
+        geometry:
+          $ref: '#/components/schemas/MultiPolygon'
+        planter_runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanterRun'
+          description: An array with data on planting
+        properties:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: The numeric ID of the field
+              example: 4711
+            name:
+              type: string
+              description: Field location
+              example: Dürkheimer Michelsberg
+            station_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the station that makes Forecasts for a group of Fields.
+              example: 4711
+            number:
+              type: string
+              description: The Number of the Field (not the ID)
+              example: 471/1
+            size:
+              type: number
+              format: double
+              description: Size of the Field given in square meters
+              example: 47.11
+            fruit_name:
+              type: string
+              description: Name of the fruit on this Field
+              example: Riesling
+    FieldPatch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Field location
+          example: Dürkheimer Michelsberg
+        station_id:
+          type: integer
+          format: int32
+          description: The numeric ID of the station that makes Forecasts for a group of Fields.
+          example: 4711
+        number:
+          type: string
+          description: The Number of the Field (not the ID)
+          example: 471/1
+        size:
+          type: number
+          format: double
+          description: Size of the Field given in square meters
+          example: 47.11
+        fruit_name:
+          type: string
+          description: Name of the fruit on this Field
+          example: Riesling
+    Forecast:
+      type: object
+      required:
+        - group_id
+        - station_id
+        - station
+        - field_ids
+        - model_id
+        - model
+        - query_timestamp
+        - time_span_start
+        - time_span_end
+        - measurement_rate
+        - measurements
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The numeric ID of the Forecast
+          example: 4711
+        group_id:
+          type: integer
+          format: int32
+          description: Notice. This information will soon no longer be used and sent along!
+          example: 1
+        station_id:
+          type: integer
+          format: int32
+          description: The numeric ID of the station that makes Forecasts for a group of Fields.
+          example: 4711
+        station:
+          type: string
+          description: Name of the measuring station
+          example: Bad Dürkheim
+        field_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: An array containing the IDs of the Fields for which the Forecast is.
+          example:
+            - 4711
+            - 815
+        model_id:
+          type: integer
+          format: int32
+          description: The numeric ID of the model
+          example: 17
+        model:
+          type: string
+          description: Name of the model
+          example: Traubenwickler
+        query_timestamp:
+          type: string
+          format: date-time
+          description: 'Time of retrieval of the data from an external source, given in the format YYYY-MM-DDThh:mm:ss.sssZ (where Y,M,D,h,m,s are variables for the time).'
+          externalDocs:
+            description: RFC3339 - Date and Time on the Internet - Timestamps
+            url: 'https://tools.ietf.org/html/rfc3339'
+          example: '1970-01-01T00:00:00.000Z'
+        time_span_start:
+          type: string
+          format: date
+          description: 'Start time of the measurement, given in the format YYYY-MM-DDThh:mm:ssZ (where Y,M,D,h,m,s are variables for the time).'
+          externalDocs:
+            description: RFC3339 - Date and Time on the Internet - Timestamps
+            url: 'https://tools.ietf.org/html/rfc3339'
+          example: '2000-01-01T00:00:00Z'
+        time_span_end:
+          type: string
+          format: date
+          description: 'End time of the measurement, given in the format YYYY-MM-DDThh:mm:ssZ (where Y,M,D,h,m,s are variables for the time).'
+          externalDocs:
+            description: RFC3339 - Date and Time on the Internet - Timestamps
+            url: 'https://tools.ietf.org/html/rfc3339'
+          example: '2000-12-31T23:59:59Z'
+        measurement_rate:
+          type: string
+          enum:
+            - Daily
+          description: Rate of the measurement
+          example: Daily
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ForecastMeasurement'
+          description: An array of measurements
+    ForecastMeasurement:
+      type: object
+      required:
+        - time
+        - values
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The numeric ID of the Measurement
+          example: 4711
+        time:
+          type: string
+          format: date-time
+          description: 'Time of measurement, given in the format YYYY-MM-DDThh:mm:ssZ (where Y,M,D,h,m,s are variables for the time).'
+          externalDocs:
+            description: RFC3339 - Date and Time on the Internet - Timestamps
+            url: 'https://tools.ietf.org/html/rfc3339'
+          example: '1970-01-01T00:00:00Z'
+        values:
+          type: object
+          description: An object containing the values of the measurement.
+    QualityMeasurement:
+      type: object
+      required:
+        - id
+        - type
+        - geometry
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - Feature
+        geometry:
+          $ref: '#/components/schemas/Point'
+        properties:
+          type: object
+          required:
+            - plant_id
+            - timestamp
+            - device
+            - measurement_uuid
+            - tartaric_aid
+            - malic_acid
+            - fructose
+            - glucose
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Quality Measurement
+              example: 4711
+            plant_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Plant
+              example: 815
+            timestamp:
+              type: string
+              format: date-time
+              description: 'Timestamp when the Measurement was taken, given in the format YYYY-MM-DDThh:mm:ss.sssZ (where Y,M,D,h,m,s are variables for the time).'
+              externalDocs:
+                description: 'RFC3339 - Date and Time on the Internet: Timestamps'
+                url: 'https://tools.ietf.org/html/rfc3339'
+              example: 1970-01-01T00:00:00.000Z
+            device:
+              type: string
+              description: 'Device id, needed for e.g. assigning the device to a customer/user'
+              example: device
+            measurement_uuid:
+              type: string
+              format: uuid
+              description: A Universally Unique IDentifier (UUID) of the Measurement
+              externalDocs:
+                description: RFC4122 - A Universally Unique IDentifier (UUID) URN Namespace
+                url: 'https://tools.ietf.org/html/rfc4122'
+              example: 550e8400-e29b-11d4-a716-446655440000
+            tartaric_acid:
+              type: number
+              format: double
+              description: 'The tartaric acid concentration, measured in g/L'
+              example: 12.143932980502946
+            malic_acid:
+              type: number
+              format: double
+              description: 'The malic acid concentration, measured in g/L'
+              example: 18.116626216683184
+            fructose:
+              type: number
+              format: double
+              description: 'The fructose concentration, measured in g/L'
+              example: 11.82997665663333
+            glucose:
+              type: number
+              format: double
+              description: 'The glucose concentration, measured in g/L'
+              example: 4.567645886934765
+    Terrain:
+      type: object
+      required:
+        - id
+        - type
+        - geometry
+        - properties
+      properties:
+        id:
+          type: integer
+          format: int32
+        type:
+          type: string
+          enum:
+            - Feature
+        geometry:
+          $ref: '#/components/schemas/MultiPointWithHeight'
+        properties:
+          type: object
+          required:
+            - description
+          properties:
+            description:
+              type: string
+            field_id:
+              type: integer
+              format: int32
+    HarvestTask:
+      type: object
+      required:
+        - type
+        - geometry
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - Feature
+        geometry:
+          $ref: '#/components/schemas/Polygon'
+        properties:
+          type: object
+          required:
+            - task_id
+            - task_name
+            - customer_name
+            - fruit_group_name
+            - fruit_name
+            - plain_name
+            - plain_size
+          properties:
+            task_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Harvest Task
+              example: 4711
+            task_name:
+              type: string
+              description: Name of the task
+              example: Ernte
+            customer_name:
+              type: string
+              description: Name of the customer
+              example: Julius Kühn-Institut
+            farm_name:
+              type: string
+              description: Name of the farm
+              example: Geilweilerhof
+            fruit_group_name:
+              type: string
+              description: Name of the fruit group
+              example: Traube
+            fruit_name:
+              type: string
+              description: Name of the specific fruit
+              example: Riesling
+            plain_name:
+              type: string
+              description: Name of the plains
+              example: Auf dem Weinberg
+            plain_size:
+              type: integer
+              format: int64
+              description: Size of the plains in square meter
+              example: 7668
+            yield_total_mass:
+              type: integer
+              format: int64
+              description: The mass of the harvest yield in kilogram
+              example: 7568
+            total_area:
+              type: integer
+              format: int64
+              description: The total area of the harvest task in square meter
+              example: 5874
+            effective_total_distance:
+              type: integer
+              format: int64
+              description: The effective distance travelled by the harvester in meter
+              example: 2580
+            effective_total_time:
+              type: integer
+              format: int64
+              description: The effective total time of the harvesting run in minutes
+              example: 95
+    Harvest:
+      type: object
+      required:
+        - type
+        - features
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - FeatureCollection
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/HarvestMeasurement'
+          description: An array containing the measurements taken during the harvest task.
+        properties:
+          type: object
+          required:
+            - task_id
+            - task_name
+            - customer_name
+            - fruit_group_name
+            - fruit_name
+            - plain_name
+            - plain_size
+          properties:
+            task_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Harvest Task
+              example: 4711
+            task_name:
+              type: string
+              description: Name of the task
+              example: Ernte
+            customer_name:
+              type: string
+              description: Name of the customer
+              example: Julius Kühn-Institut
+            farm_name:
+              type: string
+              description: Name of the farm
+              example: Geilweilerhof
+            fruit_group_name:
+              type: string
+              description: Name of the fruit group
+              example: Traube
+            fruit_name:
+              type: string
+              description: Name of the specific fruit
+              example: Riesling
+            plain_name:
+              type: string
+              description: Name of the plains
+              example: Auf dem Weinberg
+            plain_size:
+              type: integer
+              format: int64
+              description: Size of the plains in square meter
+              example: 7668
+            yield_total_mass:
+              type: integer
+              format: int64
+              description: The mass of the harvest yield in kilogram
+              example: 7568
+            total_area:
+              type: integer
+              format: int64
+              description: The total area of the harvest task in square meter
+              example: 5874
+            effective_total_distance:
+              type: integer
+              format: int64
+              description: The effective distance travelled by the harvester in meter
+              example: 2580
+            effective_total_time:
+              type: integer
+              format: int64
+              description: The effective total time of the harvesting run in minutes
+              example: 95
+    HarvestOrTask:
+      type: object
+      required:
+        - type
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - FeatureCollection
+            - Feature
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/HarvestMeasurement'
+          description: An array containing the measurements taken during the harvest task.
+        geometry:
+          $ref: '#/components/schemas/Polygon'
+        properties:
+          type: object
+          required:
+            - task_id
+            - task_name
+            - customer_name
+            - fruit_group_name
+            - fruit_name
+            - plain_name
+            - plain_size
+          properties:
+            task_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Harvest Task
+              example: 4711
+            task_name:
+              type: string
+              description: Name of the task
+              example: Ernte
+            customer_name:
+              type: string
+              description: Name of the customer
+              example: Julius Kühn-Institut
+            farm_name:
+              type: string
+              description: Name of the farm
+              example: Geilweilerhof
+            fruit_group_name:
+              type: string
+              description: Name of the fruit group
+              example: Traube
+            fruit_name:
+              type: string
+              description: Name of the specific fruit
+              example: Riesling
+            plain_name:
+              type: string
+              description: Name of the plains
+              example: Auf dem Weinberg
+            plain_size:
+              type: integer
+              format: int64
+              description: Size of the plains in square meter
+              example: 7668
+            yield_total_mass:
+              type: integer
+              format: int64
+              description: The mass of the harvest yield in kilogram
+              example: 7568
+            total_area:
+              type: integer
+              format: int64
+              description: The total area of the harvest task in square meter
+              example: 5874
+            effective_total_distance:
+              type: integer
+              format: int64
+              description: The effective distance travelled by the harvester in meter
+              example: 2580
+            effective_total_time:
+              type: integer
+              format: int64
+              description: The effective total time of the harvesting run in minutes
+              example: 95
+    HarvestMeasurement:
+      type: object
+      required:
+        - type
+        - geometry
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - Feature
+        geometry:
+          $ref: '#/components/schemas/Point'
+        properties:
+          type: object
+          required:
+            - acid
+            - sugar
+          properties:
+            acid:
+              type: integer
+              format: int64
+              description: Acid content of the harvested fruits in g/L
+              example: 23
+            sugar:
+              type: integer
+              format: int64
+              description: Sugar content of the harvested fruits in g/L
+              example: 7
+            spectral:
+              type: string
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      description: The number of items to return
+      schema:
+        type: integer
+        default: 100
+        minimum: 1
+      examples:
+        min:
+          value: 1
+          summary: 'The minimum number of items, which can be returned.'
+        default:
+          value: 100
+          summary: 'The default number of items, which will be returned, if no value is given for the limit parameter.'
+        other:
+          value: 815
+          summary: Another example for the limit parameter.
+    Offset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+      examples:
+        min:
+          value: 0
+          summary: 'The minimum number of items, which can be skipped before returning.'
+        default:
+          value: 0
+          summary: 'The default number of items, which will be skipped before returning, if no value is given for the limit parameter.'
+        other:
+          value: 815
+          summary: Another example for the offset parameter.
+    FieldId:
+      name: FieldId
+      in: path
+      required: true
+      description: The numeric ID of the field
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    ForecastId:
+      name: ForecastId
+      in: path
+      required: true
+      description: The numeric ID of the forecast
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    PlantId:
+      name: PlantId
+      in: path
+      required: true
+      description: The numeric ID of the plant
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    PlanterRunId:
+      name: PlanterRunId
+      in: path
+      required: true
+      description: The numeric ID of the planter run
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    QualityMeasurementId:
+      name: QualityMeasurementId
+      in: path
+      required: true
+      description: The numeric ID of the quality measurement
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    TerrainId:
+      name: TerrainId
+      in: path
+      required: true
+      description: The numeric ID of the terrain model
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    HarvestTaskId:
+      name: HarvestTaskId
+      in: path
+      required: true
+      description: The numeric ID of the Harvest Task
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+  responses:
+    BackendError:
+      description: Backend Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing API key.
+    NotFound:
+      description: The specified resource was not found
+    MethodNotAllowed:
+      description: Method not allowed
+    Forbidden:
+      description: Specified API key does not have the required rights.
+    BadRequest:
+      description: 'Bad Request: Could not parse parameters'
+  links:
+    GetAllFieldsRedirected:
+      operationId: getAllFields
+      description: |
+        `GET /field` (see also `getAllFields`). Returns a list of (all) stored Fields.
+    GetOneFieldById:
+      operationId: getOneField
+      parameters:
+        FieldId: $request.path.FieldId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /field/{FieldId}` (see also `getOneField`). Returns a specific stored Field.
+    GetOneFieldByIdFromResponse:
+      operationId: getOneField
+      parameters:
+        FieldId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /field/{FieldId}` (see also `getOneField`). Returns a specific stored Field.
+    DeleteOneFieldById:
+      operationId: deleteOneField
+      parameters:
+        FieldId: $request.path.FieldId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `DELETE /field/{FieldId}` (see also `deleteOneField`). Deletes a specific stored Field.
+    DeleteOneFieldByIdFromResponse:
+      operationId: deleteOneField
+      parameters:
+        FieldId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `DELETE /field/{FieldId}` (see also `deleteOneField`). Deletes a specific stored Field.
+    GetAllPlanterRunsById:
+      operationId: getAllPlanterRuns
+      parameters:
+        FieldId: $request.path.FieldId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /field/{FieldId}/planter` (see also `getAllPlanterRuns`). Returns a list of (all) stored Planter Runs for the given Field.
+    GetAllPlanterRunsByIdFromResponse:
+      operationId: getAllPlanterRuns
+      parameters:
+        FieldId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /field/{FieldId}/planter` (see also `getAllPlanterRuns`). Returns a list of (all) stored Planter Runs for the given Field.
+    GetOnePlanterRunById:
+      operationId: getOnePlanterRun
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}` (see also `getOnePlanterRun`). Returns a specific stored Planter Run.
+    GetOnePlanterRunByIdFromResponse:
+      operationId: getOnePlanterRun
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}` (see also `getOnePlanterRun`). Returns a specific stored Planter Run.
+    DeleteOnePlanterRunById:
+      operationId: deleteOnePlanterRun
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}` (see also `deleteOnePlanterRun`). Deletes a specific stored Planter Run.
+    DeleteOnePlanterRunByIdFromResponse:
+      operationId: deleteOnePlanterRun
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}` (see also `deleteOnePlanterRun`). Deletes a specific stored Planter Run.
+    GetAllPlantsById:
+      operationId: getAllPlants
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant` (see also `getAllPlants`). Returns a list of (all) stored Plants for the given Planter Run.
+    GetAllPlantsByIdFromResponse:
+      operationId: getAllPlants
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant` (see also `getAllPlants`). Returns a list of (all) stored Plants for the given Planter Run.
+    GetOnePlantById:
+      operationId: getOnePlant
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $request.path.PlantId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}` (see also `getOnePlant`). Returns a specific stored Plant.
+    GetOnePlantByIdFromResponse:
+      operationId: getOnePlant
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}` (see also `getOnePlant`). Returns a specific stored Plant.
+    DeleteOnePlantById:
+      operationId: deleteOnePlant
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $request.path.PlantId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}` (see also `deleteOnePlant`). Deletes a specific stored Plant.
+    DeleteOnePlantByIdFromResponse:
+      operationId: deleteOnePlant
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}` (see also `deleteOnePlant`). Deletes a specific stored Plant.
+    GetAllQualityMeasurementsById:
+      operationId: getAllQualityMeasurements
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $request.path.PlantId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement` (see also `getAllQualityMeasurements`). Returns a list of (all) stored Quality Measurements for the given Plant.
+    GetAllQualityMeasurementsByIdFromResponse:
+      operationId: getAllQualityMeasurements
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement` (see also `getAllQualityMeasurements`). Returns a list of (all) stored Quality Measurements for the given Plant.
+    GetOneQualityMeasurementById:
+      operationId: getOneQualityMeasurement
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $request.path.PlantId
+        QualityMeasurementId: $request.path.QualityMeasurementId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}` (see also `getOneQualityMeasurement`). Returns a specific stored Quality Measurement.
+    GetOneQualityMeasurementByIdFromResponse:
+      operationId: getOneQualityMeasurement
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $request.path.PlantId
+        QualityMeasurementId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `GET /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}` (see also `getOneQualityMeasurement`). Returns a specific stored Quality Measurement.
+    DeleteOneQualityMeasurementById:
+      operationId: deleteOneQualityMeasurement
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $request.path.PlantId
+        QualityMeasurementId: $request.path.QualityMeasurementId
+      description: |
+        The `id` values given in the request can be used as the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}` (see also `deleteOneQualityMeasurement`). Deletes a specific stored Quality Measurement.
+    DeleteOneQualityMeasurementByIdFromResponse:
+      operationId: deleteOneQualityMeasurement
+      parameters:
+        FieldId: $request.path.FieldId
+        PlanterRunId: $request.path.PlanterRunId
+        PlantId: $request.path.PlantId
+        QualityMeasurementId: $response.body#/id
+      description: |
+        The `id` values given in the request and returned in the response can be used as the `id` parameters in `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}` (see also `deleteOneQualityMeasurement`). Deletes a specific stored Quality Measurement.
+    GetAllForecastsRedirected:
+      operationId: getAllForecasts
+      description: |
+        `GET /forecast` (see also `getAllForecasts`). Returns a list of (all) stored Forecasts.
+    GetOneForecastById:
+      operationId: getOneForecast
+      parameters:
+        ForecastId: $request.path.ForecastId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /forecast/{ForecastId}` (see also `getOneForecast`). Returns a specific stored Forecast.
+    GetOneForecastByIdFromResponse:
+      operationId: getOneForecast
+      parameters:
+        ForecastId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /forecast/{ForecastId}` (see also `getOneForecast`). Returns a specific stored Forecast.
+    DeleteOneForecastById:
+      operationId: deleteOneForecast
+      parameters:
+        ForecastId: $request.path.ForecastId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `DELETE /forecast/{ForecastId}` (see also `deleteOneForecast`). Deletes a specific stored Forecast.
+    DeleteOneForecastByIdFromResponse:
+      operationId: deleteOneForecast
+      parameters:
+        ForecastId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `DELETE /forecast/{ForecastId}` (see also `deleteOneForecast`). Deletes a specific stored Forecast.
+    GetAllTerrainsRedirected:
+      operationId: getAllTerrains
+      description: |
+        `GET /terrain` (see also `getAllTerrains`). Returns a list of (all) stored Terrains.
+    GetOneTerrainById:
+      operationId: getOneTerrain
+      parameters:
+        TerrainId: $request.path.TerrainId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /terrain/{TerrainId}` (see also `getOneTerrain`). Returns a specific stored Terrain.
+    GetOneTerrainByIdFromResponse:
+      operationId: getOneTerrain
+      parameters:
+        TerrainId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /terrain/{TerrainId}` (see also `getOneTerrain`). Returns a specific stored Terrain.
+    DeleteOneTerrainById:
+      operationId: deleteOneTerrain
+      parameters:
+        TerrainId: $request.path.TerrainId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `DELETE /terrain/{TerrainId}` (see also `deleteOneTerrain`). Deletes a specific stored Terrain.
+    DeleteOneTerrainByIdFromResponse:
+      operationId: deleteOneTerrain
+      parameters:
+        TerrainId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `DELETE /terrain/{TerrainId}` (see also `deleteOneTerrain`). Deletes a specific stored Terrain.
+    GetAllScheduledHarvestTasksRedirected:
+      operationId: getAllScheduledHarvestTasks
+      description: |
+        `GET /harvest/task` (see also `getAllScheduledHarvestTasks`). Returns a list of (all) stored scheduled Harvest Tasks.
+    GetOneScheduledHarvestTaskById:
+      operationId: getOneScheduledHarvestTask
+      parameters:
+        HarvestTaskId: $request.path.HarvestTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /harvest/task/{HarvestTaskId}` (see also `getOneScheduledHarvestTask`). Returns a specific stored scheduled Harvest Task.
+    GetOneScheduledHarvestTaskByIdFromResponse:
+      operationId: getOneScheduledHarvestTask
+      parameters:
+        HarvestTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /harvest/task/{HarvestTaskId}` (see also `getOneScheduledHarvestTask`). Returns a specific stored scheduled Harvest Task.
+    DeleteOneScheduledHarvestTaskById:
+      operationId: deleteOneScheduledHarvestTask
+      parameters:
+        HarvestTaskId: $request.path.HarvestTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `DELETE /harvest/task/{HarvestTaskId}` (see also `deleteOneScheduledHarvestTask`). Deletes a specific stored scheduled Harvest Task.
+    DeleteOneScheduledHarvestTaskByIdFromResponse:
+      operationId: deleteOneScheduledHarvestTask
+      parameters:
+        HarvestTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `DELETE /harvest/task/{HarvestTaskId}` (see also `deleteOneScheduledHarvestTask`). Deletes a specific stored scheduled Harvest Task.
+    GetAllCompletedHarvestTasksRedirected:
+      operationId: getAllCompletedHarvestTasks
+      description: |
+        `GET /harvest/complete` (see also `getAllCompletedHarvestTasks`). Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements.
+    GetOneCompletedHarvestTaskById:
+      operationId: getOneCompletedHarvestTask
+      parameters:
+        HarvestTaskId: $request.path.HarvestTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /harvest/complete/{HarvestTaskId}` (see also `getOneCompletedHarvestTask`). Returns a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.
+    GetOneCompletedHarvestTaskByIdFromResponse:
+      operationId: getOneCompletedHarvestTask
+      parameters:
+        HarvestTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /harvest/complete/{HarvestTaskId}` (see also `getOneCompletedHarvestTask`). Returns a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.
+    DeleteOneCompletedHarvestTaskById:
+      operationId: deleteOneCompletedHarvestTask
+      parameters:
+        HarvestTaskId: $request.path.HarvestTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `DELETE /harvest/complete/{HarvestTaskId}` (see also `deleteOneCompletedHarvestTask`). Deletes a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.
+    DeleteOneCompletedHarvestTaskByIdFromResponse:
+      operationId: deleteOneCompletedHarvestTask
+      parameters:
+        HarvestTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `DELETE /harvest/complete/{HarvestTaskId}` (see also `deleteOneCompletedHarvestTask`). Deletes a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Get
+    description: All operations to GET data
+    externalDocs:
+      description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+      url: 'https://tools.ietf.org/html/rfc2616#section-9.3'
+  - name: GetOne
+    description: All operations to GET a single date
+    externalDocs:
+      description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+      url: 'https://tools.ietf.org/html/rfc2616#section-9.3'
+  - name: GetAll
+    description: All operations to GET all data
+    externalDocs:
+      description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+      url: 'https://tools.ietf.org/html/rfc2616#section-9.3'
+  - name: Delete
+    description: All operations to DELETE data
+    externalDocs:
+      description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+      url: 'https://tools.ietf.org/html/rfc2616#section-9.7'
+  - name: DeleteOne
+    description: All operations to DELETE a single date
+    externalDocs:
+      description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+      url: 'https://tools.ietf.org/html/rfc2616#section-9.7'
+  - name: DeleteAll
+    description: All operations to DELETE all data
+    externalDocs:
+      description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+      url: 'https://tools.ietf.org/html/rfc2616#section-9.7'
+  - name: Add
+    description: All operations to ADD / POST data
+    externalDocs:
+      description: RFC2616 - Hypertext Transfer Protocol -- HTTP/1.1
+      url: 'https://tools.ietf.org/html/rfc2616#section-9.5'
+  - name: Change
+    description: All operations to CHANGE / PATCH data
+    externalDocs:
+      description: RFC2616 - PATCH Method for HTTP
+      url: 'https://tools.ietf.org/html/rfc5789#section-2'
+  - name: Modify
+    description: 'All operations to MODIFY existing data (DELETE, PATCH)'
+  - name: Field
+    description: All operations to work with Fields
+  - name: Planter
+    description: All operations to work with Planter Runs
+  - name: Plant
+    description: All operations to work with Plants
+  - name: QualityMeasurement
+    description: All operations to work with Quality Measurements
+  - name: Forecast
+    description: All operations to work with Forecasts
+  - name: Terrain
+    description: All operations to work with Terrains
+  - name: Harvest
+    description: All operations to work with Harvests
+  - name: Harvest Task
+    description: All operations to work with Harvest Tasks
+  - name: Scheduled Harvest Task
+    description: All operations to work with scheduled Harvest Tasks
+  - name: Completed Harvest Task
+    description: All operations to work with completed Harvest Tasks
+paths:
+  /forecast:
+    get:
+      summary: Returns a list of (all) stored Forecasts
+      description: |
+        Returns a list of (all) stored Forecasts. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Forecasts will be returned.
+      operationId: getAllForecasts
+      tags:
+        - Forecast
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Forecast'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Forecast to the collection
+      description: |
+        Adds a new Forecast to the collection. In the request body you have to add the new Forecast, which to be added. If the operation was successful (status code `200`), the numeric ID of the new Forecast will be returned.
+      operationId: postForecast
+      tags:
+        - Forecast
+        - Add
+      requestBody:
+        required: true
+        description: A Forecast to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Forecast'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Forecast.
+          links:
+            GetAllForecastsRedirected:
+              $ref: '#/components/links/GetAllForecastsRedirected'
+            GetOneForecastByIdFromResponse:
+              $ref: '#/components/links/GetOneForecastByIdFromResponse'
+            DeleteOneForecastByIdFromResponse:
+              $ref: '#/components/links/DeleteOneForecastByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete collection of Forecast data. You can delete one specific Forecast with `DELETE /forecast/{ForecastID}` (`deleteOneForecast`).
+      operationId: deleteForecast
+      tags:
+        - Forecast
+        - Delete
+        - DeleteAll
+        - Modify
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/forecast/{ForecastId}':
+    get:
+      summary: Returns a specific stored Forecast from the collection
+      description: |
+        Returns a specific stored Forecast from the collection. The parameter `ForecastId` is required, to get the specific stored Forecast. If the operation was successful (status code `200`), the specific Forecast will be returned.
+      operationId: getOneForecast
+      tags:
+        - Forecast
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/ForecastId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+          links:
+            GetAllForecastsRedirected:
+              $ref: '#/components/links/GetAllForecastsRedirected'
+            DeleteOneForecastById:
+              $ref: '#/components/links/DeleteOneForecastById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllForecastsRedirected:
+              $ref: '#/components/links/GetAllForecastsRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Forecast from the collection
+      description: |
+        Removes a specific stored Forecast from the collection. The parameter `ForecastId` is required, to delete the specific stored Forecast.
+      operationId: deleteOneForecast
+      tags:
+        - Forecast
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/ForecastId'
+      responses:
+        '200':
+          description: Successfully deleted Forecast
+          links:
+            GetAllForecastsRedirected:
+              $ref: '#/components/links/GetAllForecastsRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllForecastsRedirected:
+              $ref: '#/components/links/GetAllForecastsRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /field:
+    get:
+      summary: Returns a list of (all) stored Fields
+      description: |
+        Returns a list of (all) stored Fields. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Fields will be returned.
+      operationId: getAllFields
+      tags:
+        - Field
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Field to the collection
+      description: |
+        Adds a new Field to the collection. In the request body you have to add the new Field, which to be added. If the operation was successful (status code `200`), the numeric ID of the new Field will be returned.
+      operationId: postField
+      tags:
+        - Field
+        - Add
+      requestBody:
+        required: true
+        description: A Field to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Field'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Field.
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldByIdFromResponse:
+              $ref: '#/components/links/GetOneFieldByIdFromResponse'
+            DeleteOneFieldByIdFromResponse:
+              $ref: '#/components/links/DeleteOneFieldByIdFromResponse'
+            GetAllPlanterRunsByIdFromResponse:
+              $ref: '#/components/links/GetAllPlanterRunsByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete collection of Field data. You can delete one specific Field with `DELETE /field/{FieldId}` (`deleteOneField`).
+      operationId: deleteField
+      tags:
+        - Field
+        - Delete
+        - DeleteAll
+        - Modify
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/field/{FieldId}':
+    get:
+      summary: Returns a specific stored Field from the collection
+      description: |
+        Returns a specific stored Field from the collection. The parameter `FieldId` is required, to get the specific stored Field. If the operation was successful (status code `200`), the specific Field will be returned.
+      operationId: getOneField
+      tags:
+        - Field
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Field'
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Field from the collection
+      description: |
+        Removes a specific stored Field from the collection. The parameter `FieldId` is required, to delete the specific stored Field.
+      operationId: deleteOneField
+      tags:
+        - Field
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+      responses:
+        '200':
+          description: Successfully deleted Field
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    patch:
+      summary: Patches a specific stored Field
+      description: |
+        Patches a specific stored Field. The parameter `FieldId` is required, to replace the specific stored Field by the new one. Also the new data (`FieldPatch`) is required. If the operation was successful (status code `200`), the new Field will be returned.
+      operationId: patchOneField
+      tags:
+        - Field
+        - Change
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+      requestBody:
+        required: true
+        description: The updated properties to patch
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldPatch'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Field'
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/field/{FieldId}/planter':
+    get:
+      summary: Returns a list of (all) stored Planter Runs
+      description: |
+        Returns a list of (all) stored Planter Runs. The parameter `FieldId` is required, to get the specific stored Planter Runs. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Planter Runs will be returned.
+      operationId: getAllPlanterRuns
+      tags:
+        - Planter
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanterRun'
+          links:
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Planter Run to the collection
+      description: |
+        Adds a new Planter Run to the collection. In the request body you have to add the new Planter Run, which to be added. The parameter `FieldId` is required, to add a Planter Run. If the operation was successful (status code `200`), the numeric ID of the new Planter Run will be returned.
+      operationId: postPlanterRun
+      tags:
+        - Planter
+        - Add
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+      requestBody:
+        required: true
+        description: A Planter Run to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanterRun'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Planter Run.
+          links:
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunByIdFromResponse:
+              $ref: '#/components/links/GetOnePlanterRunByIdFromResponse'
+            DeleteOnePlanterRunByIdFromResponse:
+              $ref: '#/components/links/DeleteOnePlanterRunByIdFromResponse'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+            GetAllPlantsByIdFromResponse:
+              $ref: '#/components/links/GetAllPlantsByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete collection of Planter Run data. You can delete one specific Planter Run with `DELETE /field/{FieldId}/planter/{PlanterRunId}` (`deleteOnePlanterRun`).
+      operationId: deletePlanterRun
+      tags:
+        - Planter
+        - Delete
+        - DeleteAll
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/field/{FieldId}/planter/{PlanterRunId}':
+    get:
+      summary: Returns a specific stored Planter Run from the collection
+      description: |
+        Returns a specific stored Planter Run from the collection. The parameters `FieldId` and `PlanterRunId` are required, to get the specific stored Planter Run. If the operation was successful (status code `200`), the specific Planter Run will be returned.
+      operationId: getOnePlanterRun
+      tags:
+        - Planter
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanterRun'
+          links:
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Planter Run from the collection
+      description: |
+        Removes a specific stored Planter Run from the collection. The parameters `FieldId` and `PlanterRunId` are required, to delete the specific stored Planter Run.
+      operationId: deleteOnePlanterRun
+      tags:
+        - Planter
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+      responses:
+        '200':
+          description: Successfully deleted Planter Run
+          links:
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/field/{FieldId}/planter/{PlanterRunId}/plant':
+    get:
+      summary: Returns a list of (all) stored Plants
+      description: |
+        Returns a list of (all) stored Plants. The parameters `FieldId` and `PlanterRunId` are required, to get the specific stored Plants. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Plants will be returned.
+      operationId: getAllPlants
+      tags:
+        - Plant
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plant'
+          links:
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Plant to the collection
+      description: |
+        Adds a new Plant to the collection. In the request body you have to add the new Plant, which to be added. The parameters `FieldId` and `PlanterRunId` are required, to add a Plant. If the operation was successful (status code `200`), the numeric ID of the new Plant will be returned.
+      operationId: postPlant
+      tags:
+        - Plant
+        - Add
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+      requestBody:
+        required: true
+        description: A plant to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plant'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Plant.
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantByIdFromResponse:
+              $ref: '#/components/links/GetOnePlantByIdFromResponse'
+            DeleteOnePlantByIdFromResponse:
+              $ref: '#/components/links/DeleteOnePlantByIdFromResponse'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+            GetAllQualityMeasurementsByIdFromResponse:
+              $ref: '#/components/links/GetAllQualityMeasurementsByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete collection of Plants data. The parameters `FieldId` and `PlanterRunId` are required. You can delete one specific Plant with `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}` (`deleteOnePlant`).
+      operationId: deletePlant
+      tags:
+        - Plant
+        - Delete
+        - DeleteAll
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}':
+    get:
+      summary: Returns a specific stored Plant from the collection
+      description: |
+        Returns a specific stored Plant from the collection. The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to get the specific stored Plant. If the operation was successful (status code `200`), the specific Plant will be returned.
+      operationId: getOnePlant
+      tags:
+        - Plant
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plant'
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+            GetAllQualityMeasurementsById:
+              $ref: '#/components/links/GetAllQualityMeasurementsById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Plant from the collection
+      description: |
+        Removes a specific stored Plant from the collection. The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to delete the specific stored Plant.
+      operationId: deleteOnePlant
+      tags:
+        - Plant
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+      responses:
+        '200':
+          description: Successfully deleted Plant
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    patch:
+      summary: Patches a specific stored Plant
+      description: |
+        Patches a specific stored Plant. The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to replace the specific stored Plant by the new one. Also the new data (`PlantPatch`) is required. If the operation was successful (status code `200`), the new Plant will be returned.
+      operationId: patchOnePlant
+      tags:
+        - Plant
+        - Change
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+      requestBody:
+        required: true
+        description: The updated properties to patch
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlantPatch'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plant'
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantById:
+              $ref: '#/components/links/GetOnePlantById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+            GetAllQualityMeasurementsById:
+              $ref: '#/components/links/GetAllQualityMeasurementsById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement':
+    get:
+      summary: Returns a list of (all) stored Quality Measurements
+      description: |
+        Returns a list of (all) stored Quality Measurements. The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to get the specific stored Quality Measurements. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Quality Measurements will be returned.
+      operationId: getAllQualityMeasurements
+      tags:
+        - QualityMeasurement
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QualityMeasurement'
+          links:
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantById:
+              $ref: '#/components/links/GetOnePlantById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Quality Measurement to the collection
+      description: |
+        Adds a new Quality Measurement to the collection. In the request body you have to add the new Quality Measurement, which to be added. The parameters `FieldId`, `PlanterRunId` and `PlantId` are required, to add a Quality Measurement. If the operation was successful (status code `200`), the numeric ID of the new Quality Measurement will be returned.
+      operationId: postQualityMeasurement
+      tags:
+        - QualityMeasurement
+        - Add
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+      requestBody:
+        required: true
+        description: A Quality Measurement to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QualityMeasurement'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Quality Measurement.
+          links:
+            GetAllQualityMeasurementsById:
+              $ref: '#/components/links/GetAllQualityMeasurementsById'
+            GetOneQualityMeasurementByIdFromResponse:
+              $ref: '#/components/links/GetOneQualityMeasurementByIdFromResponse'
+            DeleteOneQualityMeasurementByIdFromResponse:
+              $ref: '#/components/links/DeleteOneQualityMeasurementByIdFromResponse'
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantById:
+              $ref: '#/components/links/GetOnePlantById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete collection of Quality Measurement data. You can delete one specific Quality Measurement with `DELETE /field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}` (`deleteOneQualityMeasurement`).
+      operationId: deleteQualityMeasurement
+      tags:
+        - QualityMeasurement
+        - Delete
+        - DeleteAll
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/field/{FieldId}/planter/{PlanterRunId}/plant/{PlantId}/quality_measurement/{QualityMeasurementId}':
+    get:
+      summary: Returns a specific stored Quality Measurement from the collection
+      description: |
+        Returns a specific stored Quality Measurement from the collection. The parameters `FieldId`, `PlanterRunId`, `PlantId` and `QualityMeasurementId` are required, to get the specific stored Quality Measurement. If the operation was successful (status code `200`), the specific Quality Measurement will be returned.
+      operationId: getOneQualityMeasurement
+      tags:
+        - QualityMeasurement
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+        - $ref: '#/components/parameters/QualityMeasurementId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QualityMeasurement'
+          links:
+            GetAllQualityMeasurementsById:
+              $ref: '#/components/links/GetAllQualityMeasurementsById'
+            DeleteOneQualityMeasurementById:
+              $ref: '#/components/links/DeleteOneQualityMeasurementById'
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantById:
+              $ref: '#/components/links/GetOnePlantById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllQualityMeasurementsById:
+              $ref: '#/components/links/GetAllQualityMeasurementsById'
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantById:
+              $ref: '#/components/links/GetOnePlantById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Quality Measurement from the collection
+      description: |
+        Removes a specific stored Quality Measurement from the collection. The parameters `FieldId`, `PlanterRunId`, `PlantId` and `QualityMeasurementId` are required, to delete the specific stored Quality Measurement.
+      operationId: deleteOneQualityMeasurement
+      tags:
+        - QualityMeasurement
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/FieldId'
+        - $ref: '#/components/parameters/PlanterRunId'
+        - $ref: '#/components/parameters/PlantId'
+        - $ref: '#/components/parameters/QualityMeasurementId'
+      responses:
+        '200':
+          description: Successfully deleted Quality Measurement
+          links:
+            GetAllQualityMeasurementsById:
+              $ref: '#/components/links/GetAllQualityMeasurementsById'
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantById:
+              $ref: '#/components/links/GetOnePlantById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllQualityMeasurementsById:
+              $ref: '#/components/links/GetAllQualityMeasurementsById'
+            GetAllPlantsById:
+              $ref: '#/components/links/GetAllPlantsById'
+            GetOnePlantById:
+              $ref: '#/components/links/GetOnePlantById'
+            DeleteOnePlantById:
+              $ref: '#/components/links/DeleteOnePlantById'
+            GetAllPlanterRunsById:
+              $ref: '#/components/links/GetAllPlanterRunsById'
+            GetOnePlanterRunById:
+              $ref: '#/components/links/GetOnePlanterRunById'
+            DeleteOnePlanterRunById:
+              $ref: '#/components/links/DeleteOnePlanterRunById'
+            GetAllFieldsRedirected:
+              $ref: '#/components/links/GetAllFieldsRedirected'
+            GetOneFieldById:
+              $ref: '#/components/links/GetOneFieldById'
+            DeleteOneFieldById:
+              $ref: '#/components/links/DeleteOneFieldById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /terrain:
+    get:
+      summary: Returns a list of (all) stored Terrain Models
+      description: |
+        Returns a list of (all) stored Terrain Models. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Terrain Models will be returned.
+      operationId: getAllTerrains
+      tags:
+        - Terrain
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Terrain'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete collection of Terrain Model data. You can delete one specific Terrain Model with `DELETE /terrain/{TerrainId}` (`deleteOneTerrain`).
+      operationId: deleteTerrain
+      tags:
+        - Terrain
+        - Delete
+        - DeleteAll
+        - Modify
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/terrain/{TerrainId}':
+    get:
+      summary: Returns a specific stored Terrain Model from the collection
+      description: |
+        Returns a specific stored Terrain Model from the collection. The parameter `TerrainId` is required, to get the specific stored Terrain Model. If the operation was successful (status code `200`), the specific Terrain Model will be returned.
+      operationId: getOneTerrain
+      tags:
+        - Terrain
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/TerrainId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terrain'
+          links:
+            GetAllTerrainsRedirected:
+              $ref: '#/components/links/GetAllTerrainsRedirected'
+            DeleteOneTerrainById:
+              $ref: '#/components/links/DeleteOneTerrainById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTerrainsRedirected:
+              $ref: '#/components/links/GetAllTerrainsRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Terrain Model from the collection
+      description: |
+        Removes a specific stored Terrain Model from the collection. The parameter `TerrainId` is required, to delete the specific stored Terrain Model.
+      operationId: deleteOneTerrain
+      tags:
+        - Terrain
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/TerrainId'
+      responses:
+        '200':
+          description: Successfully deleted Terrain Model
+          links:
+            GetAllTerrainsRedirected:
+              $ref: '#/components/links/GetAllTerrainsRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTerrainsRedirected:
+              $ref: '#/components/links/GetAllTerrainsRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /harvest/task:
+    get:
+      summary: Returns a list of (all) stored scheduled Harvest Tasks
+      description: |
+        Returns a list of (all) stored scheduled Harvest Tasks. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Harvest Tasks will be returned.
+      operationId: getAllScheduledHarvestTasks
+      tags:
+        - Harvest
+        - Harvest Task
+        - Scheduled Harvest Task
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HarvestTask'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Harvest Task to the scheduled collection
+      description: |
+        Adds a new Harvest Task to the scheduled collection. In the request body you have to add the new Harvest Task, which to be added. If the operation was successful (status code `200`), the numeric ID of the new Harvest Task will be returned.
+      operationId: postScheduledHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Scheduled Harvest Task
+        - Add
+      requestBody:
+        required: true
+        description: A Harvest Task to be added to the scheduled collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HarvestTask'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Harvest Task.
+          links:
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetOneScheduledHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneScheduledHarvestTaskByIdFromResponse'
+            DeleteOneScheduledHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneScheduledHarvestTaskByIdFromResponse'
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetOneCompletedHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneCompletedHarvestTaskByIdFromResponse'
+            DeleteOneCompletedHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneCompletedHarvestTaskByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete scheduled collection of Harvest Tasks. You can delete one specific scheduled Harvest Task with `DELETE /harvest/task/{HarvestTaskId}` (`deleteOneScheduledHarvestTask`). Or you can delete one specific completed Harvest Task with `DELETE /harvest/complete/{HarvestTaskId}` (`deleteOneCompletedHarvestTask`).
+      operationId: deleteScheduledHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Scheduled Harvest Task
+        - Delete
+        - DeleteAll
+        - Modify
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/harvest/task/{HarvestTaskId}':
+    get:
+      summary: Returns a specific stored Harvest Task from the scheduled collection
+      description: |
+        Returns a specific stored Harvest Task from the scheduled collection. The parameter `HarvestTaskId` is required, to get the specific stored Harvest Task. If the operation was successful (status code `200`), the specific Harvest Task will be returned.
+      operationId: getOneScheduledHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Scheduled Harvest Task
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/HarvestTaskId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HarvestTask'
+          links:
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            DeleteOneScheduledHarvestTaskById:
+              $ref: '#/components/links/DeleteOneScheduledHarvestTaskById'
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetOneCompletedHarvestTaskById:
+              $ref: '#/components/links/GetOneCompletedHarvestTaskById'
+            DeleteOneCompletedHarvestTaskById:
+              $ref: '#/components/links/DeleteOneCompletedHarvestTaskById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetOneCompletedHarvestTaskById:
+              $ref: '#/components/links/GetOneCompletedHarvestTaskById'
+            DeleteOneCompletedHarvestTaskById:
+              $ref: '#/components/links/DeleteOneCompletedHarvestTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Harvest Task from the scheduled collection
+      description: |
+        Removes a specific stored Harvest Task from the scheduled collection. The parameter `HarvestTaskId` is required, to delete the specific stored Harvest Task.
+      operationId: deleteOneScheduledHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Scheduled Harvest Task
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/HarvestTaskId'
+      responses:
+        '200':
+          description: Successfully deleted scheduled Harvest Task
+          links:
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetOneCompletedHarvestTaskById:
+              $ref: '#/components/links/GetOneCompletedHarvestTaskById'
+            DeleteOneCompletedHarvestTaskById:
+              $ref: '#/components/links/DeleteOneCompletedHarvestTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /harvest/complete:
+    get:
+      summary: Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements
+      description: |
+        Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Harvests will be returned.
+      operationId: getAllCompletedHarvestTasks
+      tags:
+        - Harvest
+        - Harvest Task
+        - Completed Harvest Task
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HarvestOrTask'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds either a new Harvest Task or a new Harvest with Harvest Measurements to the completed collection
+      description: |
+        Adds either a new Harvest Task or a new Harvest with Harvest Measurements to the completed collection. In the request body you have to add either the new Harvest Task or the new Harvest with Harvest Measurements, which to be added. If the operation was successful (status code `200`), the numeric ID of the new Harvest will be returned. Note: All Harvests with the same ID - as the ID specified here in the request body - are removed from the list of scheduled Harvest Tasks!
+      operationId: postCompletedHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Completed Harvest Task
+        - Add
+      requestBody:
+        required: true
+        description: Either a Harvest Task or a Harvest with Harvest Measurements to be added to the completed collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HarvestOrTask'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Harvest Task.
+          links:
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetOneCompletedHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneCompletedHarvestTaskByIdFromResponse'
+            DeleteOneCompletedHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneCompletedHarvestTaskByIdFromResponse'
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetOneScheduledHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneScheduledHarvestTaskByIdFromResponse'
+            DeleteOneScheduledHarvestTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneScheduledHarvestTaskByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete completed collection of Harvest Tasks and Harvests with Harvest Measurements. You can delete one specific completed Harvest Task with `DELETE /harvest/complete/{HarvestTaskId}` (`deleteOneCompletedHarvestTask`). Or you can delete one specific scheduled Harvest Task with `DELETE /harvest/task/{HarvestTaskId}` (`deleteOneScheduledHarvestTask`).
+      operationId: deleteCompletedHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Completed Harvest Task
+        - Delete
+        - DeleteAll
+        - Modify
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/harvest/complete/{HarvestTaskId}':
+    get:
+      summary: Returns either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection
+      description: |
+        Returns either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection. The parameter `HarvestTaskId` is required, to get the specific stored Harvest. If the operation was successful (status code `200`), the specific Harvest will be returned.
+      operationId: getOneCompletedHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Completed Harvest Task
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/HarvestTaskId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HarvestOrTask'
+          links:
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            DeleteOneCompletedHarvestTaskById:
+              $ref: '#/components/links/DeleteOneCompletedHarvestTaskById'
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetOneScheduledHarvestTaskById:
+              $ref: '#/components/links/GetOneScheduledHarvestTaskById'
+            DeleteOneScheduledHarvestTaskById:
+              $ref: '#/components/links/DeleteOneScheduledHarvestTaskById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetOneScheduledHarvestTaskById:
+              $ref: '#/components/links/GetOneScheduledHarvestTaskById'
+            DeleteOneScheduledHarvestTaskById:
+              $ref: '#/components/links/DeleteOneScheduledHarvestTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection
+      description: |
+        Removes either a specific stored Harvest Task or a specific stored Harvest with Harvest Measurements from the completed collection. The parameter `HarvestTaskId` is required, to delete the specific stored Harvest.
+      operationId: deleteOneCompletedHarvestTask
+      tags:
+        - Harvest
+        - Harvest Task
+        - Completed Harvest Task
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/HarvestTaskId'
+      responses:
+        '200':
+          description: Successfully deleted completed Harvest
+          links:
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllCompletedHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedHarvestTasksRedirected'
+            GetAllScheduledHarvestTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledHarvestTasksRedirected'
+            GetOneScheduledHarvestTaskById:
+              $ref: '#/components/links/GetOneScheduledHarvestTaskById'
+            DeleteOneScheduledHarvestTaskById:
+              $ref: '#/components/links/DeleteOneScheduledHarvestTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'

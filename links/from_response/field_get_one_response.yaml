@@ -1,0 +1,9 @@
+# GET /field/{FieldId}
+operationId: getOneField
+parameters:
+  FieldId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `GET /field/{FieldId}`
+  (see also `getOneField`).
+  Returns a specific stored Field.
