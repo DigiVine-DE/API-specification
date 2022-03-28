@@ -52,3 +52,5 @@ HarvestOrTask:
   $ref: "./HarvestOrTask.yaml"
 HarvestMeasurement:
   $ref: "./HarvestMeasurement.yaml"
+SprayTask:
+  $ref: "./SprayTask.yaml"

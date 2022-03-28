@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/SprayOrTask"
+            $ref: "../openapi.yaml#/components/schemas/SprayTask"
       links:
         # GET /spray/complete
         GetAllCompletedSprayTasksRedirected:
