@@ -1,0 +1,114 @@
+get:
+  summary: Returns a list of (all) stored scheduled Spray Tasks
+  description: >
+    Returns a list of (all) stored scheduled Spray Tasks.
+    With the parameters `Limit` and `Offset` it can be specified, which data to return.
+    If the operation was successful (status code `200`), an array with Spray Tasks will be returned.
+  operationId: getAllScheduledSprayTasks
+  tags:
+    - Spray
+    - Spray Task
+    - Scheduled Spray Task
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/SprayTask"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds a new Spray Task to the scheduled collection
+  description: >
+    Adds a new Spray Task to the scheduled collection.
+    In the request body you have to add the new Spray Task, which to be added.
+    If the operation was successful (status code `200`), the numeric ID of the new Spray Task will be returned.
+  operationId: postScheduledSprayTask
+  tags:
+    - Spray
+    - Spray Task
+    - Scheduled Spray Task
+    - Add
+  requestBody:
+    required: true
+    description: A Spray Task to be added to the scheduled collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/SprayTask"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Spray Task.
+      links:
+        # GET /spray/task
+        GetAllScheduledSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledSprayTasksRedirected"
+        # GET /spray/task/{SprayTaskId}
+        GetOneScheduledSprayTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledSprayTaskByIdFromResponse"
+        # DELETE /spray/task/{SprayTaskId}
+        DeleteOneScheduledSprayTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledSprayTaskByIdFromResponse"
+        # GET /spray/complete
+        GetAllCompletedSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedSprayTasksRedirected"
+        # GET /spray/complete/{SprayTaskId}
+        GetOneCompletedSprayTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/GetOneCompletedSprayTaskByIdFromResponse"
+        # DELETE /spray/complete/{SprayTaskId}
+        DeleteOneCompletedSprayTaskByIdFromResponse:
+          $ref: "../openapi.yaml#/components/links/DeleteOneCompletedSprayTaskByIdFromResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+delete:
+  summary: Can't delete complete collection
+  description: >
+    You can't delete the complete scheduled collection of Spray Tasks.
+    You can delete one specific scheduled Spray Task with `DELETE /spray/task/{SprayTaskId}` (`deleteOneScheduledSprayTask`).
+    Or you can delete one specific completed Spray Task with `DELETE /spray/complete/{SprayTaskId}` (`deleteOneCompletedSprayTask`).
+  operationId: deleteScheduledSprayTask
+  tags:
+    - Spray
+    - Spray Task
+    - Scheduled Spray Task
+    - Delete
+    - DeleteAll
+    - Modify
+  responses:
+    "405":
+      $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

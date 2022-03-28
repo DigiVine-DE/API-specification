@@ -1,0 +1,9 @@
+# GET /spray/task/{SprayTaskId}
+operationId: getOneScheduledSprayTask
+parameters:
+  SprayTaskId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `GET /spray/task/{SprayTaskId}`
+  (see also `getOneScheduledSprayTask`).
+  Returns a specific stored scheduled Spray Task.

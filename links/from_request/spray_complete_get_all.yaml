@@ -1,0 +1,6 @@
+# GET /spray/complete
+operationId: getAllCompletedSprayTasks
+description: >
+  `GET /spray/complete`
+  (see also `getAllCompletedSprayTasks`).
+  Returns a list of (all) stored completed Spray Tasks and Sprays with Measurements.

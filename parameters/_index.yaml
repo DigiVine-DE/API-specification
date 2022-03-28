@@ -18,3 +18,5 @@ TerrainId:
   $ref: "./TerrainId.yaml"
 HarvestTaskId:
   $ref: "./HarvestTaskId.yaml"
+SprayTaskId:
+  $ref: "./SprayTaskId.yaml"

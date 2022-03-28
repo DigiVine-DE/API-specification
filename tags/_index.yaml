@@ -30,3 +30,8 @@
 - $ref: "./harvestTask.yaml"
 - $ref: "./scheduledHarvestTask.yaml"
 - $ref: "./completedHarvestTask.yaml"
+# Spray
+- $ref: "./spray.yaml"
+- $ref: "./sprayTask.yaml"
+- $ref: "./scheduledSprayTask.yaml"
+- $ref: "./completedSprayTask.yaml"
