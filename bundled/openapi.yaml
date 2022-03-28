@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.0.3
 info:
   title: DigiVine API
   description: REST/CRUD API for the Digivine data warehouse
@@ -1012,6 +1012,103 @@ components:
               example: 7
             spectral:
               type: string
+    SprayTask:
+      type: object
+      required:
+        - type
+        - geometry
+        - properties
+      properties:
+        type:
+          type: string
+          enum:
+            - Feature
+        geometry:
+          $ref: '#/components/schemas/Polygon'
+        properties:
+          type: object
+          required:
+            - task_id
+            - task_name
+            - customer_name
+            - fruit_group_name
+            - fruit_name
+            - plain_name
+            - plain_size
+            - plant_protection
+          properties:
+            task_id:
+              type: integer
+              format: int32
+              description: The numeric ID of the Harvest Task
+              example: 4711
+            task_name:
+              type: string
+              description: Name of the task
+              example: Ernte
+            customer_name:
+              type: string
+              description: Name of the customer
+              example: Julius Kühn-Institut
+            farm_name:
+              type: string
+              description: Name of the farm
+              example: Geilweilerhof
+            fruit_group_name:
+              type: string
+              description: Name of the fruit group
+              example: Traube
+            fruit_name:
+              type: string
+              description: Name of the specific fruit
+              example: Riesling
+            plain_name:
+              type: string
+              description: Name of the plains
+              example: Auf dem Weinberg
+            plain_size:
+              type: integer
+              format: int64
+              description: Size of the plains in square meter
+              example: 7668
+            application_total_volume:
+              type: integer
+              format: int64
+              description: The total volume of protection sprayed
+              example: 7568
+            total_area:
+              type: integer
+              format: int64
+              description: The total area of the spray task in square meter
+              example: 5874
+            effective_total_distance:
+              type: integer
+              format: int64
+              description: The effective distance travelled by the spray machine in meter
+              example: 2580
+            effective_total_time:
+              type: integer
+              format: int64
+              description: The effective total time of the spray run in minutes
+              example: 95
+            plant_protection:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the protection fluid
+                    example: Mospilan
+                  amount:
+                    type: integer
+                    format: int64
+                    description: Amount of the protection fluid
+                    example: 375
+                  unit:
+                    type: string
+                    description: Unit of the protection fluid amount
+                    example: g/ha
   parameters:
     Limit:
       name: limit
@@ -1108,6 +1205,15 @@ components:
       in: path
       required: true
       description: The numeric ID of the Harvest Task
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    SprayTaskId:
+      name: SprayTaskId
+      in: path
+      required: true
+      description: The numeric ID of the Spray Task
       schema:
         type: integer
         format: int32
@@ -1408,6 +1514,62 @@ components:
         HarvestTaskId: $response.body#/id
       description: |
         The `id` value returned in the response can be used as the `id` parameter in `DELETE /harvest/complete/{HarvestTaskId}` (see also `deleteOneCompletedHarvestTask`). Deletes a specific stored completed Harvest Task or a specific stored completed Harvest with Harvest Measurements.
+    GetAllScheduledSprayTasksRedirected:
+      operationId: getAllScheduledSprayTasks
+      description: |
+        `GET /spray/task` (see also `getAllScheduledSprayTasks`). Returns a list of (all) stored scheduled Spray Tasks.
+    GetOneScheduledSprayTaskById:
+      operationId: getOneScheduledSprayTask
+      parameters:
+        SprayTaskId: $request.path.SprayTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /spray/task/{SprayTaskId}` (see also `getOneScheduledSprayTask`). Returns a specific stored scheduled Spray Task.
+    GetOneScheduledSprayTaskByIdFromResponse:
+      operationId: getOneScheduledSprayTask
+      parameters:
+        SprayTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /spray/task/{SprayTaskId}` (see also `getOneScheduledSprayTask`). Returns a specific stored scheduled Spray Task.
+    DeleteOneScheduledSprayTaskById:
+      operationId: deleteOneScheduledSprayTask
+      parameters:
+        SprayTaskId: $request.path.SprayTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `DELETE /spray/task/{SprayTaskId}` (see also `deleteOneScheduledSprayTask`). Deletes a specific stored scheduled Spray Task.
+    DeleteOneScheduledSprayTaskByIdFromResponse:
+      operationId: deleteOneScheduledSprayTask
+      parameters:
+        SprayTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `DELETE /spray/task/{SprayTaskId}` (see also `deleteOneScheduledSprayTask`). Deletes a specific stored scheduled Spray Task.
+    GetAllCompletedSprayTasksRedirected:
+      operationId: getAllCompletedSprayTasks
+      description: |
+        `GET /spray/complete` (see also `getAllCompletedSprayTasks`). Returns a list of (all) stored completed Spray Tasks and Sprays with Measurements.
+    GetOneCompletedSprayTaskById:
+      operationId: getOneCompletedSprayTask
+      parameters:
+        SprayTaskId: $request.path.SprayTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `GET /spray/complete/{SprayTaskId}` (see also `getOneCompletedSprayTask`). Returns a specific stored completed Spray Task or a specific stored completed Spray with Measurements.
+    GetOneCompletedSprayTaskByIdFromResponse:
+      operationId: getOneCompletedSprayTask
+      parameters:
+        SprayTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `GET /spray/complete/{SprayTaskId}` (see also `getOneCompletedSprayTask`). Returns a specific stored completed Spray Task or a specific stored completed Spray with Spray Measurements.
+    DeleteOneCompletedSprayTaskById:
+      operationId: deleteOneCompletedSprayTask
+      parameters:
+        SprayTaskId: $request.path.SprayTaskId
+      description: |
+        The `id` value given in the request can be used as the `id` parameter in `DELETE /spray/complete/{SprayTaskId}` (see also `deleteOneCompletedSprayTask`). Deletes a specific stored completed Spray Task or a specific stored completed Spray with Spray Measurements.
+    DeleteOneCompletedSprayTaskByIdFromResponse:
+      operationId: deleteOneCompletedSprayTask
+      parameters:
+        SprayTaskId: $response.body#/id
+      description: |
+        The `id` value returned in the response can be used as the `id` parameter in `DELETE /spray/complete/{SprayTaskId}` (see also `deleteOneCompletedSprayTask`). Deletes a specific stored completed Spray Task or a specific stored completed Spray with Spray Measurements.
 security:
   - ApiKeyAuth: []
 tags:
@@ -1473,6 +1635,14 @@ tags:
     description: All operations to work with scheduled Harvest Tasks
   - name: Completed Harvest Task
     description: All operations to work with completed Harvest Tasks
+  - name: Spray
+    description: All operations to work with Sprays
+  - name: Spray Task
+    description: All operations to work with Spray Tasks
+  - name: Scheduled Spray Task
+    description: All operations to work with scheduled Spray Tasks
+  - name: Completed Spray Task
+    description: All operations to work with completed Spray Tasks
 paths:
   /forecast:
     get:
@@ -3161,5 +3331,395 @@ paths:
               $ref: '#/components/links/GetOneScheduledHarvestTaskById'
             DeleteOneScheduledHarvestTaskById:
               $ref: '#/components/links/DeleteOneScheduledHarvestTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /spray/task:
+    get:
+      summary: Returns a list of (all) stored scheduled Spray Tasks
+      description: |
+        Returns a list of (all) stored scheduled Spray Tasks. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Spray Tasks will be returned.
+      operationId: getAllScheduledSprayTasks
+      tags:
+        - Spray
+        - Spray Task
+        - Scheduled Spray Task
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SprayTask'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Spray Task to the scheduled collection
+      description: |
+        Adds a new Spray Task to the scheduled collection. In the request body you have to add the new Spray Task, which to be added. If the operation was successful (status code `200`), the numeric ID of the new Spray Task will be returned.
+      operationId: postScheduledSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Scheduled Spray Task
+        - Add
+      requestBody:
+        required: true
+        description: A Spray Task to be added to the scheduled collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SprayTask'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Spray Task.
+          links:
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetOneScheduledSprayTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneScheduledSprayTaskByIdFromResponse'
+            DeleteOneScheduledSprayTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneScheduledSprayTaskByIdFromResponse'
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetOneCompletedSprayTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneCompletedSprayTaskByIdFromResponse'
+            DeleteOneCompletedSprayTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneCompletedSprayTaskByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete scheduled collection of Spray Tasks. You can delete one specific scheduled Spray Task with `DELETE /spray/task/{SprayTaskId}` (`deleteOneScheduledSprayTask`). Or you can delete one specific completed Spray Task with `DELETE /spray/complete/{SprayTaskId}` (`deleteOneCompletedSprayTask`).
+      operationId: deleteScheduledSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Scheduled Spray Task
+        - Delete
+        - DeleteAll
+        - Modify
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/spray/task/{SprayTaskId}':
+    get:
+      summary: Returns a specific stored Spray Task from the scheduled collection
+      description: |
+        Returns a specific stored Spray Task from the scheduled collection. The parameter `SprayTaskId` is required, to get the specific stored Spray Task. If the operation was successful (status code `200`), the specific Spray Task will be returned.
+      operationId: getOneScheduledSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Scheduled Spray Task
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/SprayTaskId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SprayTask'
+          links:
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            DeleteOneScheduledSprayTaskById:
+              $ref: '#/components/links/DeleteOneScheduledSprayTaskById'
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetOneCompletedSprayTaskById:
+              $ref: '#/components/links/GetOneCompletedSprayTaskById'
+            DeleteOneCompletedSprayTaskById:
+              $ref: '#/components/links/DeleteOneCompletedSprayTaskById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetOneCompletedSprayTaskById:
+              $ref: '#/components/links/GetOneCompletedSprayTaskById'
+            DeleteOneCompletedSprayTaskById:
+              $ref: '#/components/links/DeleteOneCompletedSprayTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific stored Spray Task from the scheduled collection
+      description: |
+        Removes a specific stored Spray Task from the scheduled collection. The parameter `SprayTaskId` is required, to delete the specific stored Spray Task.
+      operationId: deleteOneScheduledSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Scheduled Spray Task
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/SprayTaskId'
+      responses:
+        '200':
+          description: Successfully deleted scheduled Spray Task
+          links:
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetOneCompletedSprayTaskById:
+              $ref: '#/components/links/GetOneCompletedSprayTaskById'
+            DeleteOneCompletedSprayTaskById:
+              $ref: '#/components/links/DeleteOneCompletedSprayTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /spray/complete:
+    get:
+      summary: Returns a list of (all) stored completed Spray Tasks and Sprays with Spray Measurements
+      description: |
+        Returns a list of (all) stored completed Spray Tasks and Sprays with Spray Measurements. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Sprays will be returned.
+      operationId: getAllCompletedSprayTasks
+      tags:
+        - Spray
+        - Spray Task
+        - Completed Spray Task
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SprayTask'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds either a new Spray Task or a new Spray with Spray Measurements to the completed collection
+      description: |
+        Adds either a new Spray Task or a new Spray with Spray Measurements to the completed collection. In the request body you have to add either the new Spray Task or the new Spray with Spray Measurements, which to be added. If the operation was successful (status code `200`), the numeric ID of the new Spray will be returned. Note: All Sprays with the same ID - as the ID specified here in the request body - are removed from the list of scheduled Spray Tasks!
+      operationId: postCompletedSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Completed Spray Task
+        - Add
+      requestBody:
+        required: true
+        description: Either a Spray Task or a Spray with Spray Measurements to be added to the completed collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SprayTask'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Spray Task.
+          links:
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetOneCompletedSprayTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneCompletedSprayTaskByIdFromResponse'
+            DeleteOneCompletedSprayTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneCompletedSprayTaskByIdFromResponse'
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetOneScheduledSprayTaskByIdFromResponse:
+              $ref: '#/components/links/GetOneScheduledSprayTaskByIdFromResponse'
+            DeleteOneScheduledSprayTaskByIdFromResponse:
+              $ref: '#/components/links/DeleteOneScheduledSprayTaskByIdFromResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Can't delete complete collection
+      description: |
+        You can't delete the complete completed collection of Spray Tasks and Sprays with Spray Measurements. You can delete one specific completed Spray Task with `DELETE /spray/complete/{SprayTaskId}` (`deleteOneCompletedSprayTask`). Or you can delete one specific scheduled Spray Task with `DELETE /spray/task/{SprayTaskId}` (`deleteOneScheduledSprayTask`).
+      operationId: deleteCompletedSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Completed Spray Task
+        - Delete
+        - DeleteAll
+        - Modify
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+  '/spray/complete/{SprayTaskId}':
+    get:
+      summary: Returns either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection
+      description: |
+        Returns either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection. The parameter `SprayTaskId` is required, to get the specific stored Spray. If the operation was successful (status code `200`), the specific Spray will be returned.
+      operationId: getOneCompletedSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Completed Spray Task
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/SprayTaskId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SprayTask'
+          links:
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            DeleteOneCompletedSprayTaskById:
+              $ref: '#/components/links/DeleteOneCompletedSprayTaskById'
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetOneScheduledSprayTaskById:
+              $ref: '#/components/links/GetOneScheduledSprayTaskById'
+            DeleteOneScheduledSprayTaskById:
+              $ref: '#/components/links/DeleteOneScheduledSprayTaskById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetOneScheduledSprayTaskById:
+              $ref: '#/components/links/GetOneScheduledSprayTaskById'
+            DeleteOneScheduledSprayTaskById:
+              $ref: '#/components/links/DeleteOneScheduledSprayTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection
+      description: |
+        Removes either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection. The parameter `SprayTaskId` is required, to delete the specific stored Spray.
+      operationId: deleteOneCompletedSprayTask
+      tags:
+        - Spray
+        - Spray Task
+        - Completed Spray Task
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/SprayTaskId'
+      responses:
+        '200':
+          description: Successfully deleted completed Spray
+          links:
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllCompletedSprayTasksRedirected:
+              $ref: '#/components/links/GetAllCompletedSprayTasksRedirected'
+            GetAllScheduledSprayTasksRedirected:
+              $ref: '#/components/links/GetAllScheduledSprayTasksRedirected'
+            GetOneScheduledSprayTaskById:
+              $ref: '#/components/links/GetOneScheduledSprayTaskById'
+            DeleteOneScheduledSprayTaskById:
+              $ref: '#/components/links/DeleteOneScheduledSprayTaskById'
         '500':
           $ref: '#/components/responses/BackendError'
