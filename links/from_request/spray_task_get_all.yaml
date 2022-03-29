@@ -1,0 +1,6 @@
+# GET /spray/task
+operationId: getAllScheduledSprayTasks
+description: >
+  `GET /spray/task`
+  (see also `getAllScheduledSprayTasks`).
+  Returns a list of (all) stored scheduled Spray Tasks.

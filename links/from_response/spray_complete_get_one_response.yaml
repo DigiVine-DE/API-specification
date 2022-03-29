@@ -1,0 +1,9 @@
+# GET /spray/complete/{SprayTaskId}
+operationId: getOneCompletedSprayTask
+parameters:
+  SprayTaskId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `GET /spray/complete/{SprayTaskId}`
+  (see also `getOneCompletedSprayTask`).
+  Returns a specific stored completed Spray Task or a specific stored completed Spray with Spray Measurements.

@@ -1,4 +1,4 @@
-openapi: "3.0.2"
+openapi: "3.0.3"
 info:
   title: DigiVine API
   description: REST/CRUD API for the Digivine data warehouse
@@ -67,3 +67,11 @@ paths:
     $ref: "path/harvest_complete_index.yaml"
   /harvest/complete/{HarvestTaskId}:
     $ref: "path/harvest_complete.yaml"
+  /spray/task:
+    $ref: "path/spray_task_index.yaml"
+  /spray/task/{SprayTaskId}:
+    $ref: "path/spray_task.yaml"
+  /spray/complete:
+    $ref: "path/spray_complete_index.yaml"
+  /spray/complete/{SprayTaskId}:
+    $ref: "path/spray_complete.yaml"

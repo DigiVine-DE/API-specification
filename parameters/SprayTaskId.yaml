@@ -1,0 +1,8 @@
+name: SprayTaskId
+in: path
+required: true
+description: The numeric ID of the Spray Task
+schema:
+  type: integer
+  format: int32
+  example: 4711

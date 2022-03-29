@@ -1,0 +1,9 @@
+# DELETE /spray/complete/{SprayTaskId}
+operationId: deleteOneCompletedSprayTask
+parameters:
+  SprayTaskId: "$request.path.SprayTaskId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `DELETE /spray/complete/{SprayTaskId}`
+  (see also `deleteOneCompletedSprayTask`).
+  Deletes a specific stored completed Spray Task or a specific stored completed Spray with Spray Measurements.

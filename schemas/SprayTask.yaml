@@ -1,0 +1,99 @@
+type: object
+required:
+  - type
+  - geometry
+  - properties
+properties:
+  # GeoJSON Type "Feature"
+  type:
+    type: string
+    enum:
+      - Feature
+  # GeoJSON polygon geometry
+  geometry:
+    $ref: "../openapi.yaml#/components/schemas/Polygon"
+  # metadata referencing related objects
+  properties:
+    type: object
+    required:
+    - task_id
+    - task_name
+    - customer_name
+    - fruit_group_name
+    - fruit_name
+    - plain_name
+    - plain_size
+    - plant_protection
+    properties:
+      task_id:
+        type: integer
+        format: int32
+        description: The numeric ID of the Harvest Task
+        example: 4711
+      task_name:
+        type: string
+        description: Name of the task 
+        example: Ernte
+      customer_name:
+        type: string
+        description: Name of the customer 
+        example: Julius Kühn-Institut
+      farm_name:
+        type: string
+        description: Name of the farm 
+        example: Geilweilerhof
+      fruit_group_name:
+        type: string
+        description: Name of the fruit group 
+        example: Traube
+      fruit_name:
+        type: string
+        description: Name of the specific fruit 
+        example: Riesling
+      plain_name:
+        type: string
+        description: Name of the plains
+        example: Auf dem Weinberg
+      plain_size:
+        type: integer
+        format: int64
+        description: Size of the plains in square meter
+        example: 7668
+      application_total_volume:
+        type: integer
+        format: int64
+        description: The total volume of protection sprayed
+        example: 7568
+      total_area:
+        type: integer
+        format: int64
+        description: The total area of the spray task in square meter
+        example: 5874
+      effective_total_distance:
+        type: integer
+        format: int64
+        description: The effective distance travelled by the spray machine in meter
+        example: 2580
+      effective_total_time:
+        type: integer
+        format: int64
+        description: The effective total time of the spray run in minutes
+        example: 95
+      plant_protection:
+        type: array
+        items:
+          type: object
+          properties:
+            name: 
+              type: string
+              description: Name of the protection fluid
+              example: Mospilan
+            amount: 
+              type: integer
+              format: int64
+              description: Amount of the protection fluid
+              example: 375
+            unit: 
+              type: string
+              description: Unit of the protection fluid amount
+              example: g/ha

@@ -1,0 +1,9 @@
+# DELETE /spray/task/{SprayTaskId}
+operationId: deleteOneScheduledSprayTask
+parameters:
+  SprayTaskId: "$request.path.SprayTaskId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `DELETE /spray/task/{SprayTaskId}`
+  (see also `deleteOneScheduledSprayTask`).
+  Deletes a specific stored scheduled Spray Task.

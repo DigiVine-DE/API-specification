@@ -1,0 +1,109 @@
+get:
+  summary: Returns either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection
+  description: >
+    Returns either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection.
+    The parameter `SprayTaskId` is required, to get the specific stored Spray.
+    If the operation was successful (status code `200`), the specific Spray will be returned.
+  operationId: getOneCompletedSprayTask
+  tags:
+    - Spray
+    - Spray Task
+    - Completed Spray Task
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/SprayTaskId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/SprayTask"
+      links:
+        # GET /spray/complete
+        GetAllCompletedSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedSprayTasksRedirected"
+        # DELETE /spray/complete/{SprayTaskId}
+        DeleteOneCompletedSprayTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneCompletedSprayTaskById"
+        # GET /spray/task
+        GetAllScheduledSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledSprayTasksRedirected"
+        # GET /spray/task/{SprayTaskId}
+        GetOneScheduledSprayTaskById:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledSprayTaskById"
+        # DELETE /spray/task/{SprayTaskId}
+        DeleteOneScheduledSprayTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledSprayTaskById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /spray/complete
+        GetAllCompletedSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedSprayTasksRedirected"
+        # GET /spray/task
+        GetAllScheduledSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledSprayTasksRedirected"
+        # GET /spray/task/{SprayTaskId}
+        GetOneScheduledSprayTaskById:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledSprayTaskById"
+        # DELETE /spray/task/{SprayTaskId}
+        DeleteOneScheduledSprayTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledSprayTaskById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection
+  description: >
+    Removes either a specific stored Spray Task or a specific stored Spray with Spray Measurements from the completed collection.
+    The parameter `SprayTaskId` is required, to delete the specific stored Spray.
+  operationId: deleteOneCompletedSprayTask
+  tags:
+    - Spray
+    - Spray Task
+    - Completed Spray Task
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/SprayTaskId"
+  responses:
+    "200":
+      description: Successfully deleted completed Spray
+      links:
+        # GET /spray/complete
+        GetAllCompletedSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedSprayTasksRedirected"
+        # GET /spray/task
+        GetAllScheduledSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledSprayTasksRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /spray/complete
+        GetAllCompletedSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllCompletedSprayTasksRedirected"
+        # GET /spray/task
+        GetAllScheduledSprayTasksRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllScheduledSprayTasksRedirected"
+        # GET /spray/task/{SprayTaskId}
+        GetOneScheduledSprayTaskById:
+          $ref: "../openapi.yaml#/components/links/GetOneScheduledSprayTaskById"
+        # DELETE /spray/task/{SprayTaskId}
+        DeleteOneScheduledSprayTaskById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneScheduledSprayTaskById"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"

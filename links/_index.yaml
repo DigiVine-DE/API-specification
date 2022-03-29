@@ -92,3 +92,25 @@ DeleteOneCompletedHarvestTaskById:              # DELETE /harvest/task/{HarvestT
   $ref: "./from_request/harvest_complete_delete_one.yaml"
 DeleteOneCompletedHarvestTaskByIdFromResponse:  # DELETE /harvest/task/{HarvestTaskId}
   $ref: "./from_response/harvest_complete_delete_one_response.yaml"
+# Spray - task
+GetAllScheduledSprayTasksRedirected:          # GET /spray/task
+  $ref: "./from_request/spray_task_get_all.yaml"
+GetOneScheduledSprayTaskById:                 # GET /spray/task/{SprayTaskId}
+  $ref: "./from_request/spray_task_get_one.yaml"
+GetOneScheduledSprayTaskByIdFromResponse:     # GET /spray/task/{SprayTaskId}
+  $ref: "./from_response/spray_task_get_one_response.yaml"
+DeleteOneScheduledSprayTaskById:              # DELETE /spray/task/{SprayTaskId}
+  $ref: "./from_request/spray_task_delete_one.yaml"
+DeleteOneScheduledSprayTaskByIdFromResponse:  # DELETE /spray/task/{SprayTaskId}
+  $ref: "./from_response/spray_task_delete_one_response.yaml"
+# Spray - complete
+GetAllCompletedSprayTasksRedirected:          # GET /spray/task
+  $ref: "./from_request/spray_complete_get_all.yaml"
+GetOneCompletedSprayTaskById:                 # GET /spray/task/{SprayTaskId}
+  $ref: "./from_request/spray_complete_get_one.yaml"
+GetOneCompletedSprayTaskByIdFromResponse:     # GET /spray/task/{SprayTaskId}
+  $ref: "./from_response/spray_complete_get_one_response.yaml"
+DeleteOneCompletedSprayTaskById:              # DELETE /spray/task/{SprayTaskId}
+  $ref: "./from_request/spray_complete_delete_one.yaml"
+DeleteOneCompletedSprayTaskByIdFromResponse:  # DELETE /spray/task/{SprayTaskId}
+  $ref: "./from_response/spray_complete_delete_one_response.yaml"
