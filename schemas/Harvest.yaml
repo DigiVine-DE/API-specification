@@ -82,3 +82,23 @@ properties:
         format: int64
         description: The effective total time of the harvesting run in minutes
         example: 95
+      average_tartaric_acid:
+        type: integer
+        format: int64
+        description: Average tartaric acid content of the harvested fruits in g/L
+        example: 23
+      average_malic_acid:
+        type: integer
+        format: int64
+        description: Average malic acid content of the harvested fruits in g/L
+        example: 23
+      average_glucose:
+        type: integer
+        format: int64
+        description: Average glucose content of the harvested fruits in g/L
+        example: 7
+      average_fructose:
+        type: integer
+        format: int64
+        description: Average fructose content of the harvested fruits in g/L
+        example: 7
