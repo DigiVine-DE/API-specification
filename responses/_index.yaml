@@ -10,3 +10,5 @@ Forbidden:
   $ref: "./Forbidden.yaml"
 BadRequest:
   $ref: "./BadRequest.yaml"
+SeeOther:
+  $ref: "./SeeOther.yaml"

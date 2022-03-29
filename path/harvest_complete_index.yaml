@@ -90,6 +90,9 @@ post:
       $ref: "../openapi.yaml#/components/responses/Unauthorized"
     "403":
       $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "303":
+      $ref: "../openapi.yaml#/components/responses/SeeOther"
+
 delete:
   summary: Can't delete complete collection
   description: >
