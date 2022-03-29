@@ -1275,6 +1275,13 @@ components:
       description: Specified API key does not have the required rights.
     BadRequest:
       description: 'Bad Request: Could not parse parameters'
+    SeeOther:
+      description: See Other
+      headers:
+        Location:
+          description: 'The server is redirecting the user agent to a different resource, as indicated by a URI in the Location header field, which is intended to provide an indirect response to the original request.'
+          schema:
+            type: string
   links:
     GetAllFieldsRedirected:
       operationId: getAllFields
@@ -3057,6 +3064,8 @@ paths:
               $ref: '#/components/links/GetOneCompletedHarvestTaskByIdFromResponse'
             DeleteOneCompletedHarvestTaskByIdFromResponse:
               $ref: '#/components/links/DeleteOneCompletedHarvestTaskByIdFromResponse'
+        '303':
+          $ref: '#/components/responses/SeeOther'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3252,6 +3261,8 @@ paths:
               $ref: '#/components/links/GetOneScheduledHarvestTaskByIdFromResponse'
             DeleteOneScheduledHarvestTaskByIdFromResponse:
               $ref: '#/components/links/DeleteOneScheduledHarvestTaskByIdFromResponse'
+        '303':
+          $ref: '#/components/responses/SeeOther'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
