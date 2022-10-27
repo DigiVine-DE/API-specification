@@ -1186,6 +1186,13 @@ components:
         other:
           value: 815
           summary: Another example for the offset parameter.
+    Box2D:
+      name: Box2D
+      in: query
+      required: false
+      description: The two-dimensional geometry bounding box
+      schema:
+        $ref: '#/components/schemas/BBox'
     FieldId:
       name: FieldId
       in: path
@@ -1854,13 +1861,14 @@ paths:
     get:
       summary: Returns a list of (all) stored Fields
       description: |
-        Returns a list of (all) stored Fields. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Fields will be returned.
+        Returns a list of (all) stored Fields. With the optional parameter `Box2D`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Fields will be returned.
       operationId: getAllFields
       tags:
         - Field
         - Get
         - GetAll
       parameters:
+        - $ref: '#/components/parameters/Box2D'
         - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
       responses:
