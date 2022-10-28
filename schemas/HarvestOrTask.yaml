@@ -33,7 +33,7 @@ properties:
     properties:
       task_id:
         type: integer
-        format: int32
+        format: int64
         description: The numeric ID of the Harvest Task
         example: 4711
       task_name:

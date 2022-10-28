@@ -28,7 +28,7 @@ properties:
     properties:
       id:
         type: integer
-        format: int32
+        format: int64
         description: The numeric ID of the Plant
         example: 4711
       import_key:
@@ -68,6 +68,6 @@ properties:
         example: 2000
       row_number:
         type: integer
-        format: int32
+        format: int64
         description: Number of the row of the Plant
         example: 2
