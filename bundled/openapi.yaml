@@ -324,7 +324,7 @@ components:
           properties:
             id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Plant
               example: 4711
             import_key:
@@ -363,7 +363,7 @@ components:
               example: 2000
             row_number:
               type: integer
-              format: int32
+              format: int64
               description: Number of the row of the Plant
               example: 2
     PlantPatch:
@@ -405,7 +405,7 @@ components:
           example: 2000
         row_number:
           type: integer
-          format: int32
+          format: int64
           description: Number of the row of the Plant
           example: 2
     PlanterRun:
@@ -435,22 +435,22 @@ components:
           properties:
             id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Planter Run
               example: 4711
             user_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the User who planted
               example: 815
             terminal_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Terminal of the Machine that planted
               example: 42
             field_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Field on which the Planter Run is performed.
               example: 4711
     Field:
@@ -477,7 +477,7 @@ components:
           properties:
             id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the field
               example: 4711
             name:
@@ -486,7 +486,7 @@ components:
               example: Dürkheimer Michelsberg
             station_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the station that makes Forecasts for a group of Fields.
               example: 4711
             number:
@@ -544,17 +544,17 @@ components:
       properties:
         id:
           type: integer
-          format: int32
+          format: int64
           description: The numeric ID of the Forecast
           example: 4711
         group_id:
           type: integer
-          format: int32
+          format: int64
           description: Notice. This information will soon no longer be used and sent along!
           example: 1
         station_id:
           type: integer
-          format: int32
+          format: int64
           description: The numeric ID of the station that makes Forecasts for a group of Fields.
           example: 4711
         station:
@@ -565,14 +565,14 @@ components:
           type: array
           items:
             type: integer
-            format: int32
+            format: int64
           description: An array containing the IDs of the Fields for which the Forecast is.
           example:
             - 4711
             - 815
         model_id:
           type: integer
-          format: int32
+          format: int64
           description: The numeric ID of the model
           example: 17
         model:
@@ -622,7 +622,7 @@ components:
       properties:
         id:
           type: integer
-          format: int32
+          format: int64
           description: The numeric ID of the Measurement
           example: 4711
         time:
@@ -664,12 +664,12 @@ components:
           properties:
             id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Quality Measurement
               example: 4711
             plant_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Plant
               example: 815
             timestamp:
@@ -722,7 +722,7 @@ components:
       properties:
         id:
           type: integer
-          format: int32
+          format: int64
         type:
           type: string
           enum:
@@ -738,7 +738,7 @@ components:
               type: string
             field_id:
               type: integer
-              format: int32
+              format: int64
     HarvestTask:
       type: object
       required:
@@ -765,7 +765,7 @@ components:
           properties:
             task_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Harvest Task
               example: 4711
             task_name:
@@ -846,7 +846,7 @@ components:
           properties:
             task_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Harvest Task
               example: 4711
             task_name:
@@ -949,7 +949,7 @@ components:
           properties:
             task_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Harvest Task
               example: 4711
             task_name:
@@ -1079,7 +1079,7 @@ components:
           properties:
             task_id:
               type: integer
-              format: int32
+              format: int64
               description: The numeric ID of the Harvest Task
               example: 4711
             task_name:
@@ -1193,7 +1193,7 @@ components:
       description: The numeric ID of the field
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
     ForecastId:
       name: ForecastId
@@ -1202,7 +1202,7 @@ components:
       description: The numeric ID of the forecast
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
     PlantId:
       name: PlantId
@@ -1211,7 +1211,7 @@ components:
       description: The numeric ID of the plant
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
     PlanterRunId:
       name: PlanterRunId
@@ -1220,7 +1220,7 @@ components:
       description: The numeric ID of the planter run
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
     QualityMeasurementId:
       name: QualityMeasurementId
@@ -1229,7 +1229,7 @@ components:
       description: The numeric ID of the quality measurement
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
     TerrainId:
       name: TerrainId
@@ -1238,7 +1238,7 @@ components:
       description: The numeric ID of the terrain model
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
     HarvestTaskId:
       name: HarvestTaskId
@@ -1247,7 +1247,7 @@ components:
       description: The numeric ID of the Harvest Task
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
     SprayTaskId:
       name: SprayTaskId
@@ -1256,7 +1256,7 @@ components:
       description: The numeric ID of the Spray Task
       schema:
         type: integer
-        format: int32
+        format: int64
         example: 4711
   responses:
     BackendError:
@@ -1746,7 +1746,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Forecast.
           links:
             GetAllForecastsRedirected:
@@ -1905,7 +1905,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Field.
           links:
             GetAllFieldsRedirected:
@@ -2125,7 +2125,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Planter Run.
           links:
             GetAllPlanterRunsById:
@@ -2340,7 +2340,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Plant.
           links:
             GetAllPlantsById:
@@ -2669,7 +2669,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Quality Measurement.
           links:
             GetAllQualityMeasurementsById:
@@ -3049,7 +3049,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Harvest Task.
           links:
             GetAllScheduledHarvestTasksRedirected:
@@ -3246,7 +3246,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Harvest Task.
           links:
             GetAllCompletedHarvestTasksRedirected:
@@ -3443,7 +3443,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Spray Task.
           links:
             GetAllScheduledSprayTasksRedirected:
@@ -3638,7 +3638,7 @@ paths:
                 properties:
                   id:
                     type: integer
-                    format: int32
+                    format: int64
                     description: Numeric ID of the created Spray Task.
           links:
             GetAllCompletedSprayTasksRedirected:
