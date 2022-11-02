@@ -68,6 +68,6 @@ properties:
         example: 2000
       row_number:
         type: integer
-        format: int64
+        format: int32
         description: Number of the row of the Plant
         example: 2
