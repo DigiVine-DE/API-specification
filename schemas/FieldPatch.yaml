@@ -6,7 +6,7 @@ properties:
     example: Dürkheimer Michelsberg
   station_id:
     type: integer
-    format: int32
+    format: int64
     description: The numeric ID of the station that makes Forecasts for a group of Fields.
     example: 4711
   number:

@@ -28,12 +28,12 @@ properties:
     properties:
       id:
         type: integer
-        format: int32
+        format: int64
         description: The numeric ID of the Quality Measurement
         example: 4711
       plant_id:
         type: integer
-        format: int32
+        format: int64
         description: The numeric ID of the Plant
         example: 815
       timestamp:
