@@ -4,5 +4,5 @@ required: true
 description: The numeric ID of the quality measurement
 schema:
   type: integer
-  format: int32
+  format: int64
   example: 4711

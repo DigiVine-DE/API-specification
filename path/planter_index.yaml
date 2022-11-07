@@ -71,7 +71,7 @@ post:
             properties:
               id:
                 type: integer
-                format: int32
+                format: int64
                 description: Numeric ID of the created Planter Run.
       links:
         # GET /field/{FieldId}/planter
