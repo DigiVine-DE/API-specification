@@ -3,8 +3,8 @@ Limit:
   $ref: "./Limit.yaml"
 Offset:
   $ref: "./Offset.yaml"
-Box2d:
-  $ref: "./Box2d.yaml"  
+Box:
+  $ref: "./Box.yaml"  
 # Ids
 FieldId:
   $ref: "./FieldId.yaml"
