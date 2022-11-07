@@ -1861,7 +1861,7 @@ paths:
     get:
       summary: Returns a list of (all) stored Fields
       description: |
-        Returns a list of (all) stored Fields. With the optional parameter `Box2D`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Fields will be returned.
+        Returns a list of (all) stored Fields. With the optional parameter `Box2D`, only the fields that intersect the given bounding box will be returned.  With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Fields will be returned.
       operationId: getAllFields
       tags:
         - Field
