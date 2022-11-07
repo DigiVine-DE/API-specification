@@ -1,4 +1,4 @@
-name: Box
+name: box
 in: query
 required: false
 description: The two-dimensional geometry bounding box
