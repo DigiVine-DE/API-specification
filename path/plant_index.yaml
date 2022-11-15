@@ -3,6 +3,7 @@ get:
   description: >
     Returns a list of (all) stored Plants.
     The parameters `FieldId` and `PlanterRunId` are required, to get the specific stored Plants.
+    With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned.
     With the parameters `Limit` and `Offset` it can be specified, which data to return.
     If the operation was successful (status code `200`), an array with Plants will be returned.
   operationId: getAllPlants
@@ -15,6 +16,7 @@ get:
     - $ref: "../openapi.yaml#/components/parameters/Limit"
     - $ref: "../openapi.yaml#/components/parameters/FieldId"
     - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/Box2d"
   responses:
     "200":
       description: Successful operation

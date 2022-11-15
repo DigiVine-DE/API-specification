@@ -2,6 +2,7 @@ get:
   summary: Returns a list of (all) stored scheduled Spray Tasks
   description: >
     Returns a list of (all) stored scheduled Spray Tasks.
+    With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned.
     With the parameters `Limit` and `Offset` it can be specified, which data to return.
     If the operation was successful (status code `200`), an array with Spray Tasks will be returned.
   operationId: getAllScheduledSprayTasks
@@ -12,6 +13,7 @@ get:
     - Get
     - GetAll
   parameters:
+    - $ref: "../openapi.yaml#/components/parameters/Box2d"
     - $ref: "../openapi.yaml#/components/parameters/Offset"
     - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
