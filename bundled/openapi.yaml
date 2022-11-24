@@ -2072,7 +2072,7 @@ paths:
     get:
       summary: Returns a list of (all) stored Planter Runs
       description: |
-        Returns a list of (all) stored Planter Runs. The parameter `FieldId` is required, to get the specific stored Planter Runs. With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Planter Runs will be returned.
+        Returns a list of (all) stored Planter Runs. The parameter `FieldId` is required, to get the specific stored Planter Runs. With the optional parameter `Box2d`, only the Planter Runs that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Planter Runs will be returned.
       operationId: getAllPlanterRuns
       tags:
         - Planter
@@ -2280,7 +2280,7 @@ paths:
     get:
       summary: Returns a list of (all) stored Plants
       description: |
-        Returns a list of (all) stored Plants. The parameters `FieldId` and `PlanterRunId` are required, to get the specific stored Plants. With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Plants will be returned.
+        Returns a list of (all) stored Plants. The parameters `FieldId` and `PlanterRunId` are required, to get the specific stored Plants. With the optional parameter `Box2d`, only the Plants that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Plants will be returned.
       operationId: getAllPlants
       tags:
         - Plant
@@ -3004,7 +3004,7 @@ paths:
     get:
       summary: Returns a list of (all) stored scheduled Harvest Tasks
       description: |
-        Returns a list of (all) stored scheduled Harvest Tasks. With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Harvest Tasks will be returned.
+        Returns a list of (all) stored scheduled Harvest Tasks. With the optional parameter `Box2d`, only the Harvest Tasks that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Harvest Tasks will be returned.
       operationId: getAllScheduledHarvestTasks
       tags:
         - Harvest
@@ -3202,7 +3202,7 @@ paths:
     get:
       summary: Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements
       description: |
-        Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements. With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Harvests will be returned.
+        Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements. With the optional parameter `Box2d`, only the completed Harvest Tasks that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Harvests will be returned.
       operationId: getAllCompletedHarvestTasks
       tags:
         - Harvest
@@ -3400,7 +3400,7 @@ paths:
     get:
       summary: Returns a list of (all) stored scheduled Spray Tasks
       description: |
-        Returns a list of (all) stored scheduled Spray Tasks. With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Spray Tasks will be returned.
+        Returns a list of (all) stored scheduled Spray Tasks. With the optional parameter `Box2d`, only the Spray Tasks that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Spray Tasks will be returned.
       operationId: getAllScheduledSprayTasks
       tags:
         - Spray
@@ -3596,7 +3596,7 @@ paths:
     get:
       summary: Returns a list of (all) stored completed Spray Tasks and Sprays with Spray Measurements
       description: |
-        Returns a list of (all) stored completed Spray Tasks and Sprays with Spray Measurements. With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Sprays will be returned.
+        Returns a list of (all) stored completed Spray Tasks and Sprays with Spray Measurements. With the optional parameter `Box2d`, only the completed Spray Tasks that intersect the given bounding box will be returned. With the parameters `Limit` and `Offset` it can be specified, which data to return. If the operation was successful (status code `200`), an array with Sprays will be returned.
       operationId: getAllCompletedSprayTasks
       tags:
         - Spray
