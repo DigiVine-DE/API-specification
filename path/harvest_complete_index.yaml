@@ -2,7 +2,7 @@ get:
   summary: Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements
   description: >
     Returns a list of (all) stored completed Harvest Tasks and Harvests with Harvest Measurements.
-    With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned.
+    With the optional parameter `Box2d`, only the completed Harvest Tasks that intersect the given bounding box will be returned.
     With the parameters `Limit` and `Offset` it can be specified, which data to return.
     If the operation was successful (status code `200`), an array with Harvests will be returned.
   operationId: getAllCompletedHarvestTasks

@@ -2,7 +2,7 @@ get:
   summary: Returns a list of (all) stored completed Spray Tasks and Sprays with Spray Measurements
   description: >
     Returns a list of (all) stored completed Spray Tasks and Sprays with Spray Measurements.
-    With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned.
+    With the optional parameter `Box2d`, only the completed Spray Tasks that intersect the given bounding box will be returned.
     With the parameters `Limit` and `Offset` it can be specified, which data to return.
     If the operation was successful (status code `200`), an array with Sprays will be returned.
   operationId: getAllCompletedSprayTasks

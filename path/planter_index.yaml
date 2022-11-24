@@ -3,7 +3,7 @@ get:
   description: >
     Returns a list of (all) stored Planter Runs.
     The parameter `FieldId` is required, to get the specific stored Planter Runs.
-    With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned.
+    With the optional parameter `Box2d`, only the Planter Runs that intersect the given bounding box will be returned.
     With the parameters `Limit` and `Offset` it can be specified, which data to return.
     If the operation was successful (status code `200`), an array with Planter Runs will be returned.
   operationId: getAllPlanterRuns
