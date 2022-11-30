@@ -26,6 +26,8 @@ Polygon:
   $ref: "./geojson/Polygon.yaml"
 MultiPolygon:
   $ref: "./geojson/MultiPolygon.yaml"
+Climate:
+  $ref: "./Climate.yaml"
 Plant:
   $ref: "./Plant.yaml"
 PlantPatch:
