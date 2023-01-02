@@ -1,0 +1,9 @@
+# GET /climate/{ClimateId}
+operationId: getOneClimate
+parameters:
+  ClimateId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `GET /field/{ClimateId}`
+  (see also `getOneClimate`).
+  Returns a specific stored Climate measurement.

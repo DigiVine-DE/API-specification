@@ -1,0 +1,9 @@
+# DELETE /climate/{ClimateId}
+operationId: deleteOneClimate
+parameters:
+  ClimateId: "$request.path.ClimateId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `DELETE /climate/{ClimateId}`
+  (see also `deleteOneClimate`).
+  Deletes a specific stored Climate measurement.

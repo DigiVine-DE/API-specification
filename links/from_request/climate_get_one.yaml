@@ -1,0 +1,9 @@
+# GET /climate/{ClimateId}
+operationId: getOneClimate
+parameters:
+  ClimateId: "$request.path.ClimateId"
+description: >
+  The `id` value given in the request can be used as
+  the `id` parameter in `GET /climate/{ClimateId}`
+  (see also `getOneClimate`).
+  Returns a specific stored Climate measurement.

@@ -1,0 +1,9 @@
+# DELETE /climate/{ClimateId}
+operationId: deleteOneClimate
+parameters:
+  ClimateId: "$response.body#/id"
+description: >
+  The `id` value returned in the response can be used as
+  the `id` parameter in `DELETE /climate/{ClimateId}`
+  (see also `deleteOneClimate`).
+  Deletes a specific stored Climate measurement.
