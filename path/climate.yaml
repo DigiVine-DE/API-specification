@@ -49,6 +49,7 @@ delete:
     - Climate
     - Delete
     - DeleteOne
+    - Modify
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/ClimateId"
   responses:

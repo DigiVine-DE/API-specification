@@ -42,6 +42,7 @@ post:
   tags:
     - Climate
     - Add
+    - Modify
   requestBody:
     required: true
     description: A Climate measurement to be added to the collection
@@ -89,6 +90,7 @@ delete:
     - Climate
     - Delete
     - DeleteAll
+    - Modify
   responses:
     "405":
       $ref: "../openapi.yaml#/components/responses/MethodNotAllowed"
