@@ -1,0 +1,75 @@
+get:
+  summary: Returns a specific stored Climate measurement from the collection
+  description: >
+    Returns a specific stored Climate measurement from the collection.
+    The parameter `ClimateId` is required, to get the specific stored measurement.
+    If the operation was successful (status code `200`), the specific measurement will be returned.
+  operationId: getOneMeasurement
+  tags:
+    - Climate
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/ClimateId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Climate"
+      links:
+        # GET /climate
+        GetAllClimatesRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllClimatesRedirected"
+        # DELETE /climate/{ClimateId}
+        DeleteOneClimateById:
+          $ref: "../openapi.yaml#/components/links/DeleteOneClimateById"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /climate
+        GetAllClimatesRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllClimatesRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes a specific stored Climate measurement from the collection
+  description: >
+    Removes a specific stored Climate measurement from the collection.
+    The parameter `ClimateId` is required, to delete the specific stored Climate measurement.
+  operationId: deleteOneClimate
+  tags:
+    - Climate
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/ClimateId"
+  responses:
+    "200":
+      description: Successfully deleted Field
+      links:
+        # GET /climate
+        GetAllClimatesRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllClimatesRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        # GET /climate
+        GetAllClimatesRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllClimatesRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"

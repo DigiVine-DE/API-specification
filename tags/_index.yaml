@@ -13,6 +13,8 @@
 # DELETE, PATCH
 - $ref: "./modify.yaml"
 #
+# Climate
+- $ref: "./climate.yaml"
 # Field
 - $ref: "./field.yaml"
 # Planter Run

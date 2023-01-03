@@ -1,3 +1,14 @@
+# Climate
+GetAllClimatesRedirected:                       # GET /climate
+  $ref: "./from_request/climate_get_all.yaml"
+GetOneClimateById:                              # GET /climate/{ClimateId}
+  $ref: "./from_request/climate_get_one.yaml"
+GetOneClimateByIdFromResponse:                  # GET /climate/{ClimateId}
+  $ref: "./from_response/climate_get_one_response.yaml"
+DeleteOneClimateById:                           # DELETE /climate/{ClimateId}
+  $ref: "./from_request/climate_delete_one.yaml"
+DeleteOneClimateByIdFromResponse:               # DELETE /climate/{ClimateId}
+  $ref: "./from_response/climate_delete_one_response.yaml"
 # Field
 GetAllFieldsRedirected:                         # GET /field
   $ref: "./from_request/field_get_all.yaml"

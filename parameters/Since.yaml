@@ -1,0 +1,11 @@
+name: Since
+in: query
+description: The earliest timestamp to return
+schema:
+  type: string
+  format: date-time
+  description: the time of the measurement
+  externalDocs:
+    description: RFC3339 - Date and Time on the Internet - Timestamps
+    url: https://tools.ietf.org/html/rfc3339
+  example: 1970-01-01T00:00:00.000Z

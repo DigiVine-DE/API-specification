@@ -35,6 +35,10 @@ tags:
   $ref: "./tags/_index.yaml"
 
 paths:
+  /climate:
+    $ref: "path/climate_index.yaml"
+  /climate/{ClimateId}:
+    $ref: "path/climate.yaml"
   /forecast:
     $ref: "path/forecast_index.yaml"
   /forecast/{ForecastId}:

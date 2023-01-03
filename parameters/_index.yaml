@@ -4,8 +4,16 @@ Limit:
 Offset:
   $ref: "./Offset.yaml"
 Box2d:
-  $ref: "./Box2d.yaml"  
+  $ref: "./Box2d.yaml"
+Since:
+  $ref: "./Since.yaml"
+Until:
+  $ref: "./Until.yaml"
 # Ids
+ClimateId:
+  $ref: "./ClimateId.yaml"
+DeviceId:
+  $ref: "./DeviceId.yaml"
 FieldId:
   $ref: "./FieldId.yaml"
 ForecastId:

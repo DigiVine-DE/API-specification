@@ -1,0 +1,8 @@
+name: ClimateId
+in: path
+required: true
+description: The numeric ID of the Climate measurement
+schema:
+  type: integer
+  format: int64
+  example: 4711

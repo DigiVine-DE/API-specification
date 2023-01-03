@@ -1,0 +1,6 @@
+# GET /climate
+operationId: getAllClimates
+description: >
+  `GET /climate`
+  (see also `getAllClimates`).
+  Returns a list of (all) stored Climate measurements.
