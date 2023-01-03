@@ -1851,6 +1851,7 @@ paths:
       tags:
         - Climate
         - Add
+        - Modify
       requestBody:
         required: true
         description: A Climate measurement to be added to the collection
@@ -1865,6 +1866,7 @@ paths:
             application/json:
               schema:
                 type: object
+                title: InsertedClimateId
                 properties:
                   id:
                     type: integer
@@ -1894,6 +1896,7 @@ paths:
         - Climate
         - Delete
         - DeleteAll
+        - Modify
       responses:
         '400':
           $ref: '#/components/responses/BadRequest'
@@ -1949,6 +1952,7 @@ paths:
         - Climate
         - Delete
         - DeleteOne
+        - Modify
       parameters:
         - $ref: '#/components/parameters/ClimateId'
       responses:
