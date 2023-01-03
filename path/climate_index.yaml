@@ -57,6 +57,7 @@ post:
         application/json:
           schema:
             type: object
+            title: InsertedClimateId
             properties:
               id:
                 type: integer
