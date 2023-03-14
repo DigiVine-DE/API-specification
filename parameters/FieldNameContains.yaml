@@ -1,0 +1,14 @@
+name: fieldNameContains
+in: query
+required: false
+description: A string which needs to be contained in the name (case insensitive)
+schema:
+  type: string
+  default: ""
+examples:
+  default:
+    value: ""
+    summary: The empty string is contained in all names, so specifying this (or nothing) will return all results
+  other:
+    value: "Burg"
+    summary: This will find names like "Burgunder", "Hamburg", and "Hamburger", but not "Berg"

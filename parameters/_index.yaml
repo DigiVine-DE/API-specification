@@ -5,6 +5,8 @@ Offset:
   $ref: "./Offset.yaml"
 Box2d:
   $ref: "./Box2d.yaml"  
+FieldNameContains:
+  $ref: "./FieldNameContains.yaml"
 # Ids
 FieldId:
   $ref: "./FieldId.yaml"
