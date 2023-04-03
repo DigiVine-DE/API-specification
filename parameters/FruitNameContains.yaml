@@ -1,0 +1,15 @@
+name: fruitNameContains
+in: query
+required: false
+description: A set of keywords used to filter the results of fields. Only fields with a fruit_name containing all of the specified keywords (case insensitive) will be returned.
+schema:
+  type: array
+  items:
+    type: string
+examples:
+  default:
+    value: []
+    summary: An empty array has no effect on the results
+  example1:
+    value: ["ries", "ing"]
+    summary: This will find fields with fruit names like "Riesling", but not fields with fruit names like "Chardonnay" or "Ries"
