@@ -13,7 +13,9 @@ get:
     - GetAll
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/Box2d"
-    - $ref: "../openapi.yaml#/components/parameters/FieldNameContains"
+    - $ref: "../openapi.yaml#/components/parameters/FuzzyFieldKeywords"
+    - $ref: "../openapi.yaml#/components/parameters/FruitNameContains"
+    - $ref: "../openapi.yaml#/components/parameters/FruitNameContains"
     - $ref: "../openapi.yaml#/components/parameters/Offset"
     - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
