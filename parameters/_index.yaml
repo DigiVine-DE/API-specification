@@ -4,7 +4,11 @@ Limit:
 Offset:
   $ref: "./Offset.yaml"
 Box2d:
-  $ref: "./Box2d.yaml"  
+  $ref: "./Box2d.yaml"
+FuzzyFieldKeywords:
+  $ref: "./FuzzyFieldKeywords.yaml"
+FruitNameContains:
+  $ref: "./FruitNameContains.yaml"
 FieldNameContains:
   $ref: "./FieldNameContains.yaml"
 # Ids
