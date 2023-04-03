@@ -1193,6 +1193,46 @@ components:
       description: The two-dimensional geometry bounding box
       schema:
         $ref: '#/components/schemas/BBox'
+    FuzzyFieldKeywords:
+      name: fuzzyFieldKeywords
+      in: query
+      required: false
+      description: A set of keywords used to filter the results of fields. Only fields with at least one string attribute containing one of the keywords (case insensitive) will be returned.
+      schema:
+        type: array
+        items:
+          type: string
+      examples:
+        default:
+          value: []
+          summary: An empty array has no effect on the results
+        example1:
+          value:
+            - Burg
+          summary: 'This will find fields with names like "Burgunder", "Hamburg", and "Hamburger", but not "Berg"'
+        example2:
+          value:
+            - Dürk
+            - Ries
+          summary: 'This will find fields with names like "Dürkheimer Michelsberg" and/or fruit names like "Riesling", but not field with name "Hamburg" and fruit names "Dornfelder"'
+    FruitNameContains:
+      name: fruitNameContains
+      in: query
+      required: false
+      description: A set of keywords used to filter the results of fields. Only fields with a fruit_name containing all of the specified keywords (case insensitive) will be returned.
+      schema:
+        type: array
+        items:
+          type: string
+      examples:
+        default:
+          value: []
+          summary: An empty array has no effect on the results
+        example1:
+          value:
+            - ries
+            - ing
+          summary: 'This will find fields with fruit names like "Riesling", but not fields with fruit names like "Chardonnay" or "Ries"'
     FieldNameContains:
       name: fieldNameContains
       in: query
@@ -1888,7 +1928,9 @@ paths:
         - GetAll
       parameters:
         - $ref: '#/components/parameters/Box2d'
+        - $ref: '#/components/parameters/FuzzyFieldKeywords'
         - $ref: '#/components/parameters/FieldNameContains'
+        - $ref: '#/components/parameters/FruitNameContains'
         - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
       responses:
