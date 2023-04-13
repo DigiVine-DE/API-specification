@@ -1,0 +1,18 @@
+name: fuzzyFieldKeywords
+in: query
+required: false
+description: A set of keywords used to filter the results of fields. Only fields with at least one string attribute containing one of the keywords (case insensitive) will be returned.
+schema:
+  type: array
+  items:
+    type: string
+examples:
+  default:
+    value: []
+    summary: An empty array has no effect on the results
+  example1:
+    value: ["Burg"]
+    summary: This will find fields with names like "Burgunder", "Hamburg", and "Hamburger", but not "Berg"
+  example2:
+    value: ["Dürk", "Ries"]
+    summary: This will find fields with names like "Dürkheimer Michelsberg" and/or fruit names like "Riesling", but not field with name "Hamburg" and fruit names "Dornfelder"

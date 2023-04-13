@@ -1,14 +1,16 @@
 name: fieldNameContains
 in: query
 required: false
-description: A string which needs to be contained in the name (case insensitive)
+description: A set of keywords used to filter the results of fields. Only fields with a name containing all of the specified keywords (case insensitive) will be returned.
 schema:
-  type: string
-  default: ""
+  type: array
+  items:
+    type: string
+  uniqueItems: true
 examples:
   default:
-    value: ""
-    summary: The empty string is contained in all names, so specifying this (or nothing) will return all results
-  other:
-    value: "Burg"
-    summary: This will find names like "Burgunder", "Hamburg", and "Hamburger", but not "Berg"
+    value: []
+    summary: An empty array has no effect on the results
+  example1:
+    value: ["Mich", "dürk"]
+    summary: This will find fields with names like "Dürkheimer Michelsberg", but not fields with names like "Michelsberg"

@@ -2,9 +2,19 @@ get:
   summary: Returns a list of (all) stored Fields
   description: >
     Returns a list of (all) stored Fields.
-    With the optional parameter `Box2d`, only the fields that intersect the given bounding box will be returned.
-    With the optional parameter `fieldNameContains`, only the fields whose name contains the given string will be returned.
+
+    With the optional parameter `Box2d` parameter, only the fields that intersect the given bounding box will be returned.
+
+    With the optional parameter `FieldNameContains`, only the fields with names containing all specified keywords (case insensitive) will be returned.
+
+    With the optional parameter `FruitNameContains`, only the fields with fruit names containing all specified keywords (case insensitive) will be returned.
+
+    With the optional parameter `FuzzyFieldKeywords`, only the fields with at least one string attribute containing one of the specified keywords (case insensitive) will be returned.
+
     With the parameters `Limit` and `Offset` it can be specified, which data to return.
+
+    The returned fields are ordered based on the number of string segments matched by the fuzzy keywords. Fields with case-sensitive matches receive a higher score. If two fields have identical scores, they are sorted by their field ID.
+
     If the operation was successful (status code `200`), an array with Fields will be returned.
   operationId: getAllFields
   tags:
@@ -13,7 +23,9 @@ get:
     - GetAll
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/Box2d"
+    - $ref: "../openapi.yaml#/components/parameters/FuzzyFieldKeywords"
     - $ref: "../openapi.yaml#/components/parameters/FieldNameContains"
+    - $ref: "../openapi.yaml#/components/parameters/FruitNameContains"
     - $ref: "../openapi.yaml#/components/parameters/Offset"
     - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
