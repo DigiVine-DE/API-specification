@@ -1,7 +1,8 @@
 get:
   summary: Returns all tokens of the user
   description: >
-    Returns all tokens of the user
+    Returns a list of (all) existing tokens of the user.
+    With the optional parameter `TokenStrContains`, only the tokens with names containing all specified keywords (case insensitive) will be returned.
     If the operation was successful (status code `200`), an array with tokens will be returned.
   operationId: getUserTokens
   tags:
@@ -11,6 +12,7 @@ get:
     - GetOne
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/TokenstrContains"
   responses:
     "200":
       description: Successful operation

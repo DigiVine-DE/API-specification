@@ -11,15 +11,17 @@ FruitNameContains:
   $ref: "./FruitNameContains.yaml"
 FieldNameContains:
   $ref: "./FieldNameContains.yaml"
+Tokenstr:
+  $ref: "./Tokenstr.yaml"
+TokenstrContains:
+  $ref: "./TokenstrContains.yaml"
+AccessRightPath:
+  $ref: "./AccessRightPath.yaml"
 # Ids
 FieldId:
   $ref: "./FieldId.yaml"
 UserId:
   $ref: "./UserId.yaml"
-Tokenstr:
-  $ref: "./Tokenstr.yaml"
-AccessRightPath:
-  $ref: "./AccessRightPath.yaml"
 ForecastId:
   $ref: "./ForecastId.yaml"
 PlantId:

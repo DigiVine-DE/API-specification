@@ -2,7 +2,7 @@ get:
   summary: Returns a list of all existing tokens
   description: >
     Returns a list of (all) existing tokens.
-    With the optional parameter `tokenstr` parameter, only the token has the same `tokenstr` will be returned.
+    With the optional parameter `TokenStrContains`, only the tokens with names containing all specified keywords (case insensitive) will be returned.
     If the operation was successful (status code `200`), an array with tokens will be returned.
   operationId: getAllTokens
   tags:
@@ -10,12 +10,7 @@ get:
     - Get
     - GetAll
   parameters:
-    - name: tokenstr
-      in: query
-      required: false
-      description: The token string
-      schema:
-        type: string
+    - $ref: "../openapi.yaml#/components/parameters/TokenstrContains"
   responses:
     "200":
       description: Successful operation

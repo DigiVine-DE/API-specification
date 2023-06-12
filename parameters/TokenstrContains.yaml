@@ -1,0 +1,16 @@
+name: tokenstrContains
+in: query
+required: false
+description: A set of keywords used to filter tokens. Only tokens that contain all of the specified keywords (case insensitive) will be returned.
+schema:
+  type: array
+  items:
+    type: string
+  uniqueItems: true
+examples:
+  default:
+    value: []
+    summary: An empty array has no effect on the results
+  example1:
+    value: ["all", "readonly"]
+    summary: This will find tokens like "all_readonly", but not tokens like "all"
