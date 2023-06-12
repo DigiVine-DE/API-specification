@@ -1277,6 +1277,39 @@ components:
             - Mich
             - dürk
           summary: 'This will find fields with names like "Dürkheimer Michelsberg", but not fields with names like "Michelsberg"'
+    Tokenstr:
+      name: Tokenstr
+      in: path
+      description: The token string of the token to retrieve
+      required: true
+      schema:
+        type: string
+    TokenstrContains:
+      name: tokenstrContains
+      in: query
+      required: false
+      description: A set of keywords used to filter tokens. Only tokens that contain all of the specified keywords (case insensitive) will be returned.
+      schema:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+      examples:
+        default:
+          value: []
+          summary: An empty array has no effect on the results
+        example1:
+          value:
+            - all
+            - readonly
+          summary: 'This will find tokens like "all_readonly", but not tokens like "all"'
+    AccessRightPath:
+      name: AccessRightPath
+      in: path
+      description: The path of the access right
+      required: true
+      schema:
+        type: string
     FieldId:
       name: FieldId
       in: path
@@ -1295,20 +1328,6 @@ components:
         type: integer
         format: int64
         example: 4711
-    Tokenstr:
-      name: Tokenstr
-      in: path
-      description: The token string of the token to retrieve
-      required: true
-      schema:
-        type: string
-    AccessRightPath:
-      name: AccessRightPath
-      in: path
-      description: The path of the access right
-      required: true
-      schema:
-        type: string
     ForecastId:
       name: ForecastId
       in: path
@@ -1817,19 +1836,14 @@ paths:
     get:
       summary: Returns a list of all existing tokens
       description: |
-        Returns a list of (all) existing tokens. With the optional parameter `tokenstr` parameter, only the token has the same `tokenstr` will be returned. If the operation was successful (status code `200`), an array with tokens will be returned.
+        Returns a list of (all) existing tokens. With the optional parameter `TokenStrContains`, only the tokens with names containing all specified keywords (case insensitive) will be returned. If the operation was successful (status code `200`), an array with tokens will be returned.
       operationId: getAllTokens
       tags:
         - Token
         - Get
         - GetAll
       parameters:
-        - name: tokenstr
-          in: query
-          required: false
-          description: The token string
-          schema:
-            type: string
+        - $ref: '#/components/parameters/TokenstrContains'
       responses:
         '200':
           description: Successful operation
@@ -1881,7 +1895,7 @@ paths:
     get:
       summary: Returns all tokens of the user
       description: |
-        Returns all tokens of the user If the operation was successful (status code `200`), an array with tokens will be returned.
+        Returns a list of (all) existing tokens of the user. With the optional parameter `TokenStrContains`, only the tokens with names containing all specified keywords (case insensitive) will be returned. If the operation was successful (status code `200`), an array with tokens will be returned.
       operationId: getUserTokens
       tags:
         - Token
@@ -1890,6 +1904,7 @@ paths:
         - GetOne
       parameters:
         - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/TokenstrContains'
       responses:
         '200':
           description: Successful operation
