@@ -15,6 +15,9 @@
 #
 # Field
 - $ref: "./field.yaml"
+# Token
+- $ref: "./token.yaml"
+- $ref: "./user.yaml"
 # Planter Run
 - $ref: "./planter.yaml"
 # Plant

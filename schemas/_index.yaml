@@ -55,6 +55,6 @@ HarvestMeasurement:
 SprayTask:
   $ref: "./SprayTask.yaml"
 Token:
-  $ref: "./token.yaml"
-TokenInfo:
-  $ref: "./token_info.yaml"
+  $ref: "./Token.yaml"
+AccessRight:
+  $ref: "./AccessRight.yaml"

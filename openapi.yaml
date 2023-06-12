@@ -35,15 +35,15 @@ tags:
   $ref: "./tags/_index.yaml"
 
 paths:
-  /token
+  /token:
     $ref: "path/token_index.yaml"
-  /token/{UserId}
+  /token/{UserId}:
     $ref: "path/user.yaml"
-  /token/{UserId}/{Tokenstr}
+  /token/{UserId}/{Tokenstr}:
     $ref: "path/token.yaml"
-  /token/{UserId}/{Tokenstr}/access_right
+  /token/{UserId}/{Tokenstr}/access_right:
     $ref: "path/access_right_index.yaml"
-  /token/{UserId}/{Tokenstr}/access_right/{AccessRightPath}
+  /token/{UserId}/{Tokenstr}/access_right/{AccessRightPath}:
     $ref: "path/access_right.yaml"
   /forecast:
     $ref: "path/forecast_index.yaml"

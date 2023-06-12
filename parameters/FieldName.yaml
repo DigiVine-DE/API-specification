@@ -1,8 +1,0 @@
-name: FieldName
-in: path
-required: false
-description: The field name segment
-schema:
-  type: integer
-  format: int64
-  example: 4711

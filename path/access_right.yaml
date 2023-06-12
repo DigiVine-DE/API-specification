@@ -50,15 +50,20 @@ delete:
     - $ref: "../openapi.yaml#/components/parameters/AccessRightPath"
   responses:
     "200":
-      description: Successful operation
+      description: Successfully deleted Token
       links:
         GetAllTokensRedirected:
           $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
     "404":
       description: The specified resource was not found
       links:
         GetAllTokensRedirected:
           $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
     "500":
-      $ref: "../openapi.yaml#/components/responses/
-
+      $ref: "../openapi.yaml#/components/responses/BackendError"
