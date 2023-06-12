@@ -1,0 +1,6 @@
+name: Tokenstr
+in: path
+description: The token string of the token to retrieve
+required: true
+schema:
+  type: string

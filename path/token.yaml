@@ -1,0 +1,69 @@
+delete:
+  summary: Deletes a specific token
+  description: >
+    Deletes a specific token of the given token string and user ID.
+  operationId: deleteOneToken
+  tags:
+    - Token
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+  responses:
+    "200":
+      description: Successfully deleted Token
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+patch:
+  summary: Updates a specific token
+  description: >
+    Updates a specific token.
+    If the operation was successful (status code `200`), the updated token will be returned.
+  operationId: updateToken
+  tags:
+    - Token
+    - Update
+    - UpdateOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+  requestBody:
+    description: The token to update
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/Token"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Token"
+    "404":
+      $ref: "../openapi.yaml#/components/responses/NotFound"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

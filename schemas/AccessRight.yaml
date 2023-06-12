@@ -1,0 +1,11 @@
+type: object
+properties:
+  path:
+    type: string
+    description: The path to give access to.
+  read_only:
+    type: boolean
+    description: Whether the access is read-only.
+required:
+  - path
+  - read_only

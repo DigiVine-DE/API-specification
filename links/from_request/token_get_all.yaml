@@ -1,0 +1,6 @@
+# GET /field
+operationId: getAllTokens
+description: >
+  `GET /token`
+  (see also `getAllTokens`).
+  Returns a list of (all) stored Tokens.

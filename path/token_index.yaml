@@ -1,0 +1,68 @@
+get:
+  summary: Returns a list of all existing tokens
+  description: >
+    Returns a list of (all) existing tokens.
+    With the optional parameter `tokenstr` parameter, only the token has the same `tokenstr` will be returned.
+    If the operation was successful (status code `200`), an array with tokens will be returned.
+  operationId: getAllTokens
+  tags:
+    - Token
+    - Get
+    - GetAll
+  parameters:
+    - name: tokenstr
+      in: query
+      required: false
+      description: The token string
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Token"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+
+post:
+  summary: Creates a new token
+  description: >
+    Creates a new token with no access rights.
+    If the operation was successful (status code `201`), the created token will be returned.
+  operationId: postToken
+  tags:
+    - Token
+    - Add
+  requestBody:
+    required: true
+    description: The token to create
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/Token"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Token"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+

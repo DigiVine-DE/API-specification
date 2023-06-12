@@ -35,6 +35,16 @@ tags:
   $ref: "./tags/_index.yaml"
 
 paths:
+  /token
+    $ref: "path/token_index.yaml"
+  /token/{UserId}
+    $ref: "path/user.yaml"
+  /token/{UserId}/{Tokenstr}
+    $ref: "path/token.yaml"
+  /token/{UserId}/{Tokenstr}/access_right
+    $ref: "path/access_right_index.yaml"
+  /token/{UserId}/{Tokenstr}/access_right/{AccessRightPath}
+    $ref: "path/access_right.yaml"
   /forecast:
     $ref: "path/forecast_index.yaml"
   /forecast/{ForecastId}:

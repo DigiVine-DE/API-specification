@@ -14,6 +14,10 @@ FieldNameContains:
 # Ids
 FieldId:
   $ref: "./FieldId.yaml"
+Tokenstr:
+  $ref: "./Tokenstr.yaml"
+AccessRightPath:
+  $ref: "./AccessRightPath.yaml"
 ForecastId:
   $ref: "./ForecastId.yaml"
 PlantId:

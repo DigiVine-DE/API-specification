@@ -1,3 +1,6 @@
+# Auth
+GetAllTokensRedirected:                         # GET /field
+  $ref: "./from_request/token_get_all.yaml"
 # Field
 GetAllFieldsRedirected:                         # GET /field
   $ref: "./from_request/field_get_all.yaml"
