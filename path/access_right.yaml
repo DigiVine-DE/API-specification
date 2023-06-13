@@ -50,7 +50,7 @@ delete:
     - $ref: "../openapi.yaml#/components/parameters/AccessRightPath"
   responses:
     "200":
-      description: Successfully deleted Token
+      description: Successfully deleted access right
       links:
         GetAllTokensRedirected:
           $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
