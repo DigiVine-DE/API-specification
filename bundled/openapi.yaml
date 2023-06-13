@@ -1326,7 +1326,7 @@ components:
       description: The numeric ID of the user
       schema:
         type: integer
-        format: int64
+        format: int32
         example: 4711
     ForecastId:
       name: ForecastId
