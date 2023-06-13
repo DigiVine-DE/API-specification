@@ -2189,7 +2189,7 @@ paths:
         - $ref: '#/components/parameters/AccessRightPath'
       responses:
         '200':
-          description: Successfully deleted Token
+          description: Successfully deleted access right
           links:
             GetAllTokensRedirected:
               $ref: '#/components/links/GetAllTokensRedirected'
