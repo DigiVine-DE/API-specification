@@ -2025,42 +2025,6 @@ paths:
               $ref: '#/components/links/GetAllTokensRedirected'
         '500':
           $ref: '#/components/responses/BackendError'
-    patch:
-      summary: Updates a specific token
-      description: |
-        Updates a specific token. If the operation was successful (status code `200`), the updated token will be returned.
-      operationId: updateToken
-      tags:
-        - Token
-        - Update
-        - UpdateOne
-      parameters:
-        - $ref: '#/components/parameters/UserId'
-        - $ref: '#/components/parameters/Tokenstr'
-      requestBody:
-        description: The token to update
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Token'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/BackendError'
   '/token/{UserId}/{Tokenstr}/access_right':
     get:
       summary: Returns a list of access rights for a specific token
