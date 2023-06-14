@@ -6,6 +6,7 @@ properties:
     description: The token string.
   user_id:
     type: integer
+    format: int32
     description: The ID of the user associated with the token.
 required:
   - tokenstr
