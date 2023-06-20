@@ -1945,7 +1945,14 @@ paths:
         content:
           application/json:
             schema:
-              type: string
+              type: object
+              description: An object representing tokenstr.
+              properties:
+                tokenstr:
+                  type: string
+                  description: The token string.
+              required:
+                - tokenstr
       responses:
         '201':
           description: Successful operation
