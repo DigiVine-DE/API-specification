@@ -1,0 +1,32 @@
+delete:
+  summary: Deletes a specific token
+  description: >
+    Deletes a specific token of the given token string and user ID.
+  operationId: deleteOneToken
+  tags:
+    - Token
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+  responses:
+    "200":
+      description: Successfully deleted Token
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"

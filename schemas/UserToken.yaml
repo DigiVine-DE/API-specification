@@ -1,0 +1,9 @@
+type: object
+description: An object representing a user token.
+properties:
+  tokenstr:
+    type: string
+    description: The token string.
+required:
+  - tokenstr
+

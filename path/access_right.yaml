@@ -1,0 +1,69 @@
+get:
+  summary: Returns information about a specific access right for a specific token
+  description: >
+    Returns information about a specific access right for a specific token.
+    If the operation was successful (status code `200`), the access right will be returned.
+  operationId: getOneAccessRight
+  tags:
+    - Token
+    - AccessRight
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+    - $ref: "../openapi.yaml#/components/parameters/AccessRightPath"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/AccessRight"
+    "404":
+      description: The specified resource was not found
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+
+delete:
+  summary: Deletes a specific access right for a specific token
+  description: >
+    Deletes a specific access right for a specific token.
+  operationId: deleteOneAccessRight
+  tags:
+    - Token
+    - AccessRight
+    - Delete
+    - DeleteOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+    - $ref: "../openapi.yaml#/components/parameters/AccessRightPath"
+  responses:
+    "200":
+      description: Successfully deleted access right
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"

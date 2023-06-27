@@ -1149,6 +1149,41 @@ components:
                     type: string
                     description: Unit of the protection fluid amount
                     example: g/ha
+    Token:
+      type: object
+      description: An object representing a token.
+      properties:
+        tokenstr:
+          type: string
+          description: The token string.
+        user_id:
+          type: integer
+          format: int32
+          description: The ID of the user associated with the token.
+      required:
+        - tokenstr
+        - user_id
+    UserToken:
+      type: object
+      description: An object representing a user token.
+      properties:
+        tokenstr:
+          type: string
+          description: The token string.
+      required:
+        - tokenstr
+    AccessRight:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The path to give access to.
+        read_only:
+          type: boolean
+          description: Whether the access is read-only.
+      required:
+        - path
+        - read_only
   parameters:
     Limit:
       name: limit
@@ -1252,6 +1287,39 @@ components:
             - Mich
             - dürk
           summary: 'This will find fields with names like "Dürkheimer Michelsberg", but not fields with names like "Michelsberg"'
+    Tokenstr:
+      name: Tokenstr
+      in: path
+      description: The token string of the token to retrieve
+      required: true
+      schema:
+        type: string
+    TokenstrContains:
+      name: tokenstrContains
+      in: query
+      required: false
+      description: A set of keywords used to filter tokens. Only tokens that contain all of the specified keywords (case insensitive) will be returned.
+      schema:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+      examples:
+        default:
+          value: []
+          summary: An empty array has no effect on the results
+        example1:
+          value:
+            - all
+            - readonly
+          summary: 'This will find tokens like "all_readonly", but not tokens like "all"'
+    AccessRightPath:
+      name: AccessRightPath
+      in: path
+      description: The path of the access right
+      required: true
+      schema:
+        type: string
     FieldId:
       name: FieldId
       in: path
@@ -1260,6 +1328,15 @@ components:
       schema:
         type: integer
         format: int64
+        example: 4711
+    UserId:
+      name: UserId
+      in: path
+      required: true
+      description: The numeric ID of the user
+      schema:
+        type: integer
+        format: int32
         example: 4711
     ForecastId:
       name: ForecastId
@@ -1349,6 +1426,10 @@ components:
           schema:
             type: string
   links:
+    GetAllTokensRedirected:
+      operationId: getAllTokens
+      description: |
+        `GET /token` (see also `getAllTokens`). Returns a list of (all) stored Tokens.
     GetAllFieldsRedirected:
       operationId: getAllFields
       description: |
@@ -1730,6 +1811,10 @@ tags:
     description: 'All operations to MODIFY existing data (DELETE, PATCH)'
   - name: Field
     description: All operations to work with Fields
+  - name: Token
+    description: All operations to work with tokens
+  - name: User
+    description: All operations to work with Users
   - name: Planter
     description: All operations to work with Planter Runs
   - name: Plant
@@ -1757,6 +1842,342 @@ tags:
   - name: Completed Spray Task
     description: All operations to work with completed Spray Tasks
 paths:
+  /token:
+    get:
+      summary: Returns a list of all existing tokens
+      description: |
+        Returns a list of (all) existing tokens. With the optional parameter `TokenStrContains`, only the tokens with names containing all specified keywords (case insensitive) will be returned. If the operation was successful (status code `200`), an array with tokens will be returned.
+      operationId: getAllTokens
+      tags:
+        - Token
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/TokenstrContains'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Token'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Creates a new token
+      description: |
+        Creates a new token with no access rights. If the operation was successful (status code `201`), the created token will be returned.
+      operationId: postToken
+      tags:
+        - Token
+        - Add
+      requestBody:
+        required: true
+        description: The token to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/token/{UserId}':
+    get:
+      summary: Returns all tokens of the user
+      description: |
+        Returns a list of (all) existing tokens of the user. With the optional parameter `TokenStrContains`, only the tokens with names containing all specified keywords (case insensitive) will be returned. If the operation was successful (status code `200`), an array with tokens will be returned.
+      operationId: getUserTokens
+      tags:
+        - Token
+        - User
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/TokenstrContains'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Token'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Creates a new token of the given `tokenstr`
+      description: |
+        Creates a new token with no access rights. If the operation was successful (status code `201`), the created token will be returned.
+      operationId: postUserToken
+      tags:
+        - Token
+        - User
+        - Add
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        description: The token string
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserToken'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Deletes the user and all its tokens
+      description: Deletes the user and all its tokens
+      operationId: deleteOneUser
+      tags:
+        - Token
+        - User
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Successfully deleted user
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/token/{UserId}/{Tokenstr}':
+    delete:
+      summary: Deletes a specific token
+      description: |
+        Deletes a specific token of the given token string and user ID.
+      operationId: deleteOneToken
+      tags:
+        - Token
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/Tokenstr'
+      responses:
+        '200':
+          description: Successfully deleted Token
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/token/{UserId}/{Tokenstr}/access_right':
+    get:
+      summary: Returns a list of access rights for a specific token
+      description: |
+        Returns a list of access rights for a specific token. If the operation was successful (status code `200`), an array with access rights will be returned.
+      operationId: getAccessRights
+      tags:
+        - Token
+        - AccessRight
+        - Get
+        - GetAll
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/Tokenstr'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessRight'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Creates a new access right for a specific token
+      description: |
+        Creates a new access right for a specific token. If an access right with the same path already exists, it will be replaced by the new one.  If the operation was successful (status code `201`), all access rights of this token will be returned.
+      operationId: postAccessRight
+      tags:
+        - Token
+        - AccessRight
+        - Add
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/Tokenstr'
+      requestBody:
+        description: The access right to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRight'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRight'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/token/{UserId}/{Tokenstr}/access_right/{AccessRightPath}':
+    get:
+      summary: Returns information about a specific access right for a specific token
+      description: |
+        Returns information about a specific access right for a specific token. If the operation was successful (status code `200`), the access right will be returned.
+      operationId: getOneAccessRight
+      tags:
+        - Token
+        - AccessRight
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/Tokenstr'
+        - $ref: '#/components/parameters/AccessRightPath'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRight'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Deletes a specific access right for a specific token
+      description: |
+        Deletes a specific access right for a specific token.
+      operationId: deleteOneAccessRight
+      tags:
+        - Token
+        - AccessRight
+        - Delete
+        - DeleteOne
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/Tokenstr'
+        - $ref: '#/components/parameters/AccessRightPath'
+      responses:
+        '200':
+          description: Successfully deleted access right
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+          links:
+            GetAllTokensRedirected:
+              $ref: '#/components/links/GetAllTokensRedirected'
+        '500':
+          $ref: '#/components/responses/BackendError'
   /forecast:
     get:
       summary: Returns a list of (all) stored Forecasts

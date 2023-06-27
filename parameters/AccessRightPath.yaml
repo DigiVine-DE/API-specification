@@ -1,0 +1,6 @@
+name: AccessRightPath
+in: path
+description: The path of the access right
+required: true
+schema:
+  type: string

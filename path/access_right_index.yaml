@@ -1,0 +1,79 @@
+get:
+  summary: Returns a list of access rights for a specific token
+  description: >
+    Returns a list of access rights for a specific token.
+    If the operation was successful (status code `200`), an array with access rights will be returned.
+  operationId: getAccessRights
+  tags:
+    - Token
+    - AccessRight
+    - Get
+    - GetAll
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/AccessRight"
+    "404":
+      description: The specified resource was not found
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Creates a new access right for a specific token
+  description: >
+    Creates a new access right for a specific token.
+    If an access right with the same path already exists, it will be replaced by the new one. 
+    If the operation was successful (status code `201`), all access rights of this token will be returned.
+  operationId: postAccessRight
+  tags:
+    - Token
+    - AccessRight
+    - Add
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/UserId"
+    - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+  requestBody:
+    description: The access right to create
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/AccessRight"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/AccessRight"
+    "404":
+      description: The specified resource was not found
+      links:
+        GetAllTokensRedirected:
+          $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+
