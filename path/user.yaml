@@ -13,6 +13,8 @@ get:
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/UserId"
     - $ref: "../openapi.yaml#/components/parameters/TokenstrContains"
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
     "200":
       description: Successful operation
@@ -40,7 +42,7 @@ post:
   summary: Creates a new token of the given `tokenstr`
   description: >
     Creates a new token with no access rights.
-    If the operation was successful (status code `201`), the created token will be returned.
+    If the operation was successful (status code `201`), the ID of the created token will be returned.
   operationId: postUserToken
   tags:
     - Token
@@ -61,7 +63,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/Token"
+            $ref: "../openapi.yaml#/components/schemas/TokenId"
     "500":
       $ref: "../openapi.yaml#/components/responses/BackendError"
     "400":
@@ -73,7 +75,9 @@ post:
 
 delete:
   summary: Deletes the user and all its tokens
-  description: Deletes the user and all its tokens
+  description: >
+    Deletes the user and all its tokens
+    If the operation was successful (status code `200`), all deleted tokens will be returned.
   operationId: deleteOneUser
   tags:
     - Token
@@ -86,6 +90,12 @@ delete:
   responses:
     "200":
       description: Successfully deleted user
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Token"
       links:
         GetAllTokensRedirected:
           $ref: "../openapi.yaml#/components/links/GetAllTokensRedirected"

@@ -12,6 +12,8 @@ get:
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/UserId"
     - $ref: "../openapi.yaml#/components/parameters/Tokenstr"
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
     "200":
       description: Successful operation

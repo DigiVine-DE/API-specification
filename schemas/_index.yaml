@@ -56,6 +56,8 @@ SprayTask:
   $ref: "./SprayTask.yaml"
 Token:
   $ref: "./Token.yaml"
+TokenId:
+  $ref: "./TokenId.yaml"
 UserToken:
   $ref: "./UserToken.yaml"
 AccessRight:
