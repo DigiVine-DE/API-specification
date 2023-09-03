@@ -1426,6 +1426,15 @@ components:
       description: Specified API key does not have the required rights.
     BadRequest:
       description: 'Bad Request: Could not parse parameters'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
     SeeOther:
       description: See Other
       headers:
