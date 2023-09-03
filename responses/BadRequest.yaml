@@ -4,3 +4,12 @@
 #  https://tools.ietf.org/html/rfc7231#section-6.5.1
 
 description: "Bad Request: Could not parse parameters"
+content:
+ application/json:
+   schema:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
