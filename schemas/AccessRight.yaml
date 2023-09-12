@@ -2,7 +2,8 @@ type: object
 properties:
   path:
     type: string
-    description: The path to give access to.
+    description: >
+      The path to give access to. `%` can be used as wildcard character with
   read_only:
     type: boolean
     description: Whether the access is read-only.

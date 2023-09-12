@@ -11,6 +11,8 @@ get:
     - GetAll
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/TokenstrContains"
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
     "200":
       description: Successful operation
@@ -33,7 +35,7 @@ post:
   summary: Creates a new token
   description: >
     Creates a new token with no access rights.
-    If the operation was successful (status code `201`), the created token will be returned.
+    If the operation was successful (status code `201`), the ID of the created token will be returned.
   operationId: postToken
   tags:
     - Token
@@ -51,7 +53,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/Token"
+            $ref: "../openapi.yaml#/components/schemas/TokenId"
     "500":
       $ref: "../openapi.yaml#/components/responses/BackendError"
     "400":

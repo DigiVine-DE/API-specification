@@ -1163,6 +1163,13 @@ components:
       required:
         - tokenstr
         - user_id
+    TokenId:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Numeric ID of the Token.
     UserToken:
       type: object
       description: An object representing a user token.
@@ -1177,7 +1184,8 @@ components:
       properties:
         path:
           type: string
-          description: The path to give access to.
+          description: |
+            The path to give access to. `%` can be used as wildcard character with
         read_only:
           type: boolean
           description: Whether the access is read-only.
@@ -1418,6 +1426,15 @@ components:
       description: Specified API key does not have the required rights.
     BadRequest:
       description: 'Bad Request: Could not parse parameters'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
     SeeOther:
       description: See Other
       headers:
@@ -1854,6 +1871,8 @@ paths:
         - GetAll
       parameters:
         - $ref: '#/components/parameters/TokenstrContains'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           description: Successful operation
@@ -1874,7 +1893,7 @@ paths:
     post:
       summary: Creates a new token
       description: |
-        Creates a new token with no access rights. If the operation was successful (status code `201`), the created token will be returned.
+        Creates a new token with no access rights. If the operation was successful (status code `201`), the ID of the created token will be returned.
       operationId: postToken
       tags:
         - Token
@@ -1892,7 +1911,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Token'
+                $ref: '#/components/schemas/TokenId'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1915,6 +1934,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/UserId'
         - $ref: '#/components/parameters/TokenstrContains'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           description: Successful operation
@@ -1940,7 +1961,7 @@ paths:
     post:
       summary: Creates a new token of the given `tokenstr`
       description: |
-        Creates a new token with no access rights. If the operation was successful (status code `201`), the created token will be returned.
+        Creates a new token with no access rights. If the operation was successful (status code `201`), the ID of the created token will be returned.
       operationId: postUserToken
       tags:
         - Token
@@ -1961,7 +1982,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Token'
+                $ref: '#/components/schemas/TokenId'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1972,7 +1993,8 @@ paths:
           $ref: '#/components/responses/BackendError'
     delete:
       summary: Deletes the user and all its tokens
-      description: Deletes the user and all its tokens
+      description: |
+        Deletes the user and all its tokens If the operation was successful (status code `200`), all deleted tokens will be returned.
       operationId: deleteOneUser
       tags:
         - Token
@@ -1985,6 +2007,12 @@ paths:
       responses:
         '200':
           description: Successfully deleted user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Token'
           links:
             GetAllTokensRedirected:
               $ref: '#/components/links/GetAllTokensRedirected'
@@ -2048,6 +2076,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/UserId'
         - $ref: '#/components/parameters/Tokenstr'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           description: Successful operation
