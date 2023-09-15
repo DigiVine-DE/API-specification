@@ -1192,6 +1192,65 @@ components:
       required:
         - path
         - read_only
+    Cultivar:
+      type: object
+      description: An object representing a cultivar.
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: 'The ID of the cultivar. If it is used to insert a new cultivar, this value will be ignored.'
+        cultivar_name:
+          type: string
+          description: The name of the cultivar.
+        prime_name:
+          type: string
+          description: The prime name of the cultivar.
+        variety_number:
+          type: integer
+          format: int32
+          description: The variety number of the cultivar.
+        species:
+          type: string
+          description: The species of the cultivar.
+        color:
+          type: string
+          description: The color of the berry skin.
+        country_or_region:
+          type: string
+          description: The country or region of origin of the variety.
+      required:
+        - cultivar_name
+        - prime_name
+        - variety_number
+    CultivarPatch:
+      type: object
+      properties:
+        cultivar_name:
+          type: string
+          description: The name of the cultivar.
+          example: 08319-07
+        prime_name:
+          type: string
+          description: The prime name of the cultivar.
+          example: DAVIS 08319- 07
+        variety_number:
+          type: integer
+          format: int32
+          description: The variety number of the cultivar.
+          example: 27508
+        species:
+          type: string
+          description: The species of the cultivar.
+          example: VITIS VINIFERA LINNÉ SUBSP. SATIVA (DE CANDOLLE) HEGI
+        color:
+          type: string
+          description: The color of the berry skin.
+          example: NOIR
+        country_or_region:
+          type: string
+          description: The country or region of origin of the variety.
+          example: Germany
   parameters:
     Limit:
       name: limit
@@ -1408,6 +1467,15 @@ components:
       schema:
         type: integer
         format: int64
+        example: 4711
+    CultivarId:
+      name: CultivarId
+      in: path
+      required: true
+      description: The numeric ID of the Cultivar
+      schema:
+        type: integer
+        format: int32
         example: 4711
   responses:
     BackendError:
@@ -4306,5 +4374,176 @@ paths:
               $ref: '#/components/links/GetOneScheduledSprayTaskById'
             DeleteOneScheduledSprayTaskById:
               $ref: '#/components/links/DeleteOneScheduledSprayTaskById'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /vivc:
+    get:
+      summary: Returns a list of all stored cultivars
+      description: |
+        Returns a list of all stored cultivars.
+        With the optional parameter `Color`, only the cultivars with the specified berry skin color will be returned.
+        With the optional parameter `Country`, only the cultivars originating from the specified country or region will be returned.
+        If the operation was successful (status code `200`), an array with cultivars will be returned.
+      operationId: getAllCultivars
+      tags:
+        - Cultivar
+        - Get
+        - GetAll
+      parameters:
+        - name: Color
+          in: query
+          required: false
+          description: A set of keywords used to filter the results of cultivars. Only cultivars with a berry skin color containing all of the specified keywords (case insensitive) will be returned.
+          schema:
+            type: array
+            items:
+              type: string
+        - name: region
+          in: query
+          required: false
+          description: A set of keywords used to filter the results of cultivars. Only cultivars with a country or region containing all of the specified keywords (case insensitive) will be returned.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cultivar'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Cultivar to the collection
+      description: |
+        Adds a new Cultivar to the collection. If the operation was successful (status code `200`), the numeric ID of the new Cultivar will be returned.
+      operationId: postCultivar
+      tags:
+        - Cultivar
+        - Add
+      requestBody:
+        required: true
+        description: A Cultivar to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cultivar'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Cultivar.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/vivc/{CultivarId}':
+    get:
+      summary: Returns a specific cultivar from the collection by its ID
+      description: |
+        Returns a specific cultivar from the collection. The parameter `CultivarId` is required to get the specific cultivar. If the operation is successful (status code `200`), the specific cultivar will be returned.
+      operationId: getOneCultivar
+      tags:
+        - Cultivar
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/CultivarId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cultivar'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific cultivar from the collection bi its ID
+      description: |
+        Removes a specific cultivar from the collection. The parameter `CultivarId` is required to delete the specific cultivar.
+      operationId: deleteOneCultivar
+      tags:
+        - Cultivar
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/CultivarId'
+      responses:
+        '200':
+          description: Successfully deleted cultivar
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+    patch:
+      summary: Patches a specific cultivar
+      description: |
+        Patches a specific cultivar. The parameter `CultivarId` is required to replace the specific cultivar with the new one. Also, the new data (`CultivarPatch`) is required. If the operation is successful (status code `200`), the new cultivar will be returned.
+      operationId: patchOneCultivar
+      tags:
+        - Cultivar
+        - Change
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/CultivarId'
+      requestBody:
+        required: true
+        description: The updated properties to patch
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CultivarPatch'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cultivar'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
         '500':
           $ref: '#/components/responses/BackendError'
