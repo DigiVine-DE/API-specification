@@ -36,3 +36,5 @@ HarvestTaskId:
   $ref: "./HarvestTaskId.yaml"
 SprayTaskId:
   $ref: "./SprayTaskId.yaml"
+CultivarId:
+  $ref: "./CultivarId.yaml"

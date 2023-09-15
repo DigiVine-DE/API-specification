@@ -62,3 +62,7 @@ UserToken:
   $ref: "./UserToken.yaml"
 AccessRight:
   $ref: "./AccessRight.yaml"
+Cultivar:
+  $ref: "./Cultivar.yaml"
+CultivarPatch:
+  $ref: "./CultivarPatch.yaml"

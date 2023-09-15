@@ -1,0 +1,94 @@
+get:
+  summary: Returns a specific cultivar from the collection by its ID
+  description: >
+    Returns a specific cultivar from the collection.
+    The parameter `CultivarId` is required to get the specific cultivar.
+    If the operation is successful (status code `200`), the specific cultivar will be returned.
+  operationId: getOneCultivar
+  tags:
+    - Cultivar
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/CultivarId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Cultivar"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes a specific cultivar from the collection bi its ID
+  description: >
+    Removes a specific cultivar from the collection.
+    The parameter `CultivarId` is required to delete the specific cultivar.
+  operationId: deleteOneCultivar
+  tags:
+    - Cultivar
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/CultivarId"
+  responses:
+    "200":
+      description: Successfully deleted cultivar
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+patch:
+  summary: Patches a specific cultivar
+  description: >
+    Patches a specific cultivar.
+    The parameter `CultivarId` is required to replace the specific cultivar with the new one.
+    Also, the new data (`CultivarPatch`) is required.
+    If the operation is successful (status code `200`), the new cultivar will be returned.
+  operationId: patchOneCultivar
+  tags:
+    - Cultivar
+    - Change
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/CultivarId"
+  requestBody:
+    required: true
+    description: The updated properties to patch
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/CultivarPatch"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Cultivar"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
