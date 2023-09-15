@@ -85,3 +85,7 @@ paths:
     $ref: "path/spray_complete_index.yaml"
   /spray/complete/{SprayTaskId}:
     $ref: "path/spray_complete.yaml"
+  /vivc:
+    $ref: "path/vivc_index.yaml"
+  /vivc/{CultivarId}:
+    $ref: "path/vivc.yaml"

@@ -1,0 +1,85 @@
+get:
+  summary: Returns a list of all stored cultivars
+  description: >
+    Returns a list of all stored cultivars.
+
+    With the optional parameter `Color`, only the cultivars with the specified berry skin color will be returned.
+
+    With the optional parameter `Country`, only the cultivars originating from the specified country or region will be returned.
+
+    If the operation was successful (status code `200`), an array with cultivars will be returned.
+  operationId: getAllCultivars
+  tags:
+    - Cultivar
+    - Get
+    - GetAll
+  parameters:
+    - name: Color
+      in: query
+      required: false
+      description: A set of keywords used to filter the results of cultivars. Only cultivars with a berry skin color containing all of the specified keywords (case insensitive) will be returned.
+      schema:
+        type: array
+        items:
+          type: string
+    - name: region
+      in: query
+      required: false
+      description: A set of keywords used to filter the results of cultivars. Only cultivars with a country or region containing all of the specified keywords (case insensitive) will be returned.
+      schema:
+        type: array
+        items:
+          type: string
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Cultivar"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+post:
+  summary: Adds a new Cultivar to the collection
+  description: >
+    Adds a new Cultivar to the collection.
+    If the operation was successful (status code `200`), the numeric ID of the new Cultivar will be returned.
+  operationId: postCultivar
+  tags:
+    - Cultivar
+    - Add
+  requestBody:
+    required: true
+    description: A Cultivar to be added to the collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/Cultivar"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: Numeric ID of the created Cultivar.
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

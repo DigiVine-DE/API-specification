@@ -1,0 +1,27 @@
+type: object
+properties:
+  cultivar_name:
+    type: string
+    description: The name of the cultivar.
+    example: 08319-07
+  prime_name:
+    type: string
+    description: The prime name of the cultivar.
+    example: DAVIS 08319- 07
+  variety_number:
+    type: integer
+    format: int32
+    description: The variety number of the cultivar.
+    example: 27508
+  species:
+    type: string
+    description: The species of the cultivar.
+    example: VITIS VINIFERA LINNÉ SUBSP. SATIVA (DE CANDOLLE) HEGI
+  color:
+    type: string
+    description: The color of the berry skin.
+    example: NOIR
+  country_or_region:
+    type: string
+    description: The country or region of origin of the variety.
+    example: Germany
