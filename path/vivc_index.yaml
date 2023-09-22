@@ -3,9 +3,11 @@ get:
   description: >
     Returns a list of all stored cultivars.
 
-    With the optional parameter `Color`, only the cultivars with the specified berry skin color will be returned.
+    With the optional parameter `color`, only the cultivars with the specified berry skin color will be returned.
 
-    With the optional parameter `Country`, only the cultivars originating from the specified country or region will be returned.
+    With the optional parameter `country`, only the cultivars originating from the specified country or region will be returned.
+
+    With the optional parameter `species`, only the cultivars belonging to the specified species will be returned.
 
     If the operation was successful (status code `200`), an array with cultivars will be returned.
   operationId: getAllCultivars
@@ -14,7 +16,7 @@ get:
     - Get
     - GetAll
   parameters:
-    - name: Color
+    - name: color
       in: query
       required: false
       description: A set of keywords used to filter the results of cultivars. Only cultivars with a berry skin color containing all of the specified keywords (case insensitive) will be returned.
@@ -30,6 +32,16 @@ get:
         type: array
         items:
           type: string
+    - name: species
+      in: query
+      required: false
+      description: A set of keywords used to filter the results of cultivars. Only cultivars with a species containing all of the specified keywords (case insensitive) will be returned.
+      schema:
+        type: array
+        items:
+          type: string
+    - $ref: "../openapi.yaml#/components/parameters/Offset"
+    - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
     "200":
       description: Successful operation
