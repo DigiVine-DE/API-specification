@@ -4384,6 +4384,8 @@ paths:
         With the optional parameter `color`, only the cultivars with the specified berry skin color will be returned.
         With the optional parameter `country`, only the cultivars originating from the specified country or region will be returned.
         With the optional parameter `species`, only the cultivars belonging to the specified species will be returned.
+        With the optional parameter `primeName`, only the cultivars with the specified prime name will be returned.
+        With the optional parameter `cultivarName`, only the cultivars with the specified cultivar name will be returned.
         If the operation was successful (status code `200`), an array with cultivars will be returned.
       operationId: getAllCultivars
       tags:
@@ -4411,6 +4413,22 @@ paths:
           in: query
           required: false
           description: A set of keywords used to filter the results of cultivars. Only cultivars with a species containing all of the specified keywords (case insensitive) will be returned.
+          schema:
+            type: array
+            items:
+              type: string
+        - name: primeName
+          in: query
+          required: false
+          description: A set of keywords used to filter the results of cultivars. Only cultivars with prime names containing all specified keywords (case insensitive) will be returned.
+          schema:
+            type: array
+            items:
+              type: string
+        - name: cultivarName
+          in: query
+          required: false
+          description: A set of keywords used to filter the results of cultivars. only cultivars with names containing all specified keywords (case insensitive) will be returned.
           schema:
             type: array
             items:
