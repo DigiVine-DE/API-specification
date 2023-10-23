@@ -1251,6 +1251,289 @@ components:
           type: string
           description: The country or region of origin of the variety.
           example: Germany
+    WeatherData:
+      type: object
+      description: An object representing weather data for a specific station and date.
+      properties:
+        station_id:
+          type: integer
+          format: int32
+          description: The ID of the weather station.
+        mess_date:
+          type: string
+          format: date
+          description: The reference date of the weather data.
+        fx:
+          type: number
+          format: double
+          description: Daily maximum of wind gust (m/s).
+        fx_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily maximum of wind gust.
+        fm:
+          type: number
+          format: double
+          description: Daily mean of wind velocity (m/s).
+        fm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of wind velocity.
+        rsk:
+          type: number
+          format: double
+          description: Daily precipitation height (mm).
+        rsk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily precipitation height.
+        rskf:
+          type: integer
+          description: Precipitation form (numerical code).
+        sdk:
+          type: number
+          format: double
+          description: Daily sunshine duration (h).
+        sdk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily sunshine duration.
+        shk_tag:
+          type: number
+          format: double
+          description: Daily snow depth (cm).
+        shk_tag_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily snow depth.
+        nm:
+          type: number
+          format: double
+          description: Daily mean of cloud cover (1/8).
+        nm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of cloud cover.
+        vpm:
+          type: number
+          format: double
+          description: Daily mean of vapor pressure (hPa).
+        vpm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of vapor pressure.
+        pm:
+          type: number
+          format: double
+          description: Daily mean of pressure (hPa).
+        pm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of pressure.
+        tmk:
+          type: number
+          format: double
+          description: Daily mean of temperature (°C).
+        tmk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of temperature.
+        upm:
+          type: number
+          format: double
+          description: Daily mean of relative humidity (%).
+        upm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of relative humidity.
+        txk:
+          type: number
+          format: double
+          description: Daily maximum of temperature at 2 m height (°C).
+        txk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily maximum of temperature at 2 m height.
+        tnk:
+          type: number
+          format: double
+          description: Daily minimum of temperature at 2 m height (°C).
+        tnk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily minimum of temperature at 2 m height.
+        tgk:
+          type: number
+          format: double
+          description: Daily minimum of air temperature at 5 cm above ground (°C).
+        tgk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily minimum of air temperature at 5 cm above ground.
+      required:
+        - station_id
+        - mess_date
+    WeatherDataPatch:
+      type: object
+      description: An object representing the patch of weather data
+      properties:
+        fx:
+          type: number
+          format: double
+          description: Daily maximum of wind gust (m/s).
+        fx_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily maximum of wind gust.
+        fm:
+          type: number
+          format: double
+          description: Daily mean of wind velocity (m/s).
+        fm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of wind velocity.
+        rsk:
+          type: number
+          format: double
+          description: Daily precipitation height (mm).
+        rsk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily precipitation height.
+        rskf:
+          type: integer
+          description: Precipitation form (numerical code).
+        sdk:
+          type: number
+          format: double
+          description: Daily sunshine duration (h).
+        sdk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily sunshine duration.
+        shk_tag:
+          type: number
+          format: double
+          description: Daily snow depth (cm).
+        shk_tag_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily snow depth.
+        nm:
+          type: number
+          format: double
+          description: Daily mean of cloud cover (1/8).
+        nm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of cloud cover.
+        vpm:
+          type: number
+          format: double
+          description: Daily mean of vapor pressure (hPa).
+        vpm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of vapor pressure.
+        pm:
+          type: number
+          format: double
+          description: Daily mean of pressure (hPa).
+        pm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of pressure.
+        tmk:
+          type: number
+          format: double
+          description: Daily mean of temperature (°C).
+        tmk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of temperature.
+        upm:
+          type: number
+          format: double
+          description: Daily mean of relative humidity (%).
+        upm_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily mean of relative humidity.
+        txk:
+          type: number
+          format: double
+          description: Daily maximum of temperature at 2 m height (°C).
+        txk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily maximum of temperature at 2 m height.
+        tnk:
+          type: number
+          format: double
+          description: Daily minimum of temperature at 2 m height (°C).
+        tnk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily minimum of temperature at 2 m height.
+        tgk:
+          type: number
+          format: double
+          description: Daily minimum of air temperature at 5 cm above ground (°C).
+        tgk_qn:
+          type: integer
+          format: int16
+          description: Quality level of daily minimum of air temperature at 5 cm above ground.
+    WeatherStation:
+      type: object
+      description: An object representing a weather station.
+      properties:
+        station_id:
+          type: integer
+          format: int32
+          description: The ID of the weather station.
+        station_name:
+          type: string
+          description: The name of the weather station.
+        station_bundesland:
+          type: string
+          description: The Bundesland where the weather station is located.
+        station_elevation:
+          type: integer
+          format: int32
+          description: The elevation of the weather station.
+        station_latitude:
+          type: number
+          format: double
+          description: The latitude of the weather station.
+        station_longitude:
+          type: number
+          format: double
+          description: The longitude of the weather station.
+      required:
+        - station_id
+    WeatherStationPatch:
+      type: object
+      description: An object representing the patch of a weather station.
+      properties:
+        station_name:
+          type: string
+          description: The name of the weather station.
+        station_bundesland:
+          type: string
+          description: The Bundesland where the weather station is located.
+        station_elevation:
+          type: integer
+          format: int32
+          description: The elevation of the weather station.
+        station_latitude:
+          type: number
+          format: double
+          description: The latitude of the weather station.
+        station_longitude:
+          type: number
+          format: double
+          description: The longitude of the weather station.
   parameters:
     Limit:
       name: limit
@@ -1477,6 +1760,23 @@ components:
         type: integer
         format: int32
         example: 4711
+    WeatherStationId:
+      name: WeatherStationId
+      in: path
+      required: true
+      description: The numeric ID of the weather station
+      schema:
+        type: integer
+        format: int32
+        example: 4711
+    MessDate:
+      name: MessDate
+      in: path
+      required: true
+      description: The reference date for the weather data
+      schema:
+        type: string
+        format: date
   responses:
     BackendError:
       description: Backend Error
@@ -4566,6 +4866,355 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cultivar'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /weather/station:
+    get:
+      summary: Returns a list of all weather stations
+      description: |
+        Returns a list of all weather stations.
+        With the optional parameter `bundesland`, only the weather stations located in the specified state will be returned.
+        With the optional parameter `box2d`, only the weather stations that intersect the given bounding box will be returned.
+        With the optional parameters `offset` and `limit`, you can control the pagination of the results.
+        If the operation was successful (status code `200`), an array with weather stations will be returned.
+      operationId: getAllWeatherStations
+      tags:
+        - Weather Station
+        - Get
+        - GetAll
+      parameters:
+        - name: bundesland
+          in: query
+          required: false
+          description: A set of keywords used to filter the results of weather stations. Only weather stations located in the specified state containing all of the specified keywords (case insensitive) will be returned.
+          schema:
+            type: array
+            items:
+              type: string
+        - $ref: '#/components/parameters/Box2d'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WeatherStation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds a new Weather Station to the collection
+      description: |
+        Adds a new Weather Station to the collection. If the operation was successful (status code `200`), the numeric ID of the new Weather Station will be returned.
+      operationId: postWeatherStation
+      tags:
+        - Weather Station
+        - Add
+      requestBody:
+        required: true
+        description: A Weather Station to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeatherStation'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: Numeric ID of the created Weather Station.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/weather/station/{WeatherStationId}':
+    get:
+      summary: Returns a specific weather station from the collection
+      description: |
+        Returns a specific weather station from the collection. The parameter `station_id` is required to get the specific weather station. If the operation was successful (status code `200`), the specific weather station will be returned.
+      operationId: getOneWeatherStation
+      tags:
+        - Weather Station
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/WeatherStationId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherStation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes a specific weather station from the collection
+      description: |
+        Removes a specific weather station from the collection. The parameter `station_id` is required to delete the specific weather station.
+      operationId: deleteOneWeatherStation
+      tags:
+        - Weather Station
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/WeatherStationId'
+      responses:
+        '200':
+          description: Successfully deleted weather station
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+    patch:
+      summary: Patches a specific weather station
+      description: |
+        Patches a specific weather station. The parameter `station_id` is required to replace the specific weather station with the new one. Also, the new data (`WeatherStationPatch`) is required. If the operation was successful (status code `200`), the new weather station will be returned.
+      operationId: patchOneWeatherStation
+      tags:
+        - Weather Station
+        - Change
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/WeatherStationId'
+      requestBody:
+        required: true
+        description: The updated properties to patch
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeatherStationPatch'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherStation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+  /weather/data:
+    get:
+      summary: Returns a list of weather data
+      description: |
+        Returns a list of weather data.
+        With the optional parameter `stationIds`, only the weather data for the specified station ids will be returned.
+        With the optional parameters `startDate` and `endDate`, only the weather data within the specified date range (inclusive) will be returned. If `endDate` is omitted, it defaults to today's date. If `startDate` is omitted, it includes all data up to `endDate`.
+        If the operation was successful (status code `200`), an array with weather data will be returned.
+      operationId: getWeatherData
+      tags:
+        - Weather Data
+        - Get
+        - GetAll
+      parameters:
+        - name: stationIds
+          in: query
+          required: false
+          description: A set of station ids used to filter the results of weather data. Only weather data for the specified station ids will be returned.
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: startDate
+          in: query
+          required: false
+          description: 'The start date of the date range used to filter the results of weather data. Only weather data within the specified date range (inclusive) will be returned. If omitted, it includes all data up to `endDate`.'
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: false
+          description: 'The end date of the date range used to filter the results of weather data. Only weather data within the specified date range (inclusive) will be returned. If omitted, it defaults to today''s date.'
+          schema:
+            type: string
+            format: date
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WeatherData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+  '/weather/data/{WeatherStationId}/{MessDate}':
+    get:
+      summary: Returns weather data for a specific station and date
+      description: |
+        Returns weather data for a specific weather station and date. The parameters `WeatherStationId` and `MessDate` are required to get the specific weather data. If the operation was successful (status code `200`), the weather data will be returned.
+      operationId: getWeatherData
+      tags:
+        - Weather Data
+        - Get
+        - GetOne
+      parameters:
+        - $ref: '#/components/parameters/WeatherStationId'
+        - $ref: '#/components/parameters/MessDate'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+    delete:
+      summary: Removes weather data for a specific station and date
+      description: |
+        Removes weather data for a specific weather station and date. The parameters `WeatherStationId` and `MessDate` are required to delete the specific weather data.
+      operationId: deleteWeatherData
+      tags:
+        - Weather Data
+        - Delete
+        - DeleteOne
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/WeatherStationId'
+        - $ref: '#/components/parameters/MessDate'
+      responses:
+        '200':
+          description: Successfully deleted weather data
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: The specified resource was not found
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds new weather data
+      description: |
+        Adds new weather data to the collection. If the operation was successful (status code `201`), the ID of the new weather data entry will be returned.
+      operationId: postWeatherData
+      tags:
+        - Weather Data
+        - Add
+      requestBody:
+        required: true
+        description: Weather data to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: ID of the created weather data entry.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    patch:
+      summary: Patches weather data for a specific station and date
+      description: |
+        Patches weather data for a specific weather station and date. The parameters `WeatherStationId` and `MessDate` are required to replace the specific weather data with the new one. Also, the new data (`WeatherDataPatch`) is required. If the operation was successful (status code `200`), the new weather data will be returned.
+      operationId: patchWeatherData
+      tags:
+        - Weather Data
+        - Change
+        - Modify
+      parameters:
+        - $ref: '#/components/parameters/WeatherStationId'
+        - $ref: '#/components/parameters/MessDate'
+      requestBody:
+        required: true
+        description: The updated properties to patch
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeatherDataPatch'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
