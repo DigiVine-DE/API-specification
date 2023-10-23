@@ -66,3 +66,11 @@ Cultivar:
   $ref: "./Cultivar.yaml"
 CultivarPatch:
   $ref: "./CultivarPatch.yaml"
+WeatherData:
+  $ref: "./WeatherData.yaml"
+WeatherDataPatch:
+  $ref: "./WeatherDataPatch.yaml"
+WeatherStation:
+  $ref: "./WeatherStation.yaml"
+WeatherStationPatch:
+  $ref: "./WeatherStationPatch.yaml"
