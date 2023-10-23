@@ -1,0 +1,95 @@
+get:
+  summary: Returns a specific weather station from the collection
+  description: >
+    Returns a specific weather station from the collection.
+    The parameter `station_id` is required to get the specific weather station.
+    If the operation was successful (status code `200`), the specific weather station will be returned.
+  operationId: getOneWeatherStation
+  tags:
+    - Weather Station
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/WeatherStation"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes a specific weather station from the collection
+  description: >
+    Removes a specific weather station from the collection.
+    The parameter `station_id` is required to delete the specific weather station.
+  operationId: deleteOneWeatherStation
+  tags:
+    - Weather Station
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
+  responses:
+    "200":
+      description: Successfully deleted weather station
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+patch:
+  summary: Patches a specific weather station
+  description: >
+    Patches a specific weather station.
+    The parameter `station_id` is required to replace the specific weather station with the new one.
+    Also, the new data (`WeatherStationPatch`) is required.
+    If the operation was successful (status code `200`), the new weather station will be returned.
+  operationId: patchOneWeatherStation
+  tags:
+    - Weather Station
+    - Change
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
+  requestBody:
+    required: true
+    description: The updated properties to patch
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/WeatherStationPatch"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/WeatherStation"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+

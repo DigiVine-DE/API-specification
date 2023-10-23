@@ -38,3 +38,8 @@ SprayTaskId:
   $ref: "./SprayTaskId.yaml"
 CultivarId:
   $ref: "./CultivarId.yaml"
+WeatherStationId:
+  $ref: "./WeatherStationId.yaml"
+MessDate:
+  $ref: "./MessDate.yaml"
+

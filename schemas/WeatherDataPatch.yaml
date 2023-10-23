@@ -1,0 +1,110 @@
+type: object
+description: An object representing the patch of weather data 
+properties:
+  fx:
+    type: number
+    format: double
+    description: Daily maximum of wind gust (m/s).
+  fx_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily maximum of wind gust.
+  fm:
+    type: number
+    format: double
+    description: Daily mean of wind velocity (m/s).
+  fm_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily mean of wind velocity.
+  rsk:
+    type: number
+    format: double
+    description: Daily precipitation height (mm).
+  rsk_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily precipitation height.
+  rskf:
+    type: integer
+    description: Precipitation form (numerical code).
+  sdk:
+    type: number
+    format: double
+    description: Daily sunshine duration (h).
+  sdk_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily sunshine duration.
+  shk_tag:
+    type: number
+    format: double
+    description: Daily snow depth (cm).
+  shk_tag_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily snow depth.
+  nm:
+    type: number
+    format: double
+    description: Daily mean of cloud cover (1/8).
+  nm_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily mean of cloud cover.
+  vpm:
+    type: number
+    format: double
+    description: Daily mean of vapor pressure (hPa).
+  vpm_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily mean of vapor pressure.
+  pm:
+    type: number
+    format: double
+    description: Daily mean of pressure (hPa).
+  pm_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily mean of pressure.
+  tmk:
+    type: number
+    format: double
+    description: Daily mean of temperature (°C).
+  tmk_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily mean of temperature.
+  upm:
+    type: number
+    format: double
+    description: Daily mean of relative humidity (%).
+  upm_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily mean of relative humidity.
+  txk:
+    type: number
+    format: double
+    description: Daily maximum of temperature at 2 m height (°C).
+  txk_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily maximum of temperature at 2 m height.
+  tnk:
+    type: number
+    format: double
+    description: Daily minimum of temperature at 2 m height (°C).
+  tnk_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily minimum of temperature at 2 m height.
+  tgk:
+    type: number
+    format: double
+    description: Daily minimum of air temperature at 5 cm above ground (°C).
+  tgk_qn:
+    type: integer
+    format: int16
+    description: Quality level of daily minimum of air temperature at 5 cm above ground.

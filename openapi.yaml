@@ -89,3 +89,11 @@ paths:
     $ref: "path/vivc_index.yaml"
   /vivc/{CultivarId}:
     $ref: "path/vivc.yaml"
+  /weather/station:
+    $ref: "path/weather_station_index.yaml"
+  /weather/station/{WeatherStationId}:
+    $ref: "path/weather_station.yaml"
+  /weather/data:
+    $ref: "path/weather_data_index.yaml"
+  /weather/data/{WeatherStationId}/{MessDate}:
+    $ref: "path/weather_data.yaml"

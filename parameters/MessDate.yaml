@@ -1,0 +1,7 @@
+name: MessDate
+in: path
+required: true
+description: The reference date for the weather data
+schema:
+  type: string
+  format: date
