@@ -95,5 +95,5 @@ paths:
     $ref: "path/weather_station.yaml"
   /weather/data:
     $ref: "path/weather_data_index.yaml"
-  /weather/data/{WeatherStationId}/{MessDate}:
+  /weather/data/{WeatherStationId}/{MeasurementDate}:
     $ref: "path/weather_data.yaml"

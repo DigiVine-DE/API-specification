@@ -40,6 +40,6 @@ CultivarId:
   $ref: "./CultivarId.yaml"
 WeatherStationId:
   $ref: "./WeatherStationId.yaml"
-MessDate:
-  $ref: "./MessDate.yaml"
+MeasurementDate:
+  $ref: "./MeasurementDate.yaml"
 

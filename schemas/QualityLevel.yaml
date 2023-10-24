@@ -1,0 +1,11 @@
+type: integer
+description: The quality control procedure applied for a data report. 1 is the worst and 10 is the best. For details check the [document](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/DESCRIPTION_obsgermany_climate_daily_kl_historical_en.pdf)
+enum:
+  - 1: Only formal control
+  - 2: Controlled with individually defined criteria
+  - 3: Automatic control and correction
+  - 5: Historic, subjective procedures
+  - 7: Second control done, before correction
+  - 8: Quality control outside routine
+  - 9: Not all parameters corrected
+  - 10: Quality control finished, all corrections finished
