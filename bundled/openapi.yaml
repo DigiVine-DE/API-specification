@@ -1251,128 +1251,152 @@ components:
           type: string
           description: The country or region of origin of the variety.
           example: Germany
+    QualityLevel:
+      type: integer
+      description: 'The quality control procedure applied for a data report. 1 is the worst and 10 is the best. For details check the [document](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/DESCRIPTION_obsgermany_climate_daily_kl_historical_en.pdf)'
+      enum:
+        - '1': Only formal control
+        - '2': Controlled with individually defined criteria
+        - '3': Automatic control and correction
+        - '5': 'Historic, subjective procedures'
+        - '7': 'Second control done, before correction'
+        - '8': Quality control outside routine
+        - '9': Not all parameters corrected
+        - '10': 'Quality control finished, all corrections finished'
     WeatherData:
       type: object
-      description: An object representing weather data for a specific station and date.
       properties:
         station_id:
           type: integer
           format: int32
           description: The ID of the weather station.
-        mess_date:
+        measurement_date:
           type: string
           format: date
           description: The reference date of the weather data.
         fx:
-          type: number
-          format: double
-          description: Daily maximum of wind gust (m/s).
-        fx_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily maximum of wind gust.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily maximum of wind gust (m/s).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         fm:
-          type: number
-          format: double
-          description: Daily mean of wind velocity (m/s).
-        fm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of wind velocity.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily mean of wind velocity (m/s).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         rsk:
-          type: number
-          format: double
-          description: Daily precipitation height (mm).
-        rsk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily precipitation height.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily precipitation height (mm).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         rskf:
           type: integer
           description: Precipitation form (numerical code).
         sdk:
-          type: number
-          format: double
-          description: Daily sunshine duration (h).
-        sdk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily sunshine duration.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily sunshine duration (h).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         shk_tag:
-          type: number
-          format: double
-          description: Daily snow depth (cm).
-        shk_tag_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily snow depth.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily snow depth (cm).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         nm:
-          type: number
-          format: double
-          description: Daily mean of cloud cover (1/8).
-        nm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of cloud cover.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily mean of cloud cover (1/8).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         vpm:
-          type: number
-          format: double
-          description: Daily mean of vapor pressure (hPa).
-        vpm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of vapor pressure.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily mean of vapor pressure (hPa).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         pm:
-          type: number
-          format: double
-          description: Daily mean of pressure (hPa).
-        pm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of pressure.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily mean of pressure (hPa).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         tmk:
-          type: number
-          format: double
-          description: Daily mean of temperature (°C).
-        tmk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of temperature.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily mean of temperature (°C).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         upm:
-          type: number
-          format: double
-          description: Daily mean of relative humidity (%).
-        upm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of relative humidity.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily mean of relative humidity (%).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         txk:
-          type: number
-          format: double
-          description: Daily maximum of temperature at 2 m height (°C).
-        txk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily maximum of temperature at 2 m height.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily maximum of temperature at 2 m height (°C).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         tnk:
-          type: number
-          format: double
-          description: Daily minimum of temperature at 2 m height (°C).
-        tnk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily minimum of temperature at 2 m height.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily minimum of temperature at 2 m height (°C).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
         tgk:
-          type: number
-          format: double
-          description: Daily minimum of air temperature at 5 cm above ground (°C).
-        tgk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily minimum of air temperature at 5 cm above ground.
+          type: object
+          properties:
+            value:
+              type: number
+              format: double
+              description: Daily minimum of air temperature at 5 cm above ground (°C).
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
       required:
         - station_id
-        - mess_date
+        - measurement_date
     WeatherDataPatch:
       type: object
       description: An object representing the patch of weather data
@@ -1488,30 +1512,20 @@ components:
       type: object
       description: An object representing a weather station.
       properties:
-        station_id:
+        id:
           type: integer
           format: int32
           description: The ID of the weather station.
-        station_name:
+        name:
           type: string
           description: The name of the weather station.
-        station_bundesland:
+        bundesland:
           type: string
           description: The Bundesland where the weather station is located.
-        station_elevation:
-          type: integer
-          format: int32
-          description: The elevation of the weather station.
-        station_latitude:
-          type: number
-          format: double
-          description: The latitude of the weather station.
-        station_longitude:
-          type: number
-          format: double
-          description: The longitude of the weather station.
+        geometry:
+          $ref: '#/components/schemas/PointWithHeight'
       required:
-        - station_id
+        - id
     WeatherStationPatch:
       type: object
       description: An object representing the patch of a weather station.
@@ -1769,8 +1783,8 @@ components:
         type: integer
         format: int32
         example: 4711
-    MessDate:
-      name: MessDate
+    MeasurementDate:
+      name: MeasurementDate
       in: path
       required: true
       description: The reference date for the weather data
@@ -5051,7 +5065,7 @@ paths:
         With the optional parameter `stationIds`, only the weather data for the specified station ids will be returned.
         With the optional parameters `startDate` and `endDate`, only the weather data within the specified date range (inclusive) will be returned. If `endDate` is omitted, it defaults to today's date. If `startDate` is omitted, it includes all data up to `endDate`.
         If the operation was successful (status code `200`), an array with weather data will be returned.
-      operationId: getWeatherData
+      operationId: getAllWeatherData
       tags:
         - Weather Data
         - Get
@@ -5098,11 +5112,11 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/BackendError'
-  '/weather/data/{WeatherStationId}/{MessDate}':
+  '/weather/data/{WeatherStationId}/{MeasurementDate}':
     get:
       summary: Returns weather data for a specific station and date
       description: |
-        Returns weather data for a specific weather station and date. The parameters `WeatherStationId` and `MessDate` are required to get the specific weather data. If the operation was successful (status code `200`), the weather data will be returned.
+        Returns weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to get the specific weather data. If the operation was successful (status code `200`), the weather data will be returned.
       operationId: getWeatherData
       tags:
         - Weather Data
@@ -5110,7 +5124,7 @@ paths:
         - GetOne
       parameters:
         - $ref: '#/components/parameters/WeatherStationId'
-        - $ref: '#/components/parameters/MessDate'
+        - $ref: '#/components/parameters/MeasurementDate'
       responses:
         '200':
           description: Successful operation
@@ -5131,7 +5145,7 @@ paths:
     delete:
       summary: Removes weather data for a specific station and date
       description: |
-        Removes weather data for a specific weather station and date. The parameters `WeatherStationId` and `MessDate` are required to delete the specific weather data.
+        Removes weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to delete the specific weather data.
       operationId: deleteWeatherData
       tags:
         - Weather Data
@@ -5140,7 +5154,7 @@ paths:
         - Modify
       parameters:
         - $ref: '#/components/parameters/WeatherStationId'
-        - $ref: '#/components/parameters/MessDate'
+        - $ref: '#/components/parameters/MeasurementDate'
       responses:
         '200':
           description: Successfully deleted weather data
@@ -5162,6 +5176,9 @@ paths:
       tags:
         - Weather Data
         - Add
+      parameters:
+        - $ref: '#/components/parameters/WeatherStationId'
+        - $ref: '#/components/parameters/MeasurementDate'
       requestBody:
         required: true
         description: Weather data to be added to the collection
@@ -5192,7 +5209,7 @@ paths:
     patch:
       summary: Patches weather data for a specific station and date
       description: |
-        Patches weather data for a specific weather station and date. The parameters `WeatherStationId` and `MessDate` are required to replace the specific weather data with the new one. Also, the new data (`WeatherDataPatch`) is required. If the operation was successful (status code `200`), the new weather data will be returned.
+        Patches weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to replace the specific weather data with the new one. Also, the new data (`WeatherDataPatch`) is required. If the operation was successful (status code `200`), the new weather data will be returned.
       operationId: patchWeatherData
       tags:
         - Weather Data
@@ -5200,7 +5217,7 @@ paths:
         - Modify
       parameters:
         - $ref: '#/components/parameters/WeatherStationId'
-        - $ref: '#/components/parameters/MessDate'
+        - $ref: '#/components/parameters/MeasurementDate'
       requestBody:
         required: true
         description: The updated properties to patch
