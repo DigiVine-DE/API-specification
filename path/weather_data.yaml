@@ -2,7 +2,7 @@ get:
   summary: Returns weather data for a specific station and date
   description: >
     Returns weather data for a specific weather station and date.
-    The parameters `WeatherStationId` and `MessDate` are required to get the specific weather data.
+    The parameters `WeatherStationId` and `MeasurementDate` are required to get the specific weather data.
     If the operation was successful (status code `200`), the weather data will be returned.
   operationId: getWeatherData
   tags:
@@ -11,7 +11,7 @@ get:
     - GetOne
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
-    - $ref: "../openapi.yaml#/components/parameters/MessDate"
+    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
   responses:
     "200":
       description: Successful operation
@@ -33,7 +33,7 @@ delete:
   summary: Removes weather data for a specific station and date
   description: >
     Removes weather data for a specific weather station and date.
-    The parameters `WeatherStationId` and `MessDate` are required to delete the specific weather data.
+    The parameters `WeatherStationId` and `MeasurementDate` are required to delete the specific weather data.
   operationId: deleteWeatherData
   tags:
     - Weather Data
@@ -42,7 +42,7 @@ delete:
     - Modify
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
-    - $ref: "../openapi.yaml#/components/parameters/MessDate"
+    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
   responses:
     "200":
       description: Successfully deleted weather data
@@ -65,6 +65,9 @@ post:
   tags:
     - Weather Data
     - Add
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
+    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
   requestBody:
     required: true
     description: Weather data to be added to the collection
@@ -96,7 +99,7 @@ patch:
   summary: Patches weather data for a specific station and date
   description: >
     Patches weather data for a specific weather station and date.
-    The parameters `WeatherStationId` and `MessDate` are required to replace the specific weather data with the new one.
+    The parameters `WeatherStationId` and `MeasurementDate` are required to replace the specific weather data with the new one.
     Also, the new data (`WeatherDataPatch`) is required.
     If the operation was successful (status code `200`), the new weather data will be returned.
   operationId: patchWeatherData
@@ -106,7 +109,7 @@ patch:
     - Modify
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
-    - $ref: "../openapi.yaml#/components/parameters/MessDate"
+    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
   requestBody:
     required: true
     description: The updated properties to patch

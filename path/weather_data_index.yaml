@@ -8,7 +8,7 @@ get:
     With the optional parameters `startDate` and `endDate`, only the weather data within the specified date range (inclusive) will be returned. If `endDate` is omitted, it defaults to today's date. If `startDate` is omitted, it includes all data up to `endDate`.
 
     If the operation was successful (status code `200`), an array with weather data will be returned.
-  operationId: getWeatherData
+  operationId: getAllWeatherData
   tags:
     - Weather Data
     - Get
