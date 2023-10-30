@@ -9,6 +9,11 @@ properties:
     format: int64
     description: The numeric ID of the station that makes Forecasts for a group of Fields.
     example: 4711
+  historical_station_id:
+    type: integer
+    format: int64
+    description: The numeric ID of the historical weather station associated with the fields.
+    example: 4711
   number:
     type: string
     description: The Number of the Field (not the ID)
