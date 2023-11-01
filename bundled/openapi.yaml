@@ -4915,6 +4915,7 @@ paths:
       summary: Returns a list of all weather stations
       description: |
         Returns a list of all weather stations.
+        With the optional parameter `name`, only the weather stations with names containing all specified keywords (case insensitive) will be returned.
         With the optional parameter `bundesland`, only the weather stations located in the specified state will be returned.
         With the optional parameter `box2d`, only the weather stations that intersect the given bounding box will be returned.
         With the optional parameters `offset` and `limit`, you can control the pagination of the results.
@@ -4929,6 +4930,14 @@ paths:
           in: query
           required: false
           description: A set of keywords used to filter the results of weather stations. Only weather stations located in the specified state containing all of the specified keywords (case insensitive) will be returned.
+          schema:
+            type: array
+            items:
+              type: string
+        - name: name
+          in: query
+          required: false
+          description: A set of keywords used to filter the results of weather stations. Only weather stations with names containing all specified keywords (case insensitive) will be returned.
           schema:
             type: array
             items:
