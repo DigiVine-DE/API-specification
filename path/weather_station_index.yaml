@@ -12,7 +12,7 @@ get:
     If the operation was successful (status code `200`), an array with weather stations will be returned.
   operationId: getAllWeatherStations
   tags:
-    - Weather Station
+    - WeatherStation
     - Get
     - GetAll
   parameters:
@@ -51,7 +51,7 @@ post:
     If the operation was successful (status code `200`), the numeric ID of the new Weather Station will be returned.
   operationId: postWeatherStation
   tags:
-    - Weather Station
+    - WeatherStation
     - Add
   requestBody:
     required: true

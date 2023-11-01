@@ -6,7 +6,7 @@ get:
     If the operation was successful (status code `200`), the specific weather station will be returned.
   operationId: getOneWeatherStation
   tags:
-    - Weather Station
+    - WeatherStation
     - Get
     - GetOne
   parameters:
@@ -35,7 +35,7 @@ delete:
     The parameter `station_id` is required to delete the specific weather station.
   operationId: deleteOneWeatherStation
   tags:
-    - Weather Station
+    - WeatherStation
     - Delete
     - DeleteOne
     - Modify
@@ -63,7 +63,7 @@ patch:
     If the operation was successful (status code `200`), the new weather station will be returned.
   operationId: patchOneWeatherStation
   tags:
-    - Weather Station
+    - WeatherStation
     - Change
     - Modify
   parameters:
