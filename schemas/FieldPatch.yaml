@@ -11,7 +11,7 @@ properties:
     example: 4711
   historical_station_id:
     type: integer
-    format: int64
+    format: int32
     description: The numeric ID of the historical weather station associated with the fields.
     example: 4711
   number:
