@@ -4921,7 +4921,7 @@ paths:
         If the operation was successful (status code `200`), an array with weather stations will be returned.
       operationId: getAllWeatherStations
       tags:
-        - Weather Station
+        - WeatherStation
         - Get
         - GetAll
       parameters:
@@ -4959,7 +4959,7 @@ paths:
         Adds a new Weather Station to the collection. If the operation was successful (status code `200`), the numeric ID of the new Weather Station will be returned.
       operationId: postWeatherStation
       tags:
-        - Weather Station
+        - WeatherStation
         - Add
       requestBody:
         required: true
@@ -4995,7 +4995,7 @@ paths:
         Returns a specific weather station from the collection. The parameter `station_id` is required to get the specific weather station. If the operation was successful (status code `200`), the specific weather station will be returned.
       operationId: getOneWeatherStation
       tags:
-        - Weather Station
+        - WeatherStation
         - Get
         - GetOne
       parameters:
@@ -5023,7 +5023,7 @@ paths:
         Removes a specific weather station from the collection. The parameter `station_id` is required to delete the specific weather station.
       operationId: deleteOneWeatherStation
       tags:
-        - Weather Station
+        - WeatherStation
         - Delete
         - DeleteOne
         - Modify
@@ -5048,7 +5048,7 @@ paths:
         Patches a specific weather station. The parameter `station_id` is required to replace the specific weather station with the new one. Also, the new data (`WeatherStationPatch`) is required. If the operation was successful (status code `200`), the new weather station will be returned.
       operationId: patchOneWeatherStation
       tags:
-        - Weather Station
+        - WeatherStation
         - Change
         - Modify
       parameters:
