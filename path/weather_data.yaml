@@ -6,7 +6,7 @@ get:
     If the operation was successful (status code `200`), the weather data will be returned.
   operationId: getWeatherData
   tags:
-    - Weather Data
+    - WeatherData
     - Get
     - GetOne
   parameters:
@@ -36,7 +36,7 @@ delete:
     The parameters `WeatherStationId` and `MeasurementDate` are required to delete the specific weather data.
   operationId: deleteWeatherData
   tags:
-    - Weather Data
+    - WeatherData
     - Delete
     - DeleteOne
     - Modify
@@ -63,7 +63,7 @@ post:
     If the operation was successful (status code `201`), the ID of the new weather data entry will be returned.
   operationId: postWeatherData
   tags:
-    - Weather Data
+    - WeatherData
     - Add
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
@@ -104,7 +104,7 @@ patch:
     If the operation was successful (status code `200`), the new weather data will be returned.
   operationId: patchWeatherData
   tags:
-    - Weather Data
+    - WeatherData
     - Change
     - Modify
   parameters:

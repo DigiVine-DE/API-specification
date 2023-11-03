@@ -10,7 +10,7 @@ get:
     If the operation was successful (status code `200`), an array with weather data will be returned.
   operationId: getAllWeatherData
   tags:
-    - Weather Data
+    - WeatherData
     - Get
     - GetAll
   parameters:
