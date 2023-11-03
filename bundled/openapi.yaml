@@ -5096,7 +5096,7 @@ paths:
         If the operation was successful (status code `200`), an array with weather data will be returned.
       operationId: getAllWeatherData
       tags:
-        - Weather Data
+        - WeatherData
         - Get
         - GetAll
       parameters:
@@ -5148,7 +5148,7 @@ paths:
         Returns weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to get the specific weather data. If the operation was successful (status code `200`), the weather data will be returned.
       operationId: getWeatherData
       tags:
-        - Weather Data
+        - WeatherData
         - Get
         - GetOne
       parameters:
@@ -5177,7 +5177,7 @@ paths:
         Removes weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to delete the specific weather data.
       operationId: deleteWeatherData
       tags:
-        - Weather Data
+        - WeatherData
         - Delete
         - DeleteOne
         - Modify
@@ -5203,7 +5203,7 @@ paths:
         Adds new weather data to the collection. If the operation was successful (status code `201`), the ID of the new weather data entry will be returned.
       operationId: postWeatherData
       tags:
-        - Weather Data
+        - WeatherData
         - Add
       parameters:
         - $ref: '#/components/parameters/WeatherStationId'
@@ -5241,7 +5241,7 @@ paths:
         Patches weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to replace the specific weather data with the new one. Also, the new data (`WeatherDataPatch`) is required. If the operation was successful (status code `200`), the new weather data will be returned.
       operationId: patchWeatherData
       tags:
-        - Weather Data
+        - WeatherData
         - Change
         - Modify
       parameters:
