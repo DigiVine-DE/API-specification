@@ -7,15 +7,5 @@ properties:
   station_bundesland:
     type: string
     description: The Bundesland where the weather station is located.
-  station_elevation:
-    type: integer
-    format: int32
-    description: The elevation of the weather station.
-  station_latitude:
-    type: number
-    format: double
-    description: The latitude of the weather station.
-  station_longitude:
-    type: number
-    format: double
-    description: The longitude of the weather station.
+  geometry:
+    $ref: "../openapi.yaml#/components/schemas/PointWithHeight"
