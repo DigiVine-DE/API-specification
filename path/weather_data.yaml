@@ -4,7 +4,7 @@ get:
     Returns weather data for a specific weather station and date.
     The parameters `WeatherStationId` and `MeasurementDate` are required to get the specific weather data.
     If the operation was successful (status code `200`), the weather data will be returned.
-  operationId: getWeatherData
+  operationId: getOneWeatherData
   tags:
     - WeatherData
     - Get
@@ -34,7 +34,7 @@ delete:
   description: >
     Removes weather data for a specific weather station and date.
     The parameters `WeatherStationId` and `MeasurementDate` are required to delete the specific weather data.
-  operationId: deleteWeatherData
+  operationId: deleteOneWeatherData
   tags:
     - WeatherData
     - Delete
@@ -102,7 +102,7 @@ patch:
     The parameters `WeatherStationId` and `MeasurementDate` are required to replace the specific weather data with the new one.
     Also, the new data (`WeatherDataPatch`) is required.
     If the operation was successful (status code `200`), the new weather data will be returned.
-  operationId: patchWeatherData
+  operationId: patchOneWeatherData
   tags:
     - WeatherData
     - Change
