@@ -6,8 +6,9 @@ properties:
     description: The ID of the weather station.
   measurement_date:
     type: string
-    format: date
-    description: The reference date of the weather data.
+    pattern: '^\d{4}-\d{2}-\d{2}$'
+    description: The reference date of the weather data, following the format specified by RFC 3339.
+    example: '2023-08-01'
   fx:
     type: object
     description: Daily maximum of wind gust (m/s).
