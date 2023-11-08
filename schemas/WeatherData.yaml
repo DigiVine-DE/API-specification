@@ -10,29 +10,29 @@ properties:
     description: The reference date of the weather data.
   fx:
     type: object
+    description: Daily maximum of wind gust (m/s).
     properties:
       value:
         type: number
         format: double
-        description: Daily maximum of wind gust (m/s).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   fm:
     type: object
+    description: Daily mean of wind velocity (m/s).
     properties:
       value:
         type: number
         format: double
-        description: Daily mean of wind velocity (m/s).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   rsk:
     type: object
+    description: Daily precipitation height (mm).
     properties:
       value:
         type: number
         format: double
-        description: Daily precipitation height (mm).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   rskf:
@@ -40,92 +40,92 @@ properties:
     description: Precipitation form (numerical code).
   sdk:
     type: object
+    description: Daily sunshine duration (h).
     properties:
       value:
         type: number
         format: double
-        description: Daily sunshine duration (h).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   shk_tag:
     type: object
+    description: Daily snow depth (cm).
     properties:
       value:
         type: number
         format: double
-        description: Daily snow depth (cm).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   nm:
     type: object
+    description: Daily mean of cloud cover (1/8).
     properties:
       value:
         type: number
         format: double
-        description: Daily mean of cloud cover (1/8).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   vpm:
     type: object
+    description: Daily mean of vapor pressure (hPa).
     properties:
       value:
         type: number
         format: double
-        description: Daily mean of vapor pressure (hPa).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   pm:
     type: object
+    description: Daily mean of pressure (hPa).
     properties:
       value:
         type: number
         format: double
-        description: Daily mean of pressure (hPa).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   tmk:
     type: object
+    description: Daily mean of temperature (°C).
     properties:
       value:
         type: number
         format: double
-        description: Daily mean of temperature (°C).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   upm:
     type: object
+    description: Daily mean of relative humidity (%).
     properties:
       value:
         type: number
         format: double
-        description: Daily mean of relative humidity (%).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   txk:
     type: object
+    description: Daily maximum of temperature at 2 m height (°C).
     properties:
       value:
         type: number
         format: double
-        description: Daily maximum of temperature at 2 m height (°C).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   tnk:
     type: object
+    description: Daily minimum of temperature at 2 m height (°C).
     properties:
       value:
         type: number
         format: double
-        description: Daily minimum of temperature at 2 m height (°C).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
   tgk:
     type: object
+    description: Daily minimum of air temperature at 5 cm above ground (°C).
     properties:
       value:
         type: number
         format: double
-        description: Daily minimum of air temperature at 5 cm above ground (°C).
       quality_level:
         $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
 required:
