@@ -1292,8 +1292,9 @@ components:
           description: The ID of the weather station.
         measurement_date:
           type: string
-          format: date
-          description: The reference date of the weather data.
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+          description: 'The reference date of the weather data, following the format specified by RFC 3339.'
+          example: '2023-08-01'
         fx:
           type: object
           description: Daily maximum of wind gust (m/s).
@@ -1303,6 +1304,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         fm:
           type: object
           description: Daily mean of wind velocity (m/s).
@@ -1312,6 +1316,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         rsk:
           type: object
           description: Daily precipitation height (mm).
@@ -1321,6 +1328,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         rskf:
           type: integer
           description: Precipitation form (numerical code).
@@ -1333,6 +1343,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         shk_tag:
           type: object
           description: Daily snow depth (cm).
@@ -1342,6 +1355,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         nm:
           type: object
           description: Daily mean of cloud cover (1/8).
@@ -1351,6 +1367,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         vpm:
           type: object
           description: Daily mean of vapor pressure (hPa).
@@ -1360,6 +1379,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         pm:
           type: object
           description: Daily mean of pressure (hPa).
@@ -1369,6 +1391,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         tmk:
           type: object
           description: Daily mean of temperature (°C).
@@ -1378,6 +1403,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         upm:
           type: object
           description: Daily mean of relative humidity (%).
@@ -1387,6 +1415,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         txk:
           type: object
           description: Daily maximum of temperature at 2 m height (°C).
@@ -1396,6 +1427,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         tnk:
           type: object
           description: Daily minimum of temperature at 2 m height (°C).
@@ -1405,6 +1439,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         tgk:
           type: object
           description: Daily minimum of air temperature at 5 cm above ground (°C).
@@ -1414,6 +1451,9 @@ components:
               format: double
             quality_level:
               $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
       required:
         - station_id
         - measurement_date
@@ -5136,7 +5176,7 @@ paths:
       summary: Returns weather data for a specific station and date
       description: |
         Returns weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to get the specific weather data. If the operation was successful (status code `200`), the weather data will be returned.
-      operationId: getWeatherData
+      operationId: getOneWeatherData
       tags:
         - WeatherData
         - Get
@@ -5165,7 +5205,7 @@ paths:
       summary: Removes weather data for a specific station and date
       description: |
         Removes weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to delete the specific weather data.
-      operationId: deleteWeatherData
+      operationId: deleteOneWeatherData
       tags:
         - WeatherData
         - Delete
@@ -5229,7 +5269,7 @@ paths:
       summary: Patches weather data for a specific station and date
       description: |
         Patches weather data for a specific weather station and date. The parameters `WeatherStationId` and `MeasurementDate` are required to replace the specific weather data with the new one. Also, the new data (`WeatherDataPatch`) is required. If the operation was successful (status code `200`), the new weather data will be returned.
-      operationId: patchWeatherData
+      operationId: patchOneWeatherData
       tags:
         - WeatherData
         - Change
