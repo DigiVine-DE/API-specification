@@ -4,4 +4,6 @@ required: true
 description: The reference date for the weather data
 schema:
   type: string
-  format: date
+  pattern: '^\d{4}-\d{2}-\d{2}$'
+  description: The date format specified by RFC 3339.
+  example: '2023-08-01'

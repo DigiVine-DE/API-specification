@@ -28,14 +28,18 @@ get:
       description: The start date of the date range used to filter the results of weather data. Only weather data within the specified date range (inclusive) will be returned. If omitted, it includes all data up to `endDate`.
       schema:
         type: string
-        format: date
+        pattern: '^\d{4}-\d{2}-\d{2}$'
+        description: The date format specified by RFC 3339.
+        example: '2023-08-01'
     - name: endDate
       in: query
       required: false
       description: The end date of the date range used to filter the results of weather data. Only weather data within the specified date range (inclusive) will be returned. If omitted, it defaults to today's date.
       schema:
         type: string
-        format: date
+        pattern: '^\d{4}-\d{2}-\d{2}$'
+        description: The date format specified by RFC 3339.
+        example: '2023-08-01'
     - $ref: "../openapi.yaml#/components/parameters/Offset"
     - $ref: "../openapi.yaml#/components/parameters/Limit"
   responses:
