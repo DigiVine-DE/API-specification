@@ -59,3 +59,48 @@ get:
       $ref: "../openapi.yaml#/components/responses/Unauthorized"
     "403":
       $ref: "../openapi.yaml#/components/responses/Forbidden"
+
+post:
+  summary: Adds new weather data
+  description: >
+    Adds new weather data to the collection.
+    If the operation was successful (status code `201`), the ID of the new weather data entry will be returned.
+  operationId: postWeatherData
+  tags:
+    - WeatherData
+    - Add
+  requestBody:
+    required: true
+    description: Weather data to be added to the collection
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/WeatherData"
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              station_id:
+                type: integer
+                format: int32
+                description: The ID of the weather station.
+              measurement_date:
+                type: string
+                pattern: '^\d{4}-\d{2}-\d{2}$'
+                description: The reference date of the weather data, following the format specified by RFC 3339.
+                example: '2023-08-01'
+            required:
+              - station_id
+              - measurement_date
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"

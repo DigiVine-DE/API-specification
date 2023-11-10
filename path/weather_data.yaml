@@ -56,45 +56,6 @@ delete:
       description: The specified resource was not found
     "500":
       $ref: "../openapi.yaml#/components/responses/BackendError"
-post:
-  summary: Adds new weather data
-  description: >
-    Adds new weather data to the collection.
-    If the operation was successful (status code `201`), the ID of the new weather data entry will be returned.
-  operationId: postWeatherData
-  tags:
-    - WeatherData
-    - Add
-  parameters:
-    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
-    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
-  requestBody:
-    required: true
-    description: Weather data to be added to the collection
-    content:
-      application/json:
-        schema:
-          $ref: "../openapi.yaml#/components/schemas/WeatherData"
-  responses:
-    "201":
-      description: Successful operation
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-                format: int32
-                description: ID of the created weather data entry.
-    "500":
-      $ref: "../openapi.yaml#/components/responses/BackendError"
-    "400":
-      $ref: "../openapi.yaml#/components/responses/BadRequest"
-    "401":
-      $ref: "../openapi.yaml#/components/responses/Unauthorized"
-    "403":
-      $ref: "../openapi.yaml#/components/responses/Forbidden"
 patch:
   summary: Patches weather data for a specific station and date
   description: >
