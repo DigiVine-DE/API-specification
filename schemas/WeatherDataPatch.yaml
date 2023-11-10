@@ -2,109 +2,161 @@ type: object
 description: An object representing the patch of weather data 
 properties:
   fx:
-    type: number
-    format: double
+    type: object
     description: Daily maximum of wind gust (m/s).
-  fx_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily maximum of wind gust.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   fm:
-    type: number
-    format: double
+    type: object
     description: Daily mean of wind velocity (m/s).
-  fm_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily mean of wind velocity.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   rsk:
-    type: number
-    format: double
+    type: object
     description: Daily precipitation height (mm).
-  rsk_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily precipitation height.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   rskf:
     type: integer
     description: Precipitation form (numerical code).
   sdk:
-    type: number
-    format: double
+    type: object
     description: Daily sunshine duration (h).
-  sdk_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily sunshine duration.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   shk_tag:
-    type: number
-    format: double
+    type: object
     description: Daily snow depth (cm).
-  shk_tag_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily snow depth.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   nm:
-    type: number
-    format: double
+    type: object
     description: Daily mean of cloud cover (1/8).
-  nm_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily mean of cloud cover.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   vpm:
-    type: number
-    format: double
+    type: object
     description: Daily mean of vapor pressure (hPa).
-  vpm_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily mean of vapor pressure.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   pm:
-    type: number
-    format: double
+    type: object
     description: Daily mean of pressure (hPa).
-  pm_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily mean of pressure.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   tmk:
-    type: number
-    format: double
+    type: object
     description: Daily mean of temperature (°C).
-  tmk_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily mean of temperature.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   upm:
-    type: number
-    format: double
+    type: object
     description: Daily mean of relative humidity (%).
-  upm_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily mean of relative humidity.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   txk:
-    type: number
-    format: double
+    type: object
     description: Daily maximum of temperature at 2 m height (°C).
-  txk_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily maximum of temperature at 2 m height.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   tnk:
-    type: number
-    format: double
+    type: object
     description: Daily minimum of temperature at 2 m height (°C).
-  tnk_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily minimum of temperature at 2 m height.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
   tgk:
-    type: number
-    format: double
+    type: object
     description: Daily minimum of air temperature at 5 cm above ground (°C).
-  tgk_qn:
-    type: integer
-    format: int16
-    description: Quality level of daily minimum of air temperature at 5 cm above ground.
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
