@@ -1462,112 +1462,164 @@ components:
       description: An object representing the patch of weather data
       properties:
         fx:
-          type: number
-          format: double
+          type: object
           description: Daily maximum of wind gust (m/s).
-        fx_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily maximum of wind gust.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         fm:
-          type: number
-          format: double
+          type: object
           description: Daily mean of wind velocity (m/s).
-        fm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of wind velocity.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         rsk:
-          type: number
-          format: double
+          type: object
           description: Daily precipitation height (mm).
-        rsk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily precipitation height.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         rskf:
           type: integer
           description: Precipitation form (numerical code).
         sdk:
-          type: number
-          format: double
+          type: object
           description: Daily sunshine duration (h).
-        sdk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily sunshine duration.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         shk_tag:
-          type: number
-          format: double
+          type: object
           description: Daily snow depth (cm).
-        shk_tag_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily snow depth.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         nm:
-          type: number
-          format: double
+          type: object
           description: Daily mean of cloud cover (1/8).
-        nm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of cloud cover.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         vpm:
-          type: number
-          format: double
+          type: object
           description: Daily mean of vapor pressure (hPa).
-        vpm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of vapor pressure.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         pm:
-          type: number
-          format: double
+          type: object
           description: Daily mean of pressure (hPa).
-        pm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of pressure.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         tmk:
-          type: number
-          format: double
+          type: object
           description: Daily mean of temperature (°C).
-        tmk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of temperature.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         upm:
-          type: number
-          format: double
+          type: object
           description: Daily mean of relative humidity (%).
-        upm_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily mean of relative humidity.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         txk:
-          type: number
-          format: double
+          type: object
           description: Daily maximum of temperature at 2 m height (°C).
-        txk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily maximum of temperature at 2 m height.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         tnk:
-          type: number
-          format: double
+          type: object
           description: Daily minimum of temperature at 2 m height (°C).
-        tnk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily minimum of temperature at 2 m height.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
         tgk:
-          type: number
-          format: double
+          type: object
           description: Daily minimum of air temperature at 5 cm above ground (°C).
-        tgk_qn:
-          type: integer
-          format: int16
-          description: Quality level of daily minimum of air temperature at 5 cm above ground.
+          properties:
+            value:
+              type: number
+              format: double
+            quality_level:
+              $ref: '#/components/schemas/QualityLevel'
+          required:
+            - value
+            - quality_level
     WeatherStation:
       type: object
       description: An object representing a weather station.
@@ -1840,7 +1892,9 @@ components:
       description: The reference date for the weather data
       schema:
         type: string
-        format: date
+        pattern: '^\d{4}-\d{2}-\d{2}$'
+        description: The date format specified by RFC 3339.
+        example: '2023-08-01'
   responses:
     BackendError:
       description: Backend Error
@@ -5144,14 +5198,18 @@ paths:
           description: 'The start date of the date range used to filter the results of weather data. Only weather data within the specified date range (inclusive) will be returned. If omitted, it includes all data up to `endDate`.'
           schema:
             type: string
-            format: date
+            pattern: '^\d{4}-\d{2}-\d{2}$'
+            description: The date format specified by RFC 3339.
+            example: '2023-08-01'
         - name: endDate
           in: query
           required: false
           description: 'The end date of the date range used to filter the results of weather data. Only weather data within the specified date range (inclusive) will be returned. If omitted, it defaults to today''s date.'
           schema:
             type: string
-            format: date
+            pattern: '^\d{4}-\d{2}-\d{2}$'
+            description: The date format specified by RFC 3339.
+            example: '2023-08-01'
         - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -5163,6 +5221,49 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WeatherData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/BackendError'
+    post:
+      summary: Adds new weather data
+      description: |
+        Adds new weather data to the collection. If the operation was successful (status code `201`), the ID of the new weather data entry will be returned.
+      operationId: postWeatherData
+      tags:
+        - WeatherData
+        - Add
+      requestBody:
+        required: true
+        description: Weather data to be added to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeatherData'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  station_id:
+                    type: integer
+                    format: int32
+                    description: The ID of the weather station.
+                  measurement_date:
+                    type: string
+                    pattern: '^\d{4}-\d{2}-\d{2}$'
+                    description: 'The reference date of the weather data, following the format specified by RFC 3339.'
+                    example: '2023-08-01'
+                required:
+                  - station_id
+                  - measurement_date
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -5225,44 +5326,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           description: The specified resource was not found
-        '500':
-          $ref: '#/components/responses/BackendError'
-    post:
-      summary: Adds new weather data
-      description: |
-        Adds new weather data to the collection. If the operation was successful (status code `201`), the ID of the new weather data entry will be returned.
-      operationId: postWeatherData
-      tags:
-        - WeatherData
-        - Add
-      parameters:
-        - $ref: '#/components/parameters/WeatherStationId'
-        - $ref: '#/components/parameters/MeasurementDate'
-      requestBody:
-        required: true
-        description: Weather data to be added to the collection
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WeatherData'
-      responses:
-        '201':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    format: int32
-                    description: ID of the created weather data entry.
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/BackendError'
     patch:
