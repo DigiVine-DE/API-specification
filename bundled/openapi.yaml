@@ -1622,22 +1622,32 @@ components:
             - quality_level
     WeatherStation:
       type: object
+      required:
+        - type
+        - properties
       description: An object representing a weather station.
       properties:
-        id:
-          type: integer
-          format: int32
-          description: The ID of the weather station.
-        name:
+        type:
           type: string
-          description: The name of the weather station.
-        bundesland:
-          type: string
-          description: The Bundesland where the weather station is located.
+          enum:
+            - Feature
         geometry:
           $ref: '#/components/schemas/PointWithHeight'
-      required:
-        - id
+        properties:
+          type: object
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: 'The ID of the weather station provided by Deutscher Wetterdienst (https://www.dwd.de).'
+            name:
+              type: string
+              description: The name of the weather station.
+            bundesland:
+              type: string
+              description: The Bundesland where the weather station is located.
     WeatherStationPatch:
       type: object
       description: An object representing the patch of a weather station.
