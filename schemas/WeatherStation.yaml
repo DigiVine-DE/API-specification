@@ -1,17 +1,31 @@
 type: object
+required:
+  - type
+  - properties
 description: An object representing a weather station.
 properties:
-  id:
-    type: integer
-    format: int32
-    description: The ID of the weather station.
-  name:
+  # GeoJSON Type "FeatureCollection"
+  type:
     type: string
-    description: The name of the weather station.
-  bundesland:
-    type: string
-    description: The Bundesland where the weather station is located.
+    enum:
+      - Feature
+  # Array of GeoJSON Features
   geometry:
     $ref: "../openapi.yaml#/components/schemas/PointWithHeight"
-required:
-  - id
+  # Metadata referencing related objects
+  properties:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+        format: int32
+        description: The ID of the weather station provided by Deutscher Wetterdienst (https://www.dwd.de).
+      name:
+        type: string
+        description: The name of the weather station.
+      bundesland:
+        type: string
+        description: The Bundesland where the weather station is located.
+
