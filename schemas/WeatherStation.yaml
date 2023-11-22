@@ -1,6 +1,7 @@
 type: object
 required:
   - type
+  - geometry
   - properties
 description: An object representing a weather station.
 properties:
@@ -11,7 +12,9 @@ properties:
       - Feature
   # Array of GeoJSON Features
   geometry:
-    $ref: "../openapi.yaml#/components/schemas/PointWithHeight"
+    nullable: true
+    allOf:
+      - $ref: "../openapi.yaml#/components/schemas/PointWithHeight"
   # Metadata referencing related objects
   properties:
     type: object
