@@ -1,0 +1,173 @@
+type: object
+properties:
+  station_id:
+    type: integer
+    format: int32
+    description: The ID of the weather station.
+  measurement_date:
+    type: string
+    pattern: '^\d{4}-\d{2}-\d{2}$'
+    description: The reference date of the weather data, following the format specified by RFC 3339.
+    example: '2023-08-01'
+  fx:
+    type: object
+    description: Daily maximum of wind gust (m/s).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  fm:
+    type: object
+    description: Daily mean of wind velocity (m/s).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  rsk:
+    type: object
+    description: Daily precipitation height (mm).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  rskf:
+    type: integer
+    description: Precipitation form (numerical code).
+  sdk:
+    type: object
+    description: Daily sunshine duration (h).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  shk_tag:
+    type: object
+    description: Daily snow depth (cm).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  nm:
+    type: object
+    description: Daily mean of cloud cover (1/8).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  vpm:
+    type: object
+    description: Daily mean of vapor pressure (hPa).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  pm:
+    type: object
+    description: Daily mean of pressure (hPa).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  tmk:
+    type: object
+    description: Daily mean of temperature (°C).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  upm:
+    type: object
+    description: Daily mean of relative humidity (%).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  txk:
+    type: object
+    description: Daily maximum of temperature at 2 m height (°C).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  tnk:
+    type: object
+    description: Daily minimum of temperature at 2 m height (°C).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+  tgk:
+    type: object
+    description: Daily minimum of air temperature at 5 cm above ground (°C).
+    properties:
+      value:
+        type: number
+        format: double
+      quality_level:
+        $ref:  "../openapi.yaml#/components/schemas/QualityLevel"
+    required:
+      - value
+      - quality_level
+required:
+  - station_id
+  - measurement_date

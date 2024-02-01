@@ -1,0 +1,97 @@
+get:
+  summary: Returns weather data for a specific station and date
+  description: >
+    Returns weather data for a specific weather station and date.
+    The parameters `WeatherStationId` and `MeasurementDate` are required to get the specific weather data.
+    If the operation was successful (status code `200`), the weather data will be returned.
+  operationId: getOneWeatherData
+  tags:
+    - WeatherData
+    - Get
+    - GetOne
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
+    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/WeatherData"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+delete:
+  summary: Removes weather data for a specific station and date
+  description: >
+    Removes weather data for a specific weather station and date.
+    The parameters `WeatherStationId` and `MeasurementDate` are required to delete the specific weather data.
+  operationId: deleteOneWeatherData
+  tags:
+    - WeatherData
+    - Delete
+    - DeleteOne
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
+    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
+  responses:
+    "200":
+      description: Successfully deleted weather data
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"   
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
+patch:
+  summary: Patches weather data for a specific station and date
+  description: >
+    Patches weather data for a specific weather station and date.
+    The parameters `WeatherStationId` and `MeasurementDate` are required to replace the specific weather data with the new one.
+    Also, the new data (`WeatherDataPatch`) is required.
+    If the operation was successful (status code `200`), the new weather data will be returned.
+  operationId: patchOneWeatherData
+  tags:
+    - WeatherData
+    - Change
+    - Modify
+  parameters:
+    - $ref: "../openapi.yaml#/components/parameters/WeatherStationId"
+    - $ref: "../openapi.yaml#/components/parameters/MeasurementDate"
+  requestBody:
+    required: true
+    description: The updated properties to patch
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/WeatherDataPatch"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/WeatherData"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequest"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/Unauthorized"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/Forbidden"
+    "404":
+      description: The specified resource was not found
+    "500":
+      $ref: "../openapi.yaml#/components/responses/BackendError"
