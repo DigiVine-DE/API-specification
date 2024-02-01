@@ -1,4 +1,7 @@
 type: integer
+format: int32
+minimum: 1
+maximum: 10
 description: >
   The quality control procedure applied for a data report. 1 is the worst and 10 is the best. For details check the [document](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/DESCRIPTION_obsgermany_climate_daily_kl_historical_en.pdf)
     * `1` - Only formal control
@@ -10,12 +13,3 @@ description: >
     * `9` - Not all parameters corrected
     * `10` - Quality control finished, all corrections finished  
 nullable: false
-enum:
-  - 1
-  - 2
-  - 3
-  - 5
-  - 7
-  - 8
-  - 9
-  - 10
