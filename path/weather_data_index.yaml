@@ -1,7 +1,7 @@
 get:
   summary: Returns a list of weather data
   description: >
-    Returns a list of weather data.
+    Returns a list of weather data sorted by `measurement_date`.
 
     With the optional parameter `stationIds`, only the weather data for the specified station ids will be returned.
 
