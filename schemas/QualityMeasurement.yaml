@@ -76,3 +76,11 @@ properties:
         format: double
         description: The glucose concentration, measured in g/L
         example: 4.5676458869347655
+x-federation:
+  has-parameters:
+    - parameter: QualityMeasurementId
+      path: "/properties/id"
+      is-artificial-id: true
+    - parameter: PlantId
+      path: "/properties/plant_id"
+      is-artificial-id: true

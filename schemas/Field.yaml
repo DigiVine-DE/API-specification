@@ -55,3 +55,11 @@ properties:
         type: string
         description: Name of the fruit on this Field
         example: Riesling
+x-federation:
+  has-resources:
+    - resource: PlanterRun
+      path: "/planter_runs"
+  has-parameters:
+    - parameter: FieldId
+      path: "/properties/id"
+      is-artificial-id: true

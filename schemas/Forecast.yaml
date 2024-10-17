@@ -82,3 +82,8 @@ properties:
     items:
       $ref: "../openapi.yaml#/components/schemas/ForecastMeasurement"
     description: An array of measurements
+x-federation:
+  has-parameters:
+    - parameter: ForecastId
+      path: "/id"
+      is-artificial-id: true

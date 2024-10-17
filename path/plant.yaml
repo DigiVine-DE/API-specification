@@ -7,11 +7,11 @@ get:
   operationId: getOnePlant
   tags:
     - Plant
-    - Get
+    - Get 
     - GetOne
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/FieldId"
-    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId"
+    - $ref: "../openapi.yaml#/components/parameters/PlanterRunId" 
     - $ref: "../openapi.yaml#/components/parameters/PlantId"
   responses:
     "200":

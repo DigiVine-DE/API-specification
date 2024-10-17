@@ -28,3 +28,8 @@ required:
   - cultivar_name
   - prime_name
   - variety_number
+x-federation:
+  has-parameters:
+    - parameter: CultivarId
+      path: "/id"
+      is-artificial-id: true

@@ -6,3 +6,6 @@ schema:
   type: integer
   format: int32
   example: 4711
+x-federation:
+  filter:
+    type: bloom(0.01)

@@ -10,7 +10,7 @@ get:
   tags:
     - Planter
     - Get
-    - GetAll
+    - GetAll 
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/Box2d"
     - $ref: "../openapi.yaml#/components/parameters/FieldId"

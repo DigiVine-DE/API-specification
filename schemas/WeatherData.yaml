@@ -171,3 +171,9 @@ properties:
 required:
   - station_id
   - measurement_date
+x-federation:
+  has-parameters:
+    - parameter: MeasurementDate
+      path: "/measurement_date" 
+    - parameter: WeatherStationId
+      path: "/station_id" 

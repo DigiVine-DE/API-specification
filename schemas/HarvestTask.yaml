@@ -78,3 +78,8 @@ properties:
         format: int64
         description: The effective total time of the harvesting run in minutes
         example: 95
+x-federation:
+  has-parameters:
+    - parameter: HarvestTaskId
+      path: "/properties/task_id"
+      is-artificial-id: true

@@ -71,3 +71,8 @@ properties:
         format: int32
         description: Number of the row of the Plant
         example: 2
+x-federation:
+  has-parameters:
+    - parameter: PlantId
+      path: "/properties/id"
+      is-artificial-id: true

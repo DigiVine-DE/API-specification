@@ -25,3 +25,8 @@ properties:
       field_id:
         type: integer
         format: int64
+x-federation:
+  has-parameters:
+    - parameter: TerrainId
+      path: "/id"
+      is-artificial-id: true

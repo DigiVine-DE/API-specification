@@ -11,7 +11,7 @@ get:
     - Scheduled Spray Task
     - Get
     - GetOne
-  parameters:
+  parameters: 
     - $ref: "../openapi.yaml#/components/parameters/SprayTaskId"
   responses:
     "200":

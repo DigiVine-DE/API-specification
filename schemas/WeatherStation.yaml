@@ -31,4 +31,7 @@ properties:
       bundesland:
         type: string
         description: The Bundesland where the weather station is located.
-
+x-federation:
+  has-parameters:
+    - parameter: WeatherStationId
+      path: "/properties/id" 

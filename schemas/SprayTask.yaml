@@ -97,3 +97,8 @@ properties:
               type: string
               description: Unit of the protection fluid amount
               example: g/ha
+x-federation:
+  has-parameters:
+    - parameter: SprayTaskId
+      path: "/properties/task_id"
+      is-artificial-id: true

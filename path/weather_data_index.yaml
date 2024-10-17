@@ -31,6 +31,12 @@ get:
         pattern: '^\d{4}-\d{2}-\d{2}$'
         description: The date format specified by RFC 3339.
         example: '2023-08-01'
+      x-federation:
+        filter:
+          type: lowerbound(inclusive)
+          source: MeasurementDate
+          extractors:
+            - parse_rfc3339
     - name: endDate
       in: query
       required: false
@@ -40,8 +46,22 @@ get:
         pattern: '^\d{4}-\d{2}-\d{2}$'
         description: The date format specified by RFC 3339.
         example: '2023-08-01'
+      x-federation:
+        filter:
+          type: upperbound(inclusive)
+          source: MeasurementDate
+          extractors:
+            - parse_rfc3339
     - $ref: "../openapi.yaml#/components/parameters/Offset"
     - $ref: "../openapi.yaml#/components/parameters/Limit"
+  x-federation:
+    - sort-by:
+        parameter: MeasurementDate
+        extractors:
+          - parse_rfc3339          
+    - dedup-by:
+          - "/station_id"
+          - "/measurement_date"
   responses:
     "200":
       description: Successful operation
