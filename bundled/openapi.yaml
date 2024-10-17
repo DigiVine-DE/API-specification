@@ -366,6 +366,11 @@ components:
               format: int32
               description: Number of the row of the Plant
               example: 2
+      x-federation:
+        has-parameters:
+          - parameter: PlantId
+            path: /properties/id
+            is-artificial-id: true
     PlantPatch:
       type: object
       properties:
@@ -453,6 +458,11 @@ components:
               format: int64
               description: The numeric ID of the Field on which the Planter Run is performed.
               example: 4711
+      x-federation:
+        has-parameters:
+          - parameter: PlanterRunId
+            path: /properties/id
+            is-artificial-id: true
     Field:
       type: object
       required:
@@ -507,6 +517,14 @@ components:
               type: string
               description: Name of the fruit on this Field
               example: Riesling
+      x-federation:
+        has-resources:
+          - resource: PlanterRun
+            path: /planter_runs
+        has-parameters:
+          - parameter: FieldId
+            path: /properties/id
+            is-artificial-id: true
     FieldPatch:
       type: object
       properties:
@@ -624,6 +642,11 @@ components:
           items:
             $ref: '#/components/schemas/ForecastMeasurement'
           description: An array of measurements
+      x-federation:
+        has-parameters:
+          - parameter: ForecastId
+            path: /id
+            is-artificial-id: true
     ForecastMeasurement:
       type: object
       required:
@@ -722,6 +745,14 @@ components:
               format: double
               description: 'The glucose concentration, measured in g/L'
               example: 4.567645886934765
+      x-federation:
+        has-parameters:
+          - parameter: QualityMeasurementId
+            path: /properties/id
+            is-artificial-id: true
+          - parameter: PlantId
+            path: /properties/plant_id
+            is-artificial-id: true
     Terrain:
       type: object
       required:
@@ -749,6 +780,11 @@ components:
             field_id:
               type: integer
               format: int64
+      x-federation:
+        has-parameters:
+          - parameter: TerrainId
+            path: /id
+            is-artificial-id: true
     HarvestTask:
       type: object
       required:
@@ -827,6 +863,11 @@ components:
               format: int64
               description: The effective total time of the harvesting run in minutes
               example: 95
+      x-federation:
+        has-parameters:
+          - parameter: HarvestTaskId
+            path: /properties/task_id
+            is-artificial-id: true
     Harvest:
       type: object
       required:
@@ -1031,6 +1072,11 @@ components:
               format: int64
               description: Average fructose content of the harvested fruits in g/L
               example: 7
+      x-federation:
+        has-parameters:
+          - parameter: HarvestTaskId
+            path: /properties/task_id
+            is-artificial-id: true
     HarvestMeasurement:
       type: object
       required:
@@ -1159,6 +1205,11 @@ components:
                     type: string
                     description: Unit of the protection fluid amount
                     example: g/ha
+      x-federation:
+        has-parameters:
+          - parameter: SprayTaskId
+            path: /properties/task_id
+            is-artificial-id: true
     Token:
       type: object
       description: An object representing a token.
@@ -1233,6 +1284,11 @@ components:
         - cultivar_name
         - prime_name
         - variety_number
+      x-federation:
+        has-parameters:
+          - parameter: CultivarId
+            path: /id
+            is-artificial-id: true
     CultivarPatch:
       type: object
       properties:
@@ -1451,6 +1507,12 @@ components:
       required:
         - station_id
         - measurement_date
+      x-federation:
+        has-parameters:
+          - parameter: MeasurementDate
+            path: /measurement_date
+          - parameter: WeatherStationId
+            path: /station_id
     WeatherDataPatch:
       type: object
       description: An object representing the patch of weather data
@@ -1645,6 +1707,10 @@ components:
             bundesland:
               type: string
               description: The Bundesland where the weather station is located.
+      x-federation:
+        has-parameters:
+          - parameter: WeatherStationId
+            path: /properties/id
     WeatherStationPatch:
       type: object
       description: An object representing the patch of a weather station.
@@ -1802,6 +1868,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     UserId:
       name: UserId
       in: path
@@ -1820,6 +1889,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     PlantId:
       name: PlantId
       in: path
@@ -1829,6 +1901,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     PlanterRunId:
       name: PlanterRunId
       in: path
@@ -1838,6 +1913,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     QualityMeasurementId:
       name: QualityMeasurementId
       in: path
@@ -1847,6 +1925,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     TerrainId:
       name: TerrainId
       in: path
@@ -1856,6 +1937,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     HarvestTaskId:
       name: HarvestTaskId
       in: path
@@ -1865,6 +1949,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     SprayTaskId:
       name: SprayTaskId
       in: path
@@ -1874,6 +1961,9 @@ components:
         type: integer
         format: int64
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     CultivarId:
       name: CultivarId
       in: path
@@ -1883,6 +1973,9 @@ components:
         type: integer
         format: int32
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     WeatherStationId:
       name: WeatherStationId
       in: path
@@ -1892,6 +1985,9 @@ components:
         type: integer
         format: int32
         example: 4711
+      x-federation:
+        filter:
+          type: bloom(0.01)
     MeasurementDate:
       name: MeasurementDate
       in: path
@@ -1902,6 +1998,9 @@ components:
         pattern: '^\d{4}-\d{2}-\d{2}$'
         description: The date format specified by RFC 3339.
         example: '2023-08-01'
+      x-federation:
+        filter:
+          type: bloom(0.01)
   responses:
     BackendError:
       description: Backend Error
@@ -5208,6 +5307,12 @@ paths:
             pattern: '^\d{4}-\d{2}-\d{2}$'
             description: The date format specified by RFC 3339.
             example: '2023-08-01'
+          x-federation:
+            filter:
+              type: lowerbound(inclusive)
+              source: MeasurementDate
+              extractors:
+                - parse_rfc3339
         - name: endDate
           in: query
           required: false
@@ -5217,8 +5322,22 @@ paths:
             pattern: '^\d{4}-\d{2}-\d{2}$'
             description: The date format specified by RFC 3339.
             example: '2023-08-01'
+          x-federation:
+            filter:
+              type: upperbound(inclusive)
+              source: MeasurementDate
+              extractors:
+                - parse_rfc3339
         - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
+      x-federation:
+        - sort-by:
+            parameter: MeasurementDate
+            extractors:
+              - parse_rfc3339
+        - dedup-by:
+            - /station_id
+            - /measurement_date
       responses:
         '200':
           description: Successful operation
