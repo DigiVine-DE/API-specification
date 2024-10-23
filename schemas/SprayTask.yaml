@@ -102,3 +102,5 @@ x-federation:
     - parameter: SprayTaskId
       path: "/properties/task_id"
       is-artificial-id: true
+    - parameter: Box2d
+      path: "/geometry/bbox" 

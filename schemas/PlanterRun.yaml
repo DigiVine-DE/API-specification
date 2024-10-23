@@ -51,3 +51,8 @@ x-federation:
     - parameter: PlanterRunId
       path: "/properties/id"
       is-artificial-id: true
+    - parameter: FieldId
+      path: "/properties/field_id"
+      is-artificial-id: true
+    - parameter: Box2d 
+      path: "/bbox" 

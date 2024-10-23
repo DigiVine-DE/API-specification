@@ -63,3 +63,5 @@ x-federation:
     - parameter: FieldId
       path: "/properties/id"
       is-artificial-id: true
+    - parameter: Box2d
+      path: "/geometry/bbox" 

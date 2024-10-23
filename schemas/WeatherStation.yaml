@@ -35,3 +35,5 @@ x-federation:
   has-parameters:
     - parameter: WeatherStationId
       path: "/properties/id" 
+    - parameter: Box2d
+      path: "/geometry/bbox" 

@@ -4,3 +4,6 @@ required: false
 description: The two-dimensional geometry bounding box
 schema:
   $ref: "../openapi.yaml#/components/schemas/BBox"
+x-federation:
+  filter:
+    type: bbox
