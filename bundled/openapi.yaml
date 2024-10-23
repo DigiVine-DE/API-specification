@@ -371,6 +371,8 @@ components:
           - parameter: PlantId
             path: /properties/id
             is-artificial-id: true
+          - parameter: Box2d
+            path: /geometry/bbox
     PlantPatch:
       type: object
       properties:
@@ -463,6 +465,11 @@ components:
           - parameter: PlanterRunId
             path: /properties/id
             is-artificial-id: true
+          - parameter: FieldId
+            path: /properties/field_id
+            is-artificial-id: true
+          - parameter: Box2d
+            path: /bbox
     Field:
       type: object
       required:
@@ -525,6 +532,8 @@ components:
           - parameter: FieldId
             path: /properties/id
             is-artificial-id: true
+          - parameter: Box2d
+            path: /geometry/bbox
     FieldPatch:
       type: object
       properties:
@@ -785,6 +794,8 @@ components:
           - parameter: TerrainId
             path: /id
             is-artificial-id: true
+          - parameter: Box2d
+            path: /geometry/bbox
     HarvestTask:
       type: object
       required:
@@ -868,6 +879,8 @@ components:
           - parameter: HarvestTaskId
             path: /properties/task_id
             is-artificial-id: true
+          - parameter: Box2d
+            path: /geometry/bbox
     Harvest:
       type: object
       required:
@@ -1077,6 +1090,8 @@ components:
           - parameter: HarvestTaskId
             path: /properties/task_id
             is-artificial-id: true
+          - parameter: Box2d
+            path: /geometry/bbox
     HarvestMeasurement:
       type: object
       required:
@@ -1210,6 +1225,8 @@ components:
           - parameter: SprayTaskId
             path: /properties/task_id
             is-artificial-id: true
+          - parameter: Box2d
+            path: /geometry/bbox
     Token:
       type: object
       description: An object representing a token.
@@ -1711,6 +1728,8 @@ components:
         has-parameters:
           - parameter: WeatherStationId
             path: /properties/id
+          - parameter: Box2d
+            path: /geometry/bbox
     WeatherStationPatch:
       type: object
       description: An object representing the patch of a weather station.
@@ -1767,6 +1786,9 @@ components:
       description: The two-dimensional geometry bounding box
       schema:
         $ref: '#/components/schemas/BBox'
+      x-federation:
+        filter:
+          type: bbox
     FuzzyFieldKeywords:
       name: fuzzyFieldKeywords
       in: query
